@@ -21,7 +21,7 @@ committee = [
 ]
 +++
 
-## The elephant in the room: AI \& Mathematics
+# The elephant in the room: AI \& Mathematics
 
 In the last couple of years a pressing question has started to permeate the mathematical community: *_how will mathematicians' jobs coexist harmoniously with AI as it gets progressively better at mathematics?_* ["A.I. Is Coming for Mathematics, Too"](https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html) was the title chosen by the NY Times in their dedicated article of 2024, ["AI Will Become Mathematicians' Co-Pilot"](https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html) said the Scientific American, and the American Mathematical Society published ["Questions Artificial Intelligence Raises for the Mathematics Profession"](https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html).
 
@@ -32,7 +32,7 @@ This time it does not seem to be a matter of sensationalistic journalism; some o
 
 The goal of this post is to show through a concrete case study how SAT solvers, a relatively old AI technology, can also allow for human-machine collaboration in mathematics. Interestingly, the problem we study takes place in two-dimensional geometry, an a priori continuous domain, which makes the participation of SAT solvers somewhat surprising. While this is not the first usage of SAT in discrete geometry, its main novelty (besides the technical results) is in documenting how SAT solvers and other automated reasoning tools can assist mathematical research by revealing patterns and elliciting conjectures. At the end of the post I discuss verification---as opposed to recent language-based forms of AI, standard automated reasoning tools such as (Max)SAT solvers can provide proofs for their answers, which can be crucial for mathematics.
 
-## The Happy Ending was just the beginning
+# The Happy Ending was just the beginning
 
 In 1933, Esther Klein presented the following problem to George Szekeres and Paul Erdős:
 
@@ -51,7 +51,7 @@ As a second consequence of the problem, George Szekeres and Esther Klein married
 
 Not only has Klein's problem had a long-lasting impact in discrete geometry, her solution already contains an important insight: properties of finite point sets such as convexity do not rely on the specific coordinates of the points, but rather on their relative position and orientations, which are enough to determine the structure of e.g., convex hulls. This insight, as will become clear later in this post, is what opens the door to logical computation in a domain which may a priori seem continuous.
 
-## The problem: minimizing convex pentagons
+# The problem: minimizing convex pentagons
 
 Klein's proof shows \\(g(4) \leq 5\\), and it is then easy to see that indeed \\(g(4) = 5\\). It is not too hard to see that \\(g(5) = 9\\) (see **Figure 2**), but it took until 2006 for \\(g(6) = 17\\) to be proven computationally by [Lindsay Peters and George Szekeres](#szekeresPeters). [^szekeres] No other values of \\(g(k)\\) are known, although  Erdős and Szekeres conjectured \\(g(k) = 2^{k-2} + 1\\) for all \\(k \geq 3\\).
 
@@ -68,7 +68,7 @@ Indeed, let us denote by \\(\mu_k(n)\\) the minimum number of convex \\(k\\)-gon
 | Previously [2]  | 0  | 1  | 2  | 7  | [12, 13] | [20, 34] | [40, 62] | [60, 113] | — |
 | Our work        | 0  | 1  | 2  | 7  | 12 | 27 | 42 | 77 | 112 |
 
-## A boolean representation of the problem
+# A boolean representation of the problem
 
 As suggested by Klein's proof for \\(g(4)\\), it is possible to reason about properties like convexity based on combinatorial relationships between points instead of their concrete coordinates. Our goal in this section is to see how these relationships between points, and their impact on properties like convexity, can be encoded in propositional logic. The most successful combinatorial abstraction in geometric Ramsey theory is that of _triple orientations_,[^aka] which intuitively consists of considering which oriented triples of points define a curve that turns counterclockwise, and which ones turn clockwise. Concretely, given points \\(p, q, r\\), their _triple-orientation_ is defined as
 
@@ -115,7 +115,7 @@ Now, to minimize the number of convex pentagons instead of fully forbidding them
 C_{a,b,c,d,e} \lor r_{a,b,c,d,e}
 \\) -->
 
-## Local search
+# Local search
 
 At this point, we can use a local search SAT solver (e.g., _Tassat_ ([Chowdhury, Codel, Heule, 2023](#Tassat))) to try to minimize the number of falsified clauses in the formula \\(\Phi_n\\), and thus, indirectly, the number of convex pentagons among \\(n\\) points. We need however to declare two caveats:
 - Local search solvers can get stuck at local minima, so the number of falsified clauses they obtain is only an upper bound of the true answer.
@@ -178,7 +178,7 @@ and similarly
 \\]
 
 
-## Constructions
+# Constructions
 
 As we mentioned, however, we have no a-priori guarantee that the local search solutions are actually realizable by points in the plane. In fact, the fraction of orientation assignments that can be realized goes to zero as \\(n\\) grows, at a rate of \\(2^{-n}\\) ([Knuth, 1992](#knuthAxiomsHulls)). 
 
@@ -209,7 +209,7 @@ Naturally, even the parabolic construction requires some care in the design of t
 
 
 
-## Verification
+# Verification
 
 Since local search solvers cannot prove lower bounds, we used a  MaxSAT formulation to certify the values \\(\mu_5(n)\\) for \\(n \leq 15\\). Concretely, the solver that performed best was _MaxCDCL_ ([Li et al., 2021](#MaxCDCL)), and we used a _Cube and Conquer_ ([Heule, Kullman, Biere, 2018](#CubeAndConquer)) approach to parallelize the computation. Then, the _VeritasPBLib_ ([Gocht et al., 2022](#Veritas)) framework allowed us to obtain a reproducible certificate. Such certificates prove facts of the form ``at most \\(k\\) clauses can be satisfied in formula \\(F\\)'' by showing
 
@@ -221,7 +221,7 @@ The details are purposefully omitted here, but the important part is that SAT an
 This is particularly important for applications to mathematics, where correctness is paramount, and there is experience of computer-assisted proofs containing mistakes (cf. the original proof of the four color theorem, now formally verified by [Gonthier, 2023](#fourColor)). Hence, it is also important to mention that an important concern with computer-proofs is the correspondence between the computation and the mathematical statement it intends to prove. For example, even if a formula \\(F\\) is formally proven to be unsatisfiable, it could be the case that \\(F\\) is not a correct encoding of the mathematical statement we have in mind, making its unsatisfiability irrelevant. Because of the subtleties that naturally appear in translating geometric properties to propositional logic, this is a particularly important concern in our case. To this end, together with a group of students at CMU, we formally verified in Lean that the logical constraints and symmetry-breaking predicates we used in this work, and other similar proofs about discrete geometry, are indeed correct ([Subercaseaux et al., 2024](#Verification)).
 
 
-## Let's make it 16.
+# Let's make it 16.
 
 We can actually leverage the insight of the consecutive differences from earlier on to certify the value of \\(\mu_5(16)\\) without having to run a MaxSAT solver.
 
@@ -264,7 +264,7 @@ _Proof_.  -->
 
 <!-- The value of $g(7)$ is conjectured to be $33$, and more in general, Erdős and Szekeres conjectured $g(k) = 2^{k-2} + 1$. In 1961, Erdős and Szekeres proved $g(k) \geq 2^{k-2} + 1$, and to this day, the best upper bound is $g(k) \leq 2^{k + O(\sqrt{k \log k})}$ -->
 
-## Conclusions
+# Conclusions
 
 We have seen, through a concrete case study, how SAT solvers, coupled with other computational tools, can assist mathematical research at different stages. At the moment, the mathematical community is still trying to understand how to best leverage AI for mathematics, and it is important to document how existing tools can also be used in this context. While the current conversation is centered around language models, I strongly believe that classical AI tools are still vastly underutilized by the mathematical community, and I plan to keep working on tools, algorithms, and logical encodings that might make them more popular among mathematicians.
 
