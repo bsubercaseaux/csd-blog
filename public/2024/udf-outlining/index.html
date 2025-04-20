@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - The Key to Effective UDF Optimization: Before Inlining, First Perform Outlining</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#background" class="toc-link">Background</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#user-defined-functions-udfs" class="toc-link">User-Defined Functions (UDFs)</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#row-by-agonizing-row-rbar-execution" class="toc-link">Row-By-Agonizing-Row (RBAR) Execution</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#udf-inlining-intuition" class="toc-link">UDF Inlining: Intuition</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#subquery-unnesting" class="toc-link">Subquery Unnesting</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#udf-inlining-further-details" class="toc-link">UDF Inlining: Further Details</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#the-problem-with-udf-inlining" class="toc-link">The Problem with UDF Inlining</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#our-solution-udf-outlining" class="toc-link">Our Solution: UDF Outlining</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#region-based-udf-outlining" class="toc-link">Region-Based UDF Outlining</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#instruction-elimination" class="toc-link">Instruction Elimination</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#subquery-elision" class="toc-link">Subquery Elision</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#experimental-setup" class="toc-link">Experimental Setup</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#experiments-unnesting" class="toc-link">Experiments: Unnesting</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#experiments-overall-speedup" class="toc-link">Experiments: Overall Speedup</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;udf-outlining&#x2F;">The Key to Effective UDF Optimization: Before Inlining, First Perform Outlining</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-12-12</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~sarch&#x2F;" target=_blank>
+  Sam Arch
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <h1 id="background">Background</h1>
+<p>SQL is the de facto query language used to interact with databases. Since SQL is declarative, users express the <b>intended result</b> of their query rather than the concrete procedural steps to produce the answer. Database management systems (DBMSs) find fast execution strategies for SQL queries using a component called the <a rel="noopener" target="_blank" href="https://www.vldb.org/pvldb/vol9/p204-leis.pdf">query optimizer</a> (shown in Figure 1). The optimizer’s task is to search the space of equivalent query plans  (specific procedural strategies to retrieve the query result), estimate the number of rows produced by each operator (cardinalities), and select the plan with the lowest estimated runtime cost. After decades of research on query optimization, database systems have become remarkably effective at optimizing SQL queries.</p>
+<img src="optimizer.png" alt="Figure 1: Query Optimizer." width="70%" />
+<p style="text-align: left;">
+<b>Figure 1, The Query Optimizer:</b>
+<em>
+The query optimizer takes a SQL query (<b>SELECT ...</b>) as input and produces a query plan (shown on the right-hand side) as output. The query optimizer aims to select the query plan with the lowest estimated cost. It achieves this by enumerating the space of equivalent query plans (the plan space), estimating each operator's cardinalities, and estimating each candidate plan's runtime cost.
+</em></p>
+<h1 id="user-defined-functions-udfs">User-Defined Functions (UDFs)</h1>
+<p>Although most database queries are written purely in SQL, <a rel="noopener" target="_blank" href="https://www.vldb.org/pvldb/vol11/p432-ramachandra.pdf">billions of queries per day make calls to User-Defined Functions (UDFs)</a>, procedural functions written in non-SQL programming languages such as Python or PL/SQL.</p>
+<img src="rbar.png" alt="Figure 2: An example query invoking a PL/SQL UDF." width="70%" />
+<p style="text-align: left;">
+<b>Figure 2, An example query invoking a PL/SQL UDF:</b>
+<em>
+The query computes for each <b>customer</b>, their name, and whether they are a VIP.
+</em></p>
+<img src="udf.png" alt="Figure 3: UDF Example." width="70%" />
+<p style="text-align: left;">
+<b>Figure 3, An Example UDF:</b>
+<em>
+An example UDF written in PL/SQL. The function <b>is_vip</b>
+takes a customer key as input and returns whether the customer is a VIP.
+A customer is a VIP if the total amount spent 
+on their orders (computed using the <b>SELECT</b> statement) exceeds 1,000,000.
+</em></p>
+<p>Figure 2 showcases an example query invoking a UDF (<b>is_vip</b>) from SQL,
+with  Figure 3 providing the implementation of the <b>is_vip</b> UDF, which
+returns whether a customer is a VIP. The <b>is_vip</b> UDF mixes declarative code
+(the <b>SELECT</b> statement) and procedural code (<b>IF/ELSE</b> statements). Allowing
+users to mix procedural and declarative code provides a more convenient and intuitive way
+to express query logic than pure SQL. As a result, UDFs provide
+<a rel="noopener" target="_blank" href="https://learn.microsoft.com/en-us/sql/relational-databases/user-defined-functions/user-defined-functions?view=sql-server-ver16">significant software engineering benefits</a>
+to database users, namely the ability to reuse code, express query logic more concisely,
+and decompose complex queries into modular functions.</p>
+<h1 id="row-by-agonizing-row-rbar-execution">Row-By-Agonizing-Row (RBAR) Execution</h1>
+<p>Unfortunately, UDFs come with a performance cost. Unlike SQL, which is purely declarative, UDFs mix declarative and procedural programming paradigms.
+A DBMS’s query optimizer can effectively reason about SQL, but was never designed to optimize non-declarative UDF code.
+As a consequence, DBMS’s execute UDFs as opaque functions (much like built-in functions), evaluating them in a naive “row-by-row” fashion.
+In the process, <b>SELECT</b> statements embedded inside the UDF are re-evaluated
+for each row, dramatically slowing down query execution. Database practitioners have
+termed this naive, inefficient, row-by-row execution of UDFs as <a rel="noopener" target="_blank" href="https://www.red-gate.com/simple-talk/databases/sql-server/t-sql-programming-sql-server/rbar-row-by-agonizing-row/">RBAR (Row-By-Agonizing-Row)</a>.</p>
+<p>For the query shown in Figure 2, the DBMS naively evaluates the UDF for each input row of the <b>customer</b> table.
+Each UDF call executes an embedded <b>SELECT</b> statement that accesses the <b>orders</b> table.
+Without an available index on the <b>orders</b> table, the DBMS scans the entire table on each UDF invocation.
+Hence, the query’s runtime complexity is <b>Θ(|customer| × |orders|)</b>, which is extremely inefficient. With an index,
+the DBMS can avoid rescanning the <b>orders</b> table, but each UDF still incurs significant overhead, resulting in
+degraded query runtime.</p>
+<h1 id="udf-inlining-intuition">UDF Inlining: Intuition</h1>
+<img src="intuition.png" alt="Figure 4: UDF Inlining Intuition." width="80%" />
+<p style="text-align: left;">
+<b>Figure 4, UDF Inlining Intuition:</b>
+<em>
+The key intuition behind UDF inlining is to translate UDFs from procedural functions into SQL subqueries,
+a declarative representation that the DBMS can optimize effectively. In the above example, inlining replaces the <b>is_vip</b> UDF by an equivalent SQL subquery.
+</em></p>
+<p>The DBMS employs RBAR execution of UDFs as they are written in a
+non-declarative paradigm that the query optimizer cannot effectively reason about. Such row-by-row
+execution is reminiscent of how database systems logically evaluate SQL subqueries,
+whereby the DBMS re-evaluates a subquery for each row of the calling query. The key
+distinction, however, between UDFs and subqueries is that the database community has
+spent <a rel="noopener" target="_blank" href="https://materialize.com/blog/decorrelation-subquery-optimization/">decades optimizing subqueries</a>.
+Hence, if the DBMS could translate a UDF into an
+equivalent SQL subquery, the query is left entirely in SQL, which is amenable to
+effective query optimization. Translating UDFs to equivalent SQL subqueries is
+known as <a rel="noopener" target="_blank" href="https://www.vldb.org/pvldb/vol11/p432-ramachandra.pdf"><b>UDF inlining</b></a>, and enables the efficient execution of queries containing UDFs.</p>
+<h1 id="subquery-unnesting">Subquery Unnesting</h1>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/subquery.png" alt="Figure 5: Subquery Unnesting." /></p>
+<p style="text-align: left;">
+<b>Figure 5, Subquery Unnesting:</b>
+<em>
+An illustration of how DBMSs perform subquery unnesting. The SQL query is rewritten from
+an inefficient query containing a subquery to an equivalent query containing joins that are significantly faster to execute.
+</em></p>
+<p>UDF inlining avoids RBAR execution by translating UDFs into subqueries that the DBMS can <b>unnest</b>, replacing subqueries with equivalent join operators.</p>
+<p>On the left-hand side of Figure 5 is a SQL query containing a subquery (shown in red).
+The naive way of evaluating the query is by re-evaluating the subquery for each row of
+the <b>orders</b> table and rescanning the <b>customer</b> table. Evaluating the query in
+this manner results in a runtime of <b>Θ(|customer| × |orders|)</b>, which is highly inefficient. The right-hand side of Figure 5 illustrates the rewritten query after the DBMS performs subquery unnesting, efficiently evaluating the query in <b>Θ(|customer| + |orders|)</b> time with hash joins.</p>
+<h1 id="udf-inlining-further-details">UDF Inlining: Further Details</h1>
+<img src="inlining.png" alt="Figure 6: UDF Inlining." width="70%" />
+<p style="text-align: left;">
+<b>Figure 6, UDF Inlining:</b>
+<em>
+An illustration of the UDF inlining technique for our motivating example.
+Inlining translates the <b>is_vip</b> UDF into an equivalent SQL subquery with <b>LATERAL</b> joins. 
+The generated subquery is then "inlined" into the calling query.
+After inlining, the query is represented entirely in SQL, which the DBMS can optimize 
+effectively.
+</em></p>
+<p><a rel="noopener" target="_blank" href="https://www.vldb.org/pvldb/vol11/p432-ramachandra.pdf">UDF inlining</a> translates UDFs into equivalent SQL subqueries in three key steps. First,
+inlining translates a UDF’s statements to SQL tables. <b>IF/ELSE</b> blocks become
+<b>CASE WHEN</b> statements, assignments (i.e., <b>x = y</b>) become projections (i.e., <b>SELECT y AS x</b>).
+Then, the DBMS chains together these statements with <b>LATERAL</b> joins. <b>LATERAL</b> joins are special joins
+which allow the joining tables to reference each other’s columns. After inserting <b>LATERAL</b> joins, the resulting
+SQL expression is equivalent to the original UDF. The last step is to
+“inline” the generated SQL expression into the calling query, eliminating the UDF call.
+After applying UDF inlining, queries are represented in pure SQL, automatically
+improving the performance of queries with UDFs by <a rel="noopener" target="_blank" href="https://www.vldb.org/pvldb/vol11/p432-ramachandra.pdf">multiple orders of magnitude</a>.</p>
+<h1 id="the-problem-with-udf-inlining">The Problem with UDF Inlining</h1>
+<p>Unfortunately, UDF inlining is <a rel="noopener" target="_blank" href="https://www.cidrdb.org/cidr2024/papers/p13-franz.pdf">ineffective</a> for most real-world queries because it produces large,
+complex SQL queries that are hard to optimize. In particular, to achieve significant performance improvements with UDF inlining,
+the DBMS must unnest the generated subquery. Yet, UDF inlining produces complex subqueries containing <b>LATERAL</b> joins that <a rel="noopener" target="_blank" href="https://www.cidrdb.org/cidr2024/papers/p13-franz.pdf">most DBMSs fail to unnest</a>.
+As a result, the DBMS evaluates the subquery naively for each row, akin to the RBAR execution strategy used before applying UDF inlining.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/cant-unnest.png" alt="Figure 7: Subquery Unnesting (ProcBench)." /></p>
+<p style="text-align: left;">
+<b>Figure 7, Subquery Unnesting (ProcBench):</b>
+<em>
+A table indicating whether a given DBMS (SQL Server or DuckDB) successfully unnested a UDF-centric
+query from the Microsoft SQL ProcBench. A green tick indicates that the unnesting succeeded. A grey cross
+ indicates that the unnesting failed.
+</em></p>
+<p>To understand how effectively DBMSs optimize queries with UDFs, we ran the <a rel="noopener" target="_blank" href="http://www.vldb.org/pvldb/vol14/p1378-ramachandra.pdf">Microsoft
+SQL ProcBench</a>, a UDF-centric benchmark containing 15 queries
+modeled after real-world customer queries. We evaluated these queries on two DBMSs:
+Microsoft SQL Server and DuckDB. A query executes efficiently only if the DBMS can
+unnest the subquery generated by UDF inlining otherwise the DBMS evaluates it RBAR.
+SQL Server unnests only 4 out of 15 of the queries after inlining. Alternatively stated,
+SQL Server evaluates 11 out of 15 of the ProcBench queries RBAR, resulting in underwhelming
+performance. Hence, for most real-world UDF-centric queries, inlining is
+ineffective on SQL Server. Although DuckDB supports
+<a rel="noopener" target="_blank" href="https://subs.emis.de/LNI/Proceedings/Proceedings241/383.pdf">arbitrary unnesting of subqueries</a> and achieves
+high performance on all 15 queries, only a <a rel="noopener" target="_blank" href="https://www.cidrdb.org/cidr2024/papers/p13-franz.pdf">handful of DBMSs implement arbitrary unnesting</a>,
+and integrating the optimization into existing systems is highly challenging. Hence,
+for the majority of UDF-centric queries, inlining is
+<a rel="noopener" target="_blank" href="https://www.cidrdb.org/cidr2024/papers/p13-franz.pdf">ineffective for the vast majority of DBMSs</a> (shown in Figure 8).</p>
+<h1 id="our-solution-udf-outlining">Our Solution: UDF Outlining</h1>
+<p>Fundamentally, we observe that inlining <b>entire UDFs</b> results in complex subqueries that are challenging for the DBMS
+to unnest. Instead of inlining entire UDFs, a better approach is to analyze the UDF, deconstruct it into smaller pieces, and
+inline only the  pieces that help query optimization. To achieve this, we propose <b>UDF outlining</b>, an optimization technique
+that extracts UDF code fragments into separate functions that are intentionally not inlined, minimizing UDF code complexity.
+We implement UDF outlining in conjunction with four other complementary UDF-centric optimizations in <b>PRISM</b>, our optimizing compiler for UDFs (shown in Figure 9).</p>
+<img src="prism.png" alt="Figure 8: PRISM." width="70%" />
+<p style="text-align: left;">
+<b>Figure 8, PRISM:</b>
+<em>
+PRISM is an optimizing compiler for UDFs, deconstructing a UDF into separate inlined and outlined pieces. By operating on
+UDF pieces, only the code helpful for query optimization is exposed to the DBMS, intentionally leaving the remaining code opaque through UDF outlining. PRISM is reminiscent of a prism of light, breaking a UDF down into its constituent pieces.
+</em></p>
+<p>PRISM is an acronym for the five UDF-centric optimizations that it supports:</p>
+<ol>
+<li><b>P</b>redicate Hoisting</li>
+<li><b>R</b>egion-Based UDF Outlining</li>
+<li><b>I</b>nstruction Elimination</li>
+<li><b>S</b>ubquery Elision</li>
+<li>Query <b>M</b>otion</li>
+</ol>
+<p>To illustrate PRISM’s optimizations, we illustrate the changes that occur when applying the three relevant optimizations to our motivating example.</p>
+<h1 id="region-based-udf-outlining">Region-Based UDF Outlining</h1>
+<p>The first and most critical optimization that PRISM performs is region-based UDF outlining. The goal of UDF outlining is to extract the largest blocks of unhelpful code
+for query optimization into separate functions that are opaque to the DBMS. PRISM achieves this by representing a UDF as <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/pdf/10.1145/178243.178258">a hierarchy of program regions</a>, where each region is eligible for outlining. PRISM identifies the largest regions of UDF code that do not contain any <b>SELECT</b> statements and extracts each
+region into a separate outlined function. PRISM then compiles the outlined functions to machine code, preventing the inlining of the corresponding region. Lastly, PRISM replaces the
+region in the original UDF with an opaque function call into the outlined function, simplifying the UDF substantially.</p>
+<img src="outlining.png" alt="Figure 9: Region-Based UDF Outlining." width="80%" />
+<p style="text-align: left;">
+<b>Figure 9, Region-Based UDF Outlining:</b>
+<em>Instead of inlining the entire UDF, PRISM extracts the largest regions of non-<b>SELECT</b> code into separate outlined functions. In our example,
+PRISM extracts the <b>IF/ELSE</b> block and <b>RETURN</b> statement into an outlined function <b>f(...)</b>, which is opaque to the query optimizer.
+</em></p>
+<p>Figure 9 illustrates how PRISM applies region-based UDF outlining to our motivating example. First, PRISM identifies the region containing the <b>IF/ELSE</b> block and <b>RETURN</b> statement as the largest region not containing <b>SELECT</b> statements. Next, it extracts the region into a new outlined function <b>f(…)</b>, compiles it to machine code,
+and replaces the original region with an opaque function call to the outlined function. Through UDF outlining, PRISM significantly simplifies the UDF,
+enabling more effective query optimization.</p>
+<h1 id="instruction-elimination">Instruction Elimination</h1>
+<p>PRISM then applies instruction elimination, eliminating as many redundant instructions in the UDF as possible. PRISM achieves this by replacing a variable’s uses
+with its definition, making the variable definition redundant. PRISM then deletes the definition.
+PRISM eliminates redundant instructions through instruction elimination, minimizing the number of <b>LATERAL</b> joins generated from inlining.</p>
+<img src="instruction.png" alt="Figure 10: Instruction Elimination." width="80%" />
+<p style="text-align: left;">
+<b>Figure 10, Instruction Elimination:</b> After UDF outlining, PRISM applies instruction elimination to remove as many UDF instructions as possible, reducing 
+the number of <b>LATERAL</b> joins from inlining. Instruction elimination replaces the uses of a variable with its definitions. In our example,
+PRISM eliminates the definition of <b>total</b>, directly forwarding its definition to the use by <b>f(...)</b>.
+<em>
+</em></p>
+<p>Figure 10 showcases PRISM’s application of instruction elimination to our motivating example. PRISM identifies <b>total</b> as a program variable
+and replaces its use in <b>f(…)</b> with its definition. Since <b>total</b> no longer has any uses, PRISM eliminates its defining instruction, collapsing the
+UDF to a single <b>RETURN</b> statement.</p>
+<h1 id="subquery-elision">Subquery Elision</h1>
+<p>Lastly, PRISM runs subquery elision to eliminate redundant subqueries from the resulting query. Inlining translates UDFs into subqueries, which complicates
+query optimization. However, PRISM elides the subquery when a UDF consists of a single <b>RETURN</b> statement (as is the case for our motivating example, shown in Figure 11).
+Instead, it directly substitutes the original UDF call with the return value. PRISM simplifies the UDF through its optimizations,
+oftentimes leaving the resulting query free of <b>LATERAL</b> joins, resulting in more effective query optimization and faster query plans.</p>
+<img src="elision.png" alt="Figure 11: Subquery Elision." width="60%" />
+<p style="text-align: left;">
+<b>Figure 11, Subquery Elision:</b>
+<em>In our example, PRISM reduces the UDF to a single <b>RETURN</b> statement after instruction elimination. When a UDF consists of a single <b>RETURN</b> statement,
+ PRISM performs subquery elision and injects the return value into the calling query rather than substituting it as a SQL subquery.
+</em></p>
+<h1 id="experimental-setup">Experimental Setup</h1>
+<p>We performed our evaluation on a machine with a dual-socket 20-core Intel Xeon Gold 5218R CPU (20 cores per CPU, 2× HT), 192 GB DDR4 RAM, and a 960 GB NVMe SSD.
+We use the default index configuration for all workloads and build additional column-store indexes on every table on SQL Server. For each DBMS, we tune their configuration
+knobs to improve performance, pre-warm the buffer pool, and refresh statistics. We perform two warmup runs of each query and then five hot runs (with minimal observed variance),
+reporting the average execution time of the five runs.</p>
+<p><b>SQL ProcBench</b>: Microsoft released the <a rel="noopener" target="_blank" href="http://www.vldb.org/pvldb/vol14/p1378-ramachandra.pdf">SQL ProcBench</a> in 2021 as the first UDF-centric benchmark modeled after real-world UDFs on Azure SQL Server. ProcBench is based on the TPC-DS benchmark and contains 24 queries that invoke scalar UDFs. We use a scale factor of 10 (a database size of ≈10 GB). We run 15 of the 24 queries, ignoring queries that use table-valued functions (TVFs) or UDFs invoked from stored procedures.</p>
+<h1 id="experiments-unnesting">Experiments: Unnesting</h1>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/unnest.png" alt="Figure 12: Subquery Unnesting (ProcBench)." /></p>
+<p style="text-align: left;">
+<b>Figure 12, Subquery Unnesting (ProcBench):</b>
+<em>
+ A table indicating whether a given DBMS (SQL Server or DuckDB) successfully unnested a UDF-centric query
+from the Microsoft SQL ProcBench with a given technique (inlining or PRISM). A green tick indicates that the unnesting succeeded.
+ A grey cross indicates that the unnesting failed. Figure 12 and Figure 7 share the same values for the queries unnested with inlining.
+</em></p>
+<p>The principle issue with UDF inlining is that it produces complex subqueries with <b>LATERAL</b> joins
+that most DBMSs cannot unnest, resulting in inefficient RBAR execution. By comparison, PRISM only exposes
+the UDF pieces that improve query optimization, resulting in significantly simpler and faster queries.
+As shown in Figure 12, SQL Server can unnest only 4 out of 15 of the ProcBench queries after applying UDF inlining.
+Yet with PRISM, SQL Server can unnest 12 of the 15 queries, leading to efficient query execution with joins
+rather than inefficient RBAR execution. As expected, DuckDB can unnest all 15 queries with both techniques,
+as it supports arbitrary unnesting of subqueries. In summary, PRISM significantly improves
+subquery unnesting compared to naively inlining the entire UDF.</p>
+<h1 id="experiments-overall-speedup">Experiments: Overall Speedup</h1>
+<img src="speedup.png" alt="Figure 13: Overall Speedup (ProcBench)." width="70%" />
+<p style="text-align: left;">
+<b>Figure 13, Aritmethic Mean Speedup (ProcBench):</b>
+<em>
+A table indicating the overall speedup on the Microsoft SQL ProcBench when running queries with PRISM over inlining the entire UDF.
+We calculate speedup by dividing the runtime of running a given query without PRISM (i.e., inlining the entire UDF) by the runtime with PRISM.
+We report the arithmetic mean speedup (excluding outliers) and the maximum speedup (including outliers). We observe that PRISM provides significant performance improvements over existing UDF optimization techniques.
+</em></p>
+<p>Figure 13 details the arithmetic mean (average) and maximum speedup of the ProcBench queries when running PRISM. We observe that, on average, PRISM attains a speedup of 298.7× due to 8 of the 15 ProcBench queries now evaluating efficiently with joins after successful unnesting rather than RBAR. The maximum speedup for SQL Server is 2997.9×, again due to more effective unnesting,
+for a query that spends the entirety of its execution time in the UDF call. DuckDB can unnest arbitrary queries. Therefore, PRISM offers a more modest arithmetic mean speedup of 1.29× due to
+eliminating <b>LATERAL</b> joins from the query plan. Lastly, PRISM delivers a maximum speedup of 2270.2× on DuckDB, as the query after UDF inlining is so complex, that even after unnesting, the DBMS picks an inefficient query plan with a large cross-product.  In contrast, the generated query is substantially simpler with PRISM,  leading to an efficient plan
+evaluated with hash joins. PRISM significantly improves SQL Server and DuckDB compared to inlining entire UDFs by generating simpler queries that are easier to optimize.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>The database community developed UDF inlining to translate entire  UDFs to SQL for more effective query optimization. We observe that inlining entire UDFs leads to complex, obfuscated queries that are challenging for DBMSs to optimize effectively. Instead, we propose UDF outlining, a new technique that extracts regions of code irrelevant for query optimization into opaque functions intentionally hidden from the DBMS. In addition to UDF outlining, our optimizing compiler (PRISM) supports four other complementary UDF-centric optimizations.
+By generating simpler queries, we observe that on the Microsoft SQL ProcBench, PRISM provides dramatic performance improvements over inlining entire UDFs.</p>
+<p>Our paper has been <a rel="noopener" target="_blank" href="https://www.vldb.org/pvldb/vol18/p1-arch.pdf">accepted for publication in VLDB 2025</a>.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~sarch&#x2F;" target=_blank>
+  Sam Arch
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;wanshenl.me&#x2F;" target=_blank>
+  Wan Shen Lim,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~gibbons&#x2F;" target=_blank>
+  Phillip Gibbons,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~aldrich&#x2F;" target=_blank>
+  Jonathan Aldrich
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/">#Systems</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/database-systems/">#database systems</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/compiler-optimization/">#compiler optimization</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/query-optimization/">#query optimization</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/query-languages/">#query languages</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;directed-cut-sketch&#x2F;">‹ Tight Lower Bound for Directed Cut Sparsification</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;atlas&#x2F;">Atlas: Hierarchical Partitioning for Quantum Circuit Simulation on GPUs ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

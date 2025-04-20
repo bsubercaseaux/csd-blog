@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Cases2Beds: A Case Study in Actionable Intelligence Highlights</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#a-probabilistic-approach" class="toc-link">A Probabilistic Approach</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#an-alternative-to-monte-carlo-the-analytical-model" class="toc-link">An Alternative to Monte Carlo: the Analytical Model</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#cases2beds-in-action" class="toc-link">Cases2Beds in Action</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#resources" class="toc-link">Resources</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#appendix" class="toc-link">Appendix</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2022&#x2F;casestobeds&#x2F;">Cases2Beds: A Case Study in Actionable Intelligence Highlights</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2022-01-06</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;csd.cmu.edu&#x2F;people&#x2F;graduate-student&#x2F;ananya-joshi" target=_blank>
+  Ananya Joshi
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p><em>This blog post is adapted from the <a rel="noopener" target="_blank" href="https://delphi.cmu.edu/blog/2021/03/10/cases2beds-a-case-study-in-actionable-intelligence/">Delphi blog</a>, originally published on March 10th, 2021. Again, thank you to the Allegheny County Health Department, the DELPHI Group, Chris Scott, and Roni Rosenfeld.</em></p>
+<p>One of the <a rel="noopener" target="_blank" href="https://delphi.cmu.edu/">Delphi Group</a>’s goals is to create informative tools for healthcare organizations. Tools are only useful if the insights they provide can inform concrete actions. That is to say these tools must provide actionable intelligence. In early November 2020, as COVID case rates in Allegheny County continued to rise, the Delphi Group partnered with the Allegheny County Health Department (ACHD) to create such tools for investigating if hospitals located in the county would run out of hospital beds for COVID patients <a href="#f1">(Fig. 1)</a>.</p>
+<div id="f1"></div>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/./WPRDC-1.svg" alt="Image of the hospitalizations due to COVID-19 and new cases from positive PCR tests in Allegheny County. There are rapid upward trends in hospitalizations and positive cases from October 2020 to mid-December 2020.  The maximum number of hospitalizations is about 600 and the minimum is less than 50 [in Oct 2020]. The maximum number of positive cases is over 7000 and the minimum is less than 1000 [in Oct 2020]." />
+<strong>Fig. 1:</strong> Hospitalizations Due to COVID-19 and New Cases from Positive PCR Tests in Allegheny County (WPRDC Data <sup><a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#WPRDCLink">1</a></sup>)</p>
+<p>Based on its planning, the ACHD needed at least a week to open emergency COVID facilities. If the emergency space wasn’t open and hospital beds ran out, mortality rates could soar. But, if we didn’t need the facility, that decision would have stretched already thin resources. Many of the hospitals in Allegheny County were in contact, but each hospital system only had visibility into its own facilities. We wanted to offer a more holistic picture of hospital resources for ACHD to assist in its planning.</p>
+<h2 id="a-probabilistic-approach">A Probabilistic Approach</h2>
+<p>To provide county-level intelligence on hospital bed usage, we developed Cases2Beds<sup><a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#Cases2BedsLink">2</a></sup>.</p>
+<p>To extrapolate beds utilization 1-2 weeks in the future, we needed to estimate:</p>
+<ol>
+<li>The probability that a person who tested positive for COVID-19 would require hospitalization</li>
+<li>How many days after testing a person would be hospitalized</li>
+<li>How long a person with COVID would stay in the hospital</li>
+<li>The current number of positive COVID tests</li>
+</ol>
+<p>These values vary by demographic factors, most notably age (<a href="#f2">Fig. 2</a>), and to a lesser extent, sex and race.</p>
+<div id="f2"></div>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/./rates-1.svg" alt="Age Group Comparisons based on the Allegheny County COVID-19 Tableau. The age groups are 0-9, 10-19, 20-29, 30-39, 40-49, 50-59, 60-69, 70+, and unspecified. As the age group increases, the percent of those who were tested in that age group and were later hospitalized in that age group increases (the 70+ age group being &gt; 5%)." />
+<strong>Fig. 2:</strong> Age Group Comparisons based on the Allegheny County COVID-19 Tableau <sup><a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#ACHDDashboardLink">3</a></sup></p>
+<p>We used public data from Allegheny County about the number of people tested, test positivity rate, and hospitalization rate, broken down by the aforementioned demographic factors.</p>
+<p>We also acquired information for two critical parameters:</p>
+<ul>
+<li><strong>Offset</strong>: Offset is the number of days between the day of testing (called specimen collection date) and the first day of hospitalization. For example, if the test date were 5 days before hospitalization, the offset would be 5 days. Also, if the test date is the hospital admit date, the offset would be 0 days (or sometimes, if, for example, they are admitted at midnight, -1 or +1 days). Notably, the offset can be negative, meaning a person may have been tested some days or weeks after admission.</li>
+<li><strong>Length of Stay</strong>: The length of stay is approximately how many days a person uses a bed in the hospital (± 1 day).</li>
+</ul>
+<p>Given the hospitalization rate, the offset distribution, and the length of stay distribution, we can simulate multiple futures for any given set of positive cases and their testing dates. Estimating the future given a set of probabilities is a common problem and a possible approach is called a Monte Carlo simulation. This process ultimately shows the expected distribution of the number of beds needed each day.</p>
+<p>Monte Carlo simulations involve running a large number of scenarios based on a set of probabilities. The more scenarios run, the more accurate the model tends to be. For example, if you gave 1000 people one dart to throw at a dartboard, even though each throw may not be very good, you’d still be able to get a pretty good idea of where the bull’s eye is after 1000 throws. This is the same principle we applied for Cases2Beds – after many simulations, we had a good idea of how many beds might be needed in the next two weeks.</p>
+<p>Our prototype Monte Carlo simulation was written in Python and had a runtime of a few minutes. However, because the simulation works best with probabilities derived from Protected Health Information (PHI), ACHD needed to run it privately and offline so there would be no data transmission. Thus, any type of web application (which would transmit data to our servers) was ruled out. Even asking ACHD to run our Python software on their machines fell into a grey area. However, Microsoft Excel was easy to use and supported by ACHD. So we converted Cases2Beds into a spreadsheet.</p>
+<p>It is relatively straightforward to port the Python application to VBScript macros for Microsoft Excel. However, those macros aren’t designed to run large simulations, and we saw that the time required to generate a model was far worse, bordering on unusable.</p>
+<h2 id="an-alternative-to-monte-carlo-the-analytical-model">An Alternative to Monte Carlo: the Analytical Model</h2>
+<p>As an alternative, we developed an analytical model for Microsoft Excel that offered a much faster run time than the full Monte Carlo simulation. The sheet has two tabs of inputs: constant parameters (first tab, static), and case counts (second tab, dynamic).</p>
+<p>The analytical model had the same idea as the Monte Carlo simulation. Some fraction of individuals who test positive today will be hospitalized after a varying offset (from test date to admit date) and variable duration (from admit date to discharge date) based on their characteristics (see <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#app">appendix</a>). Because these parameters can vary by region, anyone can change these values in spreadsheet tab 1.</p>
+<p>The characteristics are:</p>
+<ol>
+<li>Age Group: (Most important) [unspecified, 0-9, 10-19, 20-29 … 70-79, 80+]</li>
+<li>Sex: [unspecified, M, F]</li>
+<li>Race: [unspecified, Black, White, Hispanic, Asian]</li>
+</ol>
+<p>And the parameters are:</p>
+<ol>
+<li>Hospitalization Rate</li>
+<li>Offset Distribution Parameter Set: Parameters describing the number of days before someone who tests positive is hospitalized</li>
+<li>Duration Distribution Parameter Set: Parameters describing the number of days someone will be in the hospital</li>
+</ol>
+<p>The second types of inputs are the daily positive cases split by their traits. This is the input that the user actively changes on their end.</p>
+<p>Behind the scenes, we take these parameters (first input tab) and generate Offset Fractions, which is the probability that a patient with given traits will occupy a bed for a duration k days after the specimen testing date. These Offset Fractions and the daily positive case breakdown (second input) give us the expected mean and variance up to 1 month in the future of the number of patients in the hospital per day based on the cases already seen (for details, see <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#app">appendix</a>). This information can be used to generate plots like <a href="#f3">(Fig. 3)</a>. This graph isn’t to suggest that there won’t be any need for beds after February! It is just that based on the cases we know, very few people will be hospitalized for more than a month.</p>
+<div id="f3"></div>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/./C2B-1.svg" alt="Output of Cases2Beds using historical data until January 21st for Allegheny County Using Public Parameters. In the output of Cases2Beds, we see a peak in mid-December 2020 in the mean number of beds, followed by a stagnation period in mid-January 2021 and a rapid decline until the end of March 2021.  The 25-75 Quantile and 5-95 Quantile are highlighted on the graph with the band having the largest width between mid-December 2020 and mid-January 2021. " />
+<strong>Fig. 3:</strong>  Output of Cases2Beds using historical data until January 21st for Allegheny County Using Public Parameters</p>
+<p>If we assume independence between patients, the mean and variance calculations are exact. However, our quantile estimates are based on approximating the sum of independent binary variables, which is inaccurate near the tails. So the accuracy of the more extreme quantiles (95%+) depends on the number of cases present, which in practice makes them less trustworthy.</p>
+<h2 id="cases2beds-in-action">Cases2Beds in Action</h2>
+<p>By the end of November 2020, we had a viable prototype Cases2Beds spreadsheet used by ACHD. Over the following months, we made various modifications with their feedback. For example, the ACHD staff did not have time to manually input case numbers. So, we were able to use the granular public data to give them estimates of future hospital utilization without any additional work on their end.</p>
+<p>At the peak of bed utilization, hospital systems themselves increased their COVID beds utilization to 6x more than in October 2020. Fortunately, in Allegheny County, we never reached a point where demand for beds exceeded a somewhat elastic supply. In early January 2021, multiple organizations told us that the pandemic’s most acute problem had changed to vaccine distribution and the number of COVID-19 beds needed dropped. Cases2Beds continues to act as an early warning system if the number of cases rise quickly.</p>
+<div id="f4"></div>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/./HHS-1.svg" alt="Numbers of staffed COVID beds over time vs. capacity from the HHS Protect Data. There was peak hospital utilization (7-day Average of COVID Adult Beds Used) in mid-December 2020 (over 800 beds avg.) before a steady decline until February 2021 (around 200 beds avg). " />
+<strong>Fig. 4:</strong> Numbers of staffed COVID beds over time vs. capacity from the HHS Protect Data <sup><a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#HHSLink">5</a></sup>.</p>
+<p>We were also able to show the efficacy of the spreadsheet to other health departments and hospitals by generating tailored, public parameters for offset and length of stay from different national public resources, like the Florida line-level COVID dataset <sup><a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#FloridaLineLevelLink">4</a></sup>.</p>
+<p>Based on these organizations’ feedback that they needed projections more than 2 weeks out, we started to use Cases2Beds as an input to hospital utilization forecasting models. Other inputs to the hospital forecasting model included current hospital bed utilization  (from HHS Protect<sup><a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/#HHSLink">5</a></sup>), how long current patients are likely to continue to be hospitalized, and how many new cases there will be in the near future. A preliminary evaluation of such a method shows decent predictive power when parameters are tailored to a location.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Cases2Beds was a case study about the realities of research institutions offering actionable intelligence in healthcare. While the Cases2Beds tool demonstrated reasonable predictive power, it was difficult to deploy it in a timely and actionable way. Our most significant challenges were data access and bureaucratic limitations to develop solutions at the granularity needed.</p>
+<p>Research institutions can be effective partners to health organizations, but the next set of challenges of this pandemic–or the next–will require quick action. The tools we build now can set the stage for the future.</p>
+<p>Thank you to the Allegheny County Health Department (especially Antony Gnalian, Dr. LuAnn Brink, and Dr. Debra Bogen) for their invaluable feedback, efforts, and shared interest in actionable intelligence.</p>
+<p>Many members of the Delphi Group, including Sumit Agrawal, Katie Mazaitis, and Phil McGuinness, met regularly with the Allegheny County Health Department, provided data, edited this blog post, and investigated various solutions other than Cases2Beds.</p>
+<h2 id="resources">Resources</h2>
+<p>Please check out the <a rel="noopener" target="_blank" href="https://github.com/cmu-delphi/cases-to-beds-public">Cases2Beds Github Repo</a></p>
+<p><a id="WPRDCLink">1.</a>  <a rel="noopener" target="_blank" href="https://data.wprdc.org/dataset/allegheny-county-covid-19-tests-cases-and-deaths">WPRDC Allegheny County COVID dataset</a></p>
+<p><a id="Cases2BedsLink">2.</a> <a rel="noopener" target="_blank" href="https://www.cmu.edu/delphi-web/cases2beds-v0.2.3.xlsm">Cases2Beds Worksheet</a></p>
+<p><a id="ACHDDashboardLink">3.</a>  <a rel="noopener" target="_blank" href="https://tableau.alleghenycounty.us/t/PublicSite/views/AlleghenyCountyCOVID-19Information_15912788131180/Landingpage?iframeSizedToWindow=true&amp;%3Aembed=y&amp;%3AshowAppBanner=false&amp;%3Adisplay_count=no&amp;%3AshowVizHome=no&amp;%3Aorigin=viz_share_link">ACHD COVID-19 Dashboard</a></p>
+<p><a id="FloridaLineLevelLink">4.</a>  <a rel="noopener" target="_blank" href="https://experience.arcgis.com/experience/96dd742462124fa0b38ddedb9b25e429">Florida line-level COVID dataset</a></p>
+<p><a id="HHSLink">5.</a>  <a rel="noopener" target="_blank" href="https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u">HHS Protect Hospital Utilization Data</a></p>
+<div id="app"></div>
+<h2 id="appendix">Appendix</h2>
+<p>To generate the Offset Fractions (OF(k|traits)), which is the probability a patient with given traits will occupy a bed on k days after the specimen testing date, we follow <strong>Alg 1</strong>. For a given set of traits, the Offset Fractions for day k, where k is between -10 and 31, is the sum of the offset * distribution probabilities * hospitalization rate that sum up to day k. From these Offset Fractions, the mean/var of bed occupancy on a given day is given in <strong>Alg 2</strong>.</p>
+<pre style="background-color:#393939;color:#dedede;"><code><span>for o in (-10, 30): #This is the offset
+</span><span>    for d in (0, 40): #This is the duration of the stay
+</span><span>              for k in (o, o+d): 
+</span><span>                    if (k&lt;31): 
+</span><span>                          OF(k|traits) += Offset(o|traits) * Duration(d|traits) * Hospitalization(traits)
+</span></code></pre>
+<p><strong>Alg 1</strong>: Generate Occupancy Fractions for a given set of traits</p>
+<pre style="background-color:#393939;color:#dedede;"><code><span>for specimen_date and num_cases in case_inputs: 
+</span><span>     for t in (-10, 30):
+</span><span>          p = OF(t|traits)
+</span><span>          beds_mean(spec_date + t) += num_cases * p
+</span><span>          beds_var(spec_date + t) += num_cases*p*(1-p)
+</span></code></pre>
+<p><strong>Alg 2</strong>: Generate Mean and Variances</p>
+<p><strong>High-level Mathematical Formulation of the Model:</strong></p>
+<p>O<sub>r,l</sub>: The offset value for a given subset of the population r <span>∈</span> R where R := {race}x{gender}x{age group} for a given day l where -10 <span>≤</span> l <span>≤</span>  30. This <strong>pdf</strong> is derived from a piecewise function using segments of exponential distributions characterized by the offset parameters.</p>
+<p>D<sub>r,k</sub>: The duration value for a given subset of the population r <span>∈</span> R for a given day k where 0 <span>≤</span> k <span>≤</span>  40. This <strong>pdf</strong> is derived from a piecewise function using segments of exponential distributions characterized by the duration parameters.</p>
+<p>h<sub>r</sub>: The hospitalization rate for a given subset of the population r <span>∈</span> R where 0 <span>≤</span> h<sub>r</sub> <span>≤</span> 1</p>
+<p>c<sub>r,d</sub>: The number of cases for a given subset of the population r <span>∈</span> R on a particular specimen collection date d (ex: 5 cases with specimen collected on January 1st 2021).</p>
+<p>$$OF_{r, j} = \sum_{l=-10}^{30} \sum_{k=0}^{40} \mathbb{I} (  l \leq j \leq l+k ) O_{r, l} * D_{r, k}*h_r $$
+The offset fraction for a given subset of the population r <span>∈</span> R for a given delta j where -10 <span>≤</span> j <span>≤</span>  30.</p>
+<p>$$ \mathbb{E}[\beta_i] = \sum_{d \in D}\sum_{r \in R}\sum_{j = -10}^{30}  \mathbb{I} ( d+j = i)  OF_{r, j}*c_{r, d} $$
+The expected number of beds on date i, where i can start 10 days before the first case date and can end 30 days after the the last case date (c<sub>r,d</sub>)</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;csd.cmu.edu&#x2F;people&#x2F;graduate-student&#x2F;ananya-joshi" target=_blank>
+  Ananya Joshi
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Ryan Tibshirani,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Zico Kolter,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Pallavi Koppol
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/artificial-intelligence/">#Artificial Intelligence</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/covid-19/">#COVID-19</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/actionable-intelligence/">#Actionable Intelligence</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2022&#x2F;kangaroo&#x2F;">Kangaroo: Caching billions of tiny objects on flash ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

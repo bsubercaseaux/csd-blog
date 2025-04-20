@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Mimir: Finding cost-efficient storage configurations in the public cloud</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#challenges-navigating-diverse-resource-options-and-heterogeneity" class="toc-link">Challenges: navigating diverse resource options and heterogeneity</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#challenge-1-diverse-storage-options-characteristics" class="toc-link">Challenge 1: diverse storage options’ characteristics</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#challenge-2-heterogeneity-is-important-for-cost-efficiency" class="toc-link">Challenge 2: heterogeneity is important for cost-efficiency</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#mimir-resource-auto-selector-for-storage-cluster-in-public-clouds" class="toc-link">Mimir: resource auto-selector for storage cluster in public clouds</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#mimir-design-and-workflow" class="toc-link">Mimir design and workflow</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#optimization-algorithm-dynamic-programming" class="toc-link">Optimization algorithm: dynamic programming</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#mimir-can-find-up-to-81-cheaper-storage-cluster-over-sota" class="toc-link">Mimir can find up to 81% cheaper storage cluster over SOTA</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;mimir&#x2F;">Mimir: Finding cost-efficient storage configurations in the public cloud</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2023-12-15</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;hojinp.github.io&#x2F;" target=_blank>
+  Hojin Park
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>In today’s landscape of diverse public cloud providers like AWS, Microsoft Azure, and Google Cloud Platform, organizations are increasingly turning to cloud computing with pay-as-you-go pricing models. <a rel="noopener" target="_blank" href="https://www.cloudzero.com/blog/cloud-computing-statistics">Many businesses</a> are adopting public cloud services to simplify data center management or leverage the scalability and elasticity offered by these providers.</p>
+<p>A pressing question that accompanies this shift to public cloud adoption is how to optimize the overall cost of utilizing cloud resources. While researchers have recently delved into cost optimization for virtual machine (VM) instances used in computational workloads, there has been limited focus on optimizing storage choices. Frequently, companies require high-performance storage clusters to efficiently operate their workloads in public clouds. However, the costs associated with these storage clusters cannot be underestimated, given that VMs and block storage options can strain budgets.</p>
+<p><strong>Thus, companies need to carefully select resources for storage clusters to reduce their Total Cost of Ownership.</strong> If organizations opt for only inexpensive resources to minimize costs, their storage clusters may fail to meet performance requirements. Conversely, selecting solely high-performance Virtual Machines and storage types can lead to substantial spending compared to an optimized resource selection approach.</p>
+<p><strong>Nonetheless, choosing the cost-efficient set of resources for storage clusters in public clouds remains a challenging task and there is no existing system that helps this provisioning decision.</strong> The multitude of available VM and storage types adds complexity. For instance, AWS alone offers over a <a rel="noopener" target="_blank" href="https://www.amazonaws.cn/en/ec2/instance-types/">hundred different instance types</a> and various block storage options, including <a rel="noopener" target="_blank" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/storage-optimized-instances.html">locally attached (LocalSSD)</a> and <a rel="noopener" target="_blank" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html">remotely disaggregated (EBS)</a>. Each resource option comes with <a rel="noopener" target="_blank" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html">distinct pricing and performance models</a>, and the performance also varies based on workload characteristics. This necessitates a deep understanding of both cloud resource attributes and workload characteristics to make informed selections. If we factor in the potential use of heterogeneous storage cluster configurations, the problem’s search space becomes significantly larger and more intricate.</p>
+<p><strong>To address these challenges, we introduce Mimir, a resource auto-selection tool designed to identify the most cost-efficient set of resources for storage clusters in public clouds, all while meeting specified performance requirements.</strong> Our system assesses all available VM types, block storage options, and even combinations of these options (heterogeneous configurations) to determine the optimal solution. <strong>As a result, Mimir can yield storage cluster configurations up to 81% cheaper than those generated by the current state-of-the-art resource auto-selection tools.</strong> In our evaluations, we demonstrate that Mimir can also serve as a resource selector for mixed workloads (comprising multiple workloads with distinct characteristics) and dynamic workloads, efficiently identifying cost-effective cluster configurations within a reasonable time.</p>
+<h2 id="challenges-navigating-diverse-resource-options-and-heterogeneity"><strong>Challenges: navigating diverse resource options and heterogeneity</strong></h2>
+<h3 id="challenge-1-diverse-storage-options-characteristics"><strong>Challenge 1: diverse storage options’ characteristics</strong></h3>
+<p>Public cloud providers have established unique performance characteristics for their block storage options, setting them apart from traditional solutions like SSDs and HDDs. Workload attributes such as access pattern (random/sequential), read ratio, and I/O unit size can exert significant influence on the performance of cloud block storage. Overlooking these factors or assuming that cloud storage behaves analogously to traditional storage can result in erroneous storage cluster configurations. To illustrate this, we present two examples showcasing how workload characteristics impact storage performance.</p>
+<table><thead><tr><th style="text-align: center"><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/./storage-io.png" alt="alt text" /></th><th style="text-align: center"><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/./storage-rw.png" alt="alt text" /></th></tr></thead><tbody>
+<tr><td style="text-align: center">(a) by I/O unit size</td><td style="text-align: center">(b) by read ratio</td></tr>
+</tbody></table>
+<p><strong>Fig. 1:</strong> Performance characteristics of public cloud storage volume types by (a) I/O unit size and (b) workload read ratio. In (a), both volume types have throughput limits defined by AWS (horizontal lines).</p>
+<p>In our tests, we employed the <a rel="noopener" target="_blank" href="https://fio.readthedocs.io/en/latest/fio_doc.html">fio benchmark</a> to assess cloud block storage performance on AWS, using three different storage types: local NVMe SSD, remote SSD (gp2), and remote HDD (st1). We varied access patterns, read ratios, and I/O unit sizes. Fig. 1 provides insights into the characteristics of 1 TiB gp2 and 1 TiB st1 volumes, each having performance of 3000 IOPS and 40 MiB/s following the performance model provided by AWS, along with local SSD attached to i3.xlarge.</p>
+<p>Fig. 1(a) shows <em>how performance characteristics vary with I/O unit size and access pattern for each storage type</em>. For gp2 performance, which is defined in IOPS, increasing the I/O unit size results in higher throughput, eventually reaching the maximum limit set by AWS. Also, it remains consistent regardless of the access pattern. In contrast, st1’s performance, defined in MiB/s, should ideally maintain a throughput of 40 MB/s regardless of the I/O unit size. However, it exhibits reduced throughput for workloads featuring random access patterns and I/O units smaller than 1 MiB, different to the behavior observed with sequential accesses.</p>
+<p>In Fig. 1(b), we examine the <em>impact of read ratios on each volume type’s throughput</em>. EBS volumes remain unaffected by the read ratio, as it lies outside their performance models. Conversely, local SSD exhibits considerably higher throughput than EBS and is notably influenced by the read ratio.</p>
+<p>As highlighted above, in public clouds, storage performance characteristics differ from traditional storage. For instance, remote SSD throughput remains consistent regardless of read-to-write ratios, while performance of different storage options changes differently for I/O unit size changes. This can confuse users configuring cloud storage clusters, as they may erroneously assume that cloud storage exhibit conventional storage behavior. However, by accurately considering these pricing and performance models, <strong>Mimir can mathematically deduce performance specifications from allocated resources, aiding in cost-efficient cloud storage configurations that meet performance needs</strong>.</p>
+<p>It is worth to note that local SSD’s highest throughput in Fig. 1 does not always make it the best choice. Throughput of each storage option varies with its configuration; larger gp2 and st1 volumes can outperform local SSD. st1 and gp2 come with lower per-byte costs, making them cost-efficient alternatives when high throughput is not crucial.</p>
+<h3 id="challenge-2-heterogeneity-is-important-for-cost-efficiency"><strong>Challenge 2: heterogeneity is important for cost-efficiency</strong></h3>
+<p>One easy way of selecting resources for a storage cluster in the public cloud is configuring a homogeneous storage cluster by using a single storage option.
+However, we found that there is no single storage option that is the most cost-efficient for every workload, and sometimes, even a mix of storage options is needed to minimize the cost.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/./motiv.png" alt="alt text" /></p>
+<p><strong>Fig. 2:</strong> No volume type is most cost-efficient for every workload, and a mix of volume types may be the most cost-effective option.</p>
+<p>Fig. 2 demonstrates the need to consider various volume types and configurations for selecting a cost-efficient Virtual Storage Cluster (VSC) configuration. For each of the three workloads, it shows the cost for the best VSC configuration under three constraints: using only local SSD volume types, only remote storage (EBS) volume types, and arbitrary mixes of both.</p>
+<p>For Workload 1, which demands high storage throughput per GB of data, opting for EBS volume types leads to over-provisioning capacity, making it an expensive choice due to the 3 IOPS per provisioned-GB limit. Conversely, Workload 2, with lower storage throughput requirements, renders local SSD an expensive option due to over-provisioning storage performance. Workload 3 combines varying performance needs, necessitating a mix of storage options to minimize costs.</p>
+<p><strong>Therefore, it is crucial to consider a heterogeneous VSC configuration for the cost-efficiency.</strong> However, this introduces complexity, making it impractical to explore the search space using naive methods. So users can use Mimir as a solution to efficiently navigate this complex search space by using dynamic programming and integer-linear programming.</p>
+<h2 id="mimir-resource-auto-selector-for-storage-cluster-in-public-clouds"><strong>Mimir: resource auto-selector for storage cluster in public clouds</strong></h2>
+<p>To tackle these challenges, we introduce Mimir, a resource auto-selector that identifies the cost-efficient set of VMs and storage volumes for a storage cluster. Mimir takes into account workload characteristics (such as read/write request ratio and data access locality) and user-defined requirements (including request rate and capacity). Next, we will provide an overview of Mimir’s workflow and delve into our main optimization algorithm.</p>
+<h3 id="mimir-design-and-workflow"><strong>Mimir design and workflow</strong></h3>
+<p>Fig. 3 outlines Mimir’s workflow, which begins by inputting characteristics from multiple workloads requiring cluster storage. Each storage cluster’s workload profiler profiles these attributes, and the Resource Profiler assesses them to determine resource needs for cost-effective cloud operations. This involves resource utilization profiling using micro-benchmarks, considering given data access patterns like request rate, access locality, and read/write ratios. The Resource Predictor uses this resource profiling data to identify efficient container sizes (i.e., storage/network bandwidth, CPU count, memory) for each workload, as Mimir utilizes containers to run multiple storage servers in the same VM with resource isolation. Finally, the VSC Cost Optimizer combines these insights with the public cloud’s cost model to optimize the Virtual Storage Cluster (VSC) configuration for the distributed storage system.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/./mimir_design.png" alt="alt text" />
+<strong>Fig. 3:</strong> Mimir’s workflow for optimizing the price of public cloud resources. Initially, Mimir profiles the provided workloads, learning the precise resource requirements (such as CPU and memory). Using this trained module and a cost model encompassing public cloud resources, the VSC Cost Optimizer then identifies the most cost-efficient Virtual Storage Cluster (VSC) configuration.</p>
+<p>Mimir assumes that users provide or profile the workload characteristics, which the system uses as input for its optimization process. This modular approach makes Mimir adaptable to any storage system capable of profiling sufficient workload information. Next, we provide a brief overview of the optimization algorithm used by Mimir to minimize costs for the given workload characteristics. Further details regarding other components, such as the Resource Profiler and Resource Predictor, can be found in <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/abs/10.1145/3579370.3594776">our paper</a>.</p>
+<h3 id="optimization-algorithm-dynamic-programming"><strong>Optimization algorithm: dynamic programming</strong></h3>
+<p>The VSC Cost Optimizer addresses the following question: <em>What resource configuration minimizes costs while meeting performance requirements and accommodating storage workload characteristics?</em></p>
+<p>In this optimization problem, we identified an optimal substructure property. This means that if Mimir determines the most cost-efficient virtual storage cluster configuration for the given workloads, then any subset of storage servers from the entire cluster (a sub-cluster) must also represent the cost-efficient configuration for the workloads running on that specific sub-cluster.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/./dynamic_programming.png" alt="alt text" />
+<strong>Fig. 4:</strong> Mimir’s optimization problem has an optimal substructure property. If we find the most cost-efficient configuration for the entire virtual storage cluster, then any sub-cluster of that configuration must also be cost-efficient for the portion of data stored within that sub-cluster.</p>
+<p>Figure 4 exemplifies the optimal substructure property. Suppose Machines 1-4 represent the most cost-efficient VSC configuration for a given workload. We contend that any sub-cluster should also be the most cost-efficient for the portion of the workload it handles. To prove this, we use a proof by contradiction. Let’s assume that Machines 1 and 2 are not the most cost-efficient sub-cluster configuration for 3/10 of the workload. This would imply the existence of another sub-cluster (in this case, Machine 5) that’s cheaper than Machines 1 and 2. However, this contradicts the fact that Machines 1-4 (total VSC cost: $28) constitute the most cost-efficient VSC configuration for the entire workload, given that a cheaper configuration involving Machines 3-5 (total VSC cost: $26) exists.</p>
+<p>Based on the optimal substructure property, we use dynamic programming to break down a large search space into manageable segments. For a more in-depth understanding of our approach, including how we use mixed-integer programming for the base case and how Mimir integrates other components (e.g., resource profiler, resource predictor, and cost model) into its optimization algorithm, please refer to our paper.</p>
+<h2 id="mimir-can-find-up-to-81-cheaper-storage-cluster-over-sota"><strong>Mimir can find up to 81% cheaper storage cluster over SOTA</strong></h2>
+<p>We evaluated Mimir using Apache BookKeeper as the distributed storage backend and six different <a rel="noopener" target="_blank" href="https://www.usenix.org/conference/fast20/presentation/cao-zhichao">Meta’s RocksDB (MR) key-value workloads</a>.
+The results of our evaluation demonstrate significant cost savings achieved by Mimir compared to state-of-the-art solutions, showing its ability to consider a wide range of volume types. We compared Mimir to three baseline configurations, each focusing on a limited subset of instance or storage types, in contrast to Mimir’s comprehensive consideration of all instance and block storage types:</p>
+<ol>
+<li><strong>i3.xlarge-only:</strong> The simplest way to configure a VSC is using a single instance type (storage-optimized instance, i3.xlarge) and determining the number of instances based on the storage server performance.</li>
+<li><strong>Mimir-LocalOnly:</strong> Another way is to use only instance types that have local SSDs, including some compute or memory optimized instance types like m5d, c5d, and r5d.</li>
+<li><strong>Mimir-EBSonly/OptimusCloud-like:</strong> Yet another way of configuring VSC is using only EBS volumes that can persist data independently from the instance status, but if the workload requires high-performance, it can be more expensive
+than local SSD. <a rel="noopener" target="_blank" href="https://www.usenix.org/conference/atc20/presentation/mahgoub">OptimusCloud</a>, the previous work we consider as the state-of-the-art, restricts the volume type to EBS volumes because of their persistent nature, but our results show that this approach is often much more costly.</li>
+</ol>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/./evaluation.png" alt="alt text" />
+<strong>Fig. 5:</strong> The cost-efficiency analysis of the optimization results of the workloads of Meta’s RocksDB key-value workloads. Throughput-intensive workloads (MR-A,C,E,F) prefer local SSD as its storage type. In contrast, other
+workloads (MR-B,D) that do not require high throughput prefer EBS volume to local SSD.</p>
+<p>Fig. 5 shows the VSC costs of the most cost-efficient VSC configurations under different resource constraints. Overall, Mimir successfully identifies the most cost-efficient VSC configuration for any workload in Fig. 5, and achieves up to 81% cost savings compared to the <em>OptimusCloud-like</em> baseline. We also demonstrate that depending on the workload characteristics, different workloads prefer different storage types to store data cost-efficiently.</p>
+<p>For instance, MR-D, a capacity-intensive workload, does not require high performance. Thus, local SSD proves costly as it under-utilizes its storage bandwidth, and gp2’s throughput (3 IOPS per provisioned GiB) suffices for MR-D.</p>
+<p>Conversely, MR-F, with the second highest throughput needs among the six workloads, benefits from local SSD, making Mimir-LocalOnly more cost-efficient than Mimir-EBSonly. Interestingly, for MR-F, compute-optimized instance types like c5d are more economical than storage-optimized i3.xlarge. This is because MR-F demands high computing power for its high data request rate. This evaluation implies that not only considering various storage options, but also selecting the right instance type is important.</p>
+<p>Our paper also covers additional evaluations, including the optimization overhead and Mimir’s effectiveness for dynamic workloads. For comprehensive details, please refer to our research paper.</p>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>Mimir finds the cost-efficient virtual storage cluster configurations for distributed storage backends.
+By using provided workload information and performance requirements, Mimir predicts resource requirements and explores the complex, heterogeneous set of block storage offerings to identify the lowest cost VSC configuration that satisfies the customer’s need.
+Experiments show that no single allocation type is best for all workloads and that a mix of allocation types is the best choice for some workloads.
+Compared to a state-of-the-art approach, Mimir finds the VSC configurations that satisfy requirements at up to 81% lower cost for Meta’s RocksDB workloads.</p>
+<p>You can find more detailed information in our <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/abs/10.1145/3579370.3594776">published paper</a>.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;hojinp.github.io&#x2F;" target=_blank>
+  Hojin Park
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~dskarlat" target=_blank>
+  Dimitrios Skarlatos,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~zhihaoj2" target=_blank>
+  Zhihao Jia,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;saramcallister.github.io&#x2F;" target=_blank>
+  Sara McAllister 
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/">#Systems</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/cloud-resource-provisioning/">#cloud resource provisioning</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/storage-systems/">#storage systems</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/public-cloud/">#public cloud</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;ktn&#x2F;">‹ Transfer Learning within a Heterogeneous Graph</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;baleen-ml-flash-caching&#x2F;">Baleen: ML admission &amp; prefetching for flash caches ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

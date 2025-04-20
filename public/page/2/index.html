@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+
+      <title>CMU CSD PhD Blog</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+                        <div class="posts">
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;modeling-bbr&#x2F;">Modeling BBRv1&#x27;s Interactions with Loss-Bassed Congestion Control</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-08-26</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~rware&#x2F;" target=_blank>
+  Ranysha Ware
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        
+In 2006, Senator Ted Stevens infamously described the Internet as a “series of tubes’‘, where “filled tubes’’ delayed his email. While Senator Stevens was ridiculed at the time for his simplistic understanding of the Internet, his characterization was not entirely wrong:
+
+“It’s …
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;modeling-bbr&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;mini-code-props&#x2F;">miniCodeProps: a Benchmark for Proving Code Properties</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-08-23</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.evanlohn.com" target=_blank>
+  Evan Lohn
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        It is nearly inevitable that bugs will appear in a codebase during software development. To catch these bugs before they lead to real-world consequences,
+the formal verification community has developed a wide variety of tools for ensuring code correctness. These tools fall
+into t…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;mini-code-props&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;mariposa&#x2F;">Mariposa: the Butterfly Effect in SMT-based Program Verification</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-08-06</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;yizhou7.github.io&#x2F;" target=_blank>
+  Yi Zhou
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        Satisfiability Modulo Theories (SMT) solvers are powerful tools
+that answer logical and mathematical questions.
+As an example, let’s say I want to know whether there exists integers
+\(a, b, c\) such that \(3a^{2} -2ab -b^2c = 7\).
+To ask an SMT solver, I need to write an SMT quer…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;mariposa&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;oblivious-maps&#x2F;">Oblivious Maps for Trusted Execution Environments</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-08-05</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~atinoco" target=_blank>
+  Afonso Tinoco
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        \[
+\gdef\lf{\left \lfloor}
+\gdef\rf{\right \rfloor}
+\]
+Imagine using a popular messaging app that includes a contact discovery feature to find which of your phone contacts are already using the service and to get information on how to communicate with them. While convenient, this…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;oblivious-maps&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;anonymous-blocklisting&#x2F;">Efficient Anonymous Blocklisting</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-07-31</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;orestischar.com&#x2F;" target=_blank>
+  Orestis Chardouvelis
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        
+
+Truly Anonymous Service Providers can offer users confirmed privacy, but also allow inappropriate behavior 😳
+Anonymous Blocklisting permits blocking ill-behaved users without denanonymizing them. Specifically, the service provider blocks individual posts, and the benign users u…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;anonymous-blocklisting&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;max-extractable-value&#x2F;">Maximal Extractable Value in Ethereum</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-06-27</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;junxi-song-218721153&#x2F;" target=_blank>
+  Junxi Song
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        In 2008, a groundbreaking development in the world of finance occurred: the birth of Bitcoin, the first decentralized digital currency. This innovation, introduced by blockchain technology, enables value transfer between parties without the need for traditional intermediaries lik…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;max-extractable-value&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;network-usable-information&#x2F;">Measuring and Exploiting Network Usable Information</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-06-21</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;mengchillee.github.io&#x2F;" target=_blank>
+  Meng-Chieh Lee
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        In large cloud service providers such as AWS, the customer provides an attributed graph and would like to perform tasks such as recommendations (i.e., link prediction in a graph) using message-passing methods within restricted budgets.
+An attributed graph consists of both the gra…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;network-usable-information&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;piano-private-information-retrieval&#x2F;">Piano: Extremely Simple, Single-Server Private Information Retrieval</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-05-16</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~mingxunz" target=_blank>
+  Mingxun Zhou
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        Information retrieval is a pervasive aspect of our digital life, yet the process of retrieval consistently compromises the privacy of the users (i.e., the information requesters). For example, when you access a website, you need to first retrieve the website’s IP address from a D…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;piano-private-information-retrieval&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;precise-traffic-engineering&#x2F;">Precise Data Center Traffic Engineering with Constrained Hardware Resources</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-05-10</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~shuoshuc" target=_blank>
+  Shawn Chen
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        Data center networks are similar to large cities:
+they are at massive scale, and there exist many available roads/paths between a pair of source and destination.
+To move data from one place to another, we transfer data in chunks of bytes known as packets (roughly analogous to veh…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;precise-traffic-engineering&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                                <article class="post">
+                                    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;understanding-setup&#x2F;">Understanding Setup Times</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-05-08</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;jalaniw.github.io&#x2F;" target=_blank>
+  Jalani Williams
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+                                    <div class="post__summary">
+                                        
+                                        
+
+Nobody likes waiting in line.
+But some of the most frustrating experiences that I’ve ever had waiting are when I get in a super long line, I peek around to the front of the line, and I see that the server isn’t even ready to serve –they’re still setting up!
+It’s terrible, and i…
+                                    </div>
+                                    <div class="read-more">
+                                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;understanding-setup&#x2F;">Read more...</a>
+                                    </div>
+                                </article>
+                            
+                        </div>
+                        <nav class="pagination">
+                            
+                                <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">‹ Previous</a>
+                            
+                            
+                                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;page&#x2F;3&#x2F;">Next ›</a>
+                            
+                        </nav>
+                    
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

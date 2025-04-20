@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Boot: accelerating training data generation for self-driving database management systems</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#tl-dr" class="toc-link">TL;DR</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#introduction" class="toc-link">Introduction</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#insight" class="toc-link">Insight</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#decoupling" class="toc-link">Decoupling</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#query-repetition" class="toc-link">Query Repetition</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#operator-repetition" class="toc-link">Operator Repetition</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#aside-the-need-for-models" class="toc-link">Aside: The Need for Models</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#solution" class="toc-link">Solution</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#architecture" class="toc-link">Architecture</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#macro-accelerator" class="toc-link">Macro-Accelerator</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#micro-accelerator" class="toc-link">Micro-Accelerator</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#results" class="toc-link">Results</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#collection-time" class="toc-link">Collection Time</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#absolute-error" class="toc-link">Absolute Error</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;boot&#x2F;">Boot: accelerating training data generation for self-driving database management systems</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-04-24</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~wanshenl&#x2F;" target=_blank>
+  Wan Shen Lim
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <h1 id="tl-dr">TL;DR</h1>
+<p>Background:</p>
+<ol>
+<li>Optimizing a database management system (DBMS) is difficult; the best configuration
+depends on time-varying factors like its environment and workload.</li>
+<li>Researchers have developed machine learning (ML) models that outperform humans at these tasks.</li>
+<li>However, the cost (e.g., training time, dollars) of obtaining these models makes them
+impractical for establishing an end-to-end database tuning loop.</li>
+<li>To build these ML models, the DBMS must gather training data by collecting telemetry as it
+executes a workload.</li>
+<li>ML techniques and model training keep getting faster and better. Workload execution has not
+changed much, in comparison.
+<ul>
+<li>Historically, it takes weeks to collect data and weeks to train models – both processes are
+slow, we just have to accept that models are hard to get.</li>
+<li>Today, weeks to collect data and minutes to train models – workload execution is the main
+bottleneck now!</li>
+</ul>
+</li>
+</ol>
+<p>Big idea:</p>
+<ol>
+<li>Training data collection is slow because the DBMS couples it to workload execution.</li>
+<li>However, training data collection <strong>does not care about query results</strong>; it fundamentally
+differs from workload execution.</li>
+<li>Take shortcuts during workload execution for faster training data generation!
+<ul>
+<li>Workloads are repetitive - avoid executing similar queries twice.</li>
+<li>Operators are repetitive - execute less of an operator if there is enough data.</li>
+</ul>
+</li>
+<li>Obtain up to 225x speedups by eliminating repetition at the:
+<ul>
+<li>Inter-query level (macro-acceleration)</li>
+<li>Intra-query level (micro-acceleration)</li>
+<li>At a modest cost to model accuracy, but tuning algorithms are surprisingly robust.</li>
+</ul>
+</li>
+</ol>
+<h1 id="introduction">Introduction</h1>
+<blockquote>
+<p>Database management systems are hard to configure by hand.<br />
+Machine learning models perform better.</p>
+</blockquote>
+<p></p>
+<p>Database management systems (DBMSs) are challenging to optimize correctly because their ideal
+configuration depends on their workload, database contents, hardware, and run-time environment,
+which all fluctuate over time.
+To address this difficulty, researchers have designed methods for automated DBMS configuration, in
+<a rel="noopener" target="_blank" href="https://ottertune.com/blog/history-ottertune-research-part1">one case</a> obtaining 20% more
+performance than the most skilled human.</p>
+<p>The unifying goal of such research is to develop a
+<a rel="noopener" target="_blank" href="https://db.cs.cmu.edu/papers/2017/p42-pavlo-cidr17.pdf"><em>self-driving</em> DBMS</a>
+that configures, tunes, and optimizes itself automatically.
+Given a target objective function (e.g., latency, throughput, cost), a self-driving DBMS aims to
+find the best configuration for its objective autonomously.
+It <a rel="noopener" target="_blank" href="https://db.cs.cmu.edu/papers/2021/p3211-pavlo.pdf">achieves this</a>
+by relying on machine learning (ML) models that predict its run-time behavior under
+different configurations.
+Such models allow the DBMS to evaluate whether a candidate configuration is beneficial without
+executing the queries in its workload, which would be too expensive.
+For example, the DBMS may need hours to complete a computationally intensive SQL query.
+If the DBMS only needs the query’s run-time, it can achieve significant time savings by using a ML
+model to predict the query’s latency instead of running it.</p>
+<p>To build its ML models, the DBMS collects
+<a rel="noopener" target="_blank" href="https://db.cs.cmu.edu/papers/2022/moddm074-butrovich.pdf"><em>training data</em></a>
+comprised of database metadata (e.g., optimizer statistics) and run-time telemetry
+(e.g., the latency of an operator in its query plan).
+It generates this data by observing itself as it executes a
+<a rel="noopener" target="_blank" href="https://db.cs.cmu.edu/papers/2018/mod435-maA.pdf">representative workload</a>,
+such as an application trace of SQL queries.
+It then constructs its models by applying ML
+<a rel="noopener" target="_blank" href="https://db.cs.cmu.edu/papers/2021/ma-sigmod2021.pdf">techniques</a>.</p>
+<blockquote>
+<p>Obtaining training data for ML models is expensive.<br />
+Especially when training data collection is not a one-time cost.</p>
+</blockquote>
+<p></p>
+<p>However, the high cost of obtaining these models makes them impractical for real-world deployments.
+In the past, the primary contributors to this cost were training data collection and model
+building (<em>collection time</em> and <em>training time</em>, respectively).
+But although ML techniques continue to improve and model construction becomes faster, training data
+collection speeds have largely remained the same.
+Today, the ratio of collection time to training time is over 99% (e.g., weeks to collect data,
+minutes to train models).<br />
+<strong>Problem 1: Training data is expensive to collect!</strong></p>
+<p>Furthermore, unlike other ML domains that dismiss training data collection as a one-time cost
+(e.g., LLM researchers share model weights because their training data does not change as much),
+an autonomous DBMS needs training data
+<a rel="noopener" target="_blank" href="https://db.cs.cmu.edu/papers/2023/p27-lim.pdf">specific to its workload and configuration</a>.
+Reusing models from other deployments is challenging because the database’s contents, hardware,
+and system configuration influence its training data labels.
+For example, the speed at which the DBMS’s sequential scan operator reads tuples from disk depends
+on its hardware and configured buffer pool size.
+Additionally, even if the DBMS already has models, they are often invalidated because of workload
+drift, schema changes, dataset growth, and more.<br />
+<strong>Problem 2: Training data is difficult to reuse!</strong></p>
+<p>Consequently, an autonomous DBMS must regularly collect training data from scratch to maintain
+its ML models.
+Due to the high cost and frequency of training data generation, it often spends more time
+collecting training data than improving its configuration.</p>
+<h1 id="insight">Insight</h1>
+<h2 id="decoupling">Decoupling</h2>
+<blockquote>
+<p>Training data generation is slow because it is coupled to regular query execution.<br />
+This coupling is unnecessary, so we can obtain the same amount of training data much faster.</p>
+</blockquote>
+<p></p>
+<p>Training data generation is slow because it builds off the DBMS’s regular query execution.
+To execute a SQL query, the DBMS uses its internal statistics to search for a <em>query plan</em> that
+efficiently computes the query’s answer.
+A query plan is a tree composed of the DBMS’s <em>operators</em> (e.g., sequential scans read a table
+from disk, hash joins combine the output of their children).
+The DBMS executes the query plan by sending all <em>tuples</em> (i.e., rows of data) from the children
+nodes to their parent nodes, which computes the query’s result.</p>
+<p>But training data generation differs from regular query execution because it concerns telemetry
+(e.g., timing information), not results (i.e., the tuples returned from a SQL query).
+A DBMS <strong>does not need accurate query results</strong> during this process.
+Therefore, it can accelerate its training data production if it can infer a workload’s telemetry
+without executing the workload to completion.
+This inference is possible because a DBMS’s workload is repetitive at the query and operator level.</p>
+<h2 id="query-repetition">Query Repetition</h2>
+<blockquote>
+<p>For most workloads, the DBMS executes the same query template repeatedly.<br />
+Many of those executions are redundant for training data generation.</p>
+</blockquote>
+<p></p>
+<p>Most accesses to a DBMS are <a rel="noopener" target="_blank" href="https://db.cs.cmu.edu/papers/2018/mod435-maA.pdf">programmatic</a>.
+Software (e.g., dashboards, reporting tools, web applications) generates most SQL queries
+from similar <em>query templates</em>, differing only in their input parameters.
+A query template is a normalized SQL string with its constants removed. For example,</p>
+<p>    Query: <em>SELECT name FROM pets WHERE kind = ‘dog’ and name = ‘terrier’</em><br />
+    Template: <em>SELECT name FROM pets WHERE kind = ‘$1’ and name = ‘$2’</em></p>
+<p>Given the same template, a DBMS often generates an identical query plan; some DBMSs even cache
+query plans by their corresponding template.
+That is, they reuse the same query plan for different instantiations of a query template, leading
+to repetition in query execution.</p>
+<table><thead><tr><th style="text-align: center">Workload</th><th style="text-align: center"># Queries</th><th style="text-align: center"># Templates</th><th style="text-align: center">Repetition</th></tr></thead><tbody>
+<tr><td style="text-align: center">Admissions</td><td style="text-align: center">2564M</td><td style="text-align: center">4060</td><td style="text-align: center">627k X</td></tr>
+<tr><td style="text-align: center">BusTracker</td><td style="text-align: center">1223M</td><td style="text-align: center">334</td><td style="text-align: center">3.66M X</td></tr>
+<tr><td style="text-align: center">MOOC</td><td style="text-align: center">95M</td><td style="text-align: center">885</td><td style="text-align: center">107k X</td></tr>
+<tr><td style="text-align: center">TPC-H</td><td style="text-align: center">20000</td><td style="text-align: center">22</td><td style="text-align: center">909 X</td></tr>
+<tr><td style="text-align: center">DSB</td><td style="text-align: center">11440</td><td style="text-align: center">52</td><td style="text-align: center">220 X</td></tr>
+<tr><td style="text-align: center">Stack</td><td style="text-align: center">5000</td><td style="text-align: center">25</td><td style="text-align: center">200 X</td></tr>
+</tbody></table>
+<p style="text-align: left;">
+<b>Table 1, Query Repetition:</b>
+<em>
+The number of queries and query templates in the workloads used in recent ML approaches for
+database tuning.
+</em></p>
+<p>We observe that both real-world application traces and synthetic benchmarks exhibit high
+repetition – the DBMS executes a small number of query templates hundreds, thousands, or even
+millions of times.
+This repetition is necessary during regular query execution because the DBMS must return
+accurate results.
+However, during training data generation, eliminating this repetition is an opportunity to achieve
+significant speedups.</p>
+<p>What is needed is a way to determine <em>when</em> and <em>why</em> the DBMS should execute a query again so that
+it can execute fewer queries during training data generation.
+For the purpose of obtaining training data for its ML models,
+it should skip all queries that do not contribute valuable training data
+(i.e., exhibit new behavior).
+The DBMS should only re-execute a query if it produces substantially different telemetry (e.g.,
+run-time) from its past parameterizations.</p>
+<h2 id="operator-repetition">Operator Repetition</h2>
+<blockquote>
+<p>Across all queries, the DBMS only uses a small number of operators.<br />
+If a query is slow, skip the expensive operators – they already appear elsewhere.</p>
+</blockquote>
+<p></p>
+<p>For every unskipped query that the DBMS must execute, there remain opportunities to identify
+and eliminate redundancies in its query plan.
+Recall that a query plan is composed of a DBMS’s operators.
+However, because a typical DBMS has only a few dozen to a hundred operators, the repetition in
+observing a particular operator’s behavior is even more frequent than that of entire queries in
+Table 1.
+Eliminating this repetition is especially important when the DBMS is exploring new configurations
+that turn out to be bad, causing queries to take a long time to complete.
+For example, a query that runs slowly because of missing indexes will remain slow for the rest of
+its execution.
+Yet the importance of that particular query to the training data corpus
+is minimal because it spends most of its time performing disk reads in its highly predictable
+sequential scan operators.
+Hence, it is essential to reduce the time the DBMS spends executing operators after they
+have become predictable.</p>
+<p>The reason this is possible is that operators are independent of each other; a DBMS operator’s
+behavior depends only on its input tuple(s).
+Existing research relies on this independence to build ML models for the DBMS.
+Our key insight is that integrating such modeling assumptions earlier into the training data
+generation process enables early termination in query execution.</p>
+<h2 id="aside-the-need-for-models">Aside: The Need for Models</h2>
+<p>Exploiting repetition allows us to obtain cheap training data for the DBMS’s models,
+but such techniques may not be suitable for replacing the models themselves
+(e.g., directly running accelerated queries during database tuning).</p>
+<p>We aim to build <em>bootstrap</em> models, which are fast and cheap but not necessarily as precise.
+These models allow the DBMS to begin its tuning loop.
+However, as that happens, the DBMS can spend more compute to build more complex models (e.g.,
+<a rel="noopener" target="_blank" href="https://arxiv.org/abs/2403.02286">hierarchical models</a>) on the same training data.
+The higher precision of these complex models can improve the quality of its tuning recommendations.</p>
+<p>Additionally, most models only require query plans as an input.
+They do not require the DBMS to be running on the same machine.
+This allows the DBMS to deploy and parallelize its tuning algorithms across different machines
+(e.g., with GPUs for faster inference) without paying the high cost of provisioning separate copies
+of the DBMS’s hardware and data.</p>
+<p>Because keeping modeling as a separate step in the tuning pipeline confers various benefits,
+we limit our scope to collecting training training data faster.</p>
+<h1 id="solution">Solution</h1>
+<p>To summarize the discussion above:</p>
+<ul>
+<li>The DBMS generates training data by executing queries.</li>
+<li>Executing queries is a bottleneck for ML-based DBMS automation.</li>
+<li>Because training data does not need to compute exact query results, the DBMS can skip or
+accelerate query execution by exploiting repetition to synthesize training data.</li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<p>Given this, we present the Boot framework to accelerate training data generation.
+Boot is transparent to the DBMS’s upstream ML components and leverages workload repetition in two
+ways to expedite training data collection while minimizing its impact on the accuracy of the ML
+models.
+First, Boot reduces the number of queries the DBMS executes by recognizing redundant queries
+based on their high-level semantics, avoiding re-execution through reusing previously computed
+training data (<em>macro-acceleration</em>).
+Next, for the queries that the DBMS does execute, Boot modifies their run-time execution behavior
+by injecting special operators into their query plans.
+These operators (1) dynamically identify redundant computations and then (2) intelligently
+short-circuit parts of the plan to expedite their completion (<em>micro-acceleration</em>).</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/architecture.png" alt="Figure 1: Architecture." /></p>
+<p style="text-align: left;">
+<b>Figure 1, Architecture:</b>
+<em>
+An overview of Boot's internal modules and execution flow.
+The Macro-Accelerator (MA) decides whether to execute a query, and the
+Micro-Accelerator (µA) accelerates the execution of a specific query.
+</em></p>
+<style>
+.step {
+    border-radius: 50%;
+    width: 1.5em;
+    height: 1.5em;
+
+    background: #fff;
+    border: 2px solid #000000;
+    color: #FFFFFF !important;
+    background-color: #C41230;
+
+    pointer-events: none;
+
+    display: inline-block;
+    text-align: center;
+}
+</style>
+<p>As Fig 1 shows, Boot integrates into a DBMS using two modules:</p>
+<ol>
+<li>The <strong>Macro-Accelerator</strong> (MA) sits between the DBMS’s network handler and planner,</li>
+<li>The <strong>Micro-Accelerator</strong> (µA) embeds itself in the DBMS’s execution engine.</li>
+</ol>
+<p>Boot’s design does not modify the DBMS’s interface for training data generation.
+Clients still connect to a Boot-enhanced DBMS over standard APIs (e.g., JDBC, ODBC) to execute
+their workloads and collect training data.
+This compatibility allows Boot to drop into existing modeling pipelines without any code change;
+the only effect is that the DBMS produces training data faster.
+However, because Boot alters the DBMS’s regular query execution semantics, it is
+<a rel="noopener" target="_blank" href="https://www.cidrdb.org/cidr2023/papers/p27-lim.pdf">fundamentally unsuitable</a>
+for production environments.
+Therefore, we deploy Boot on an offline clone of the production DBMS to avoid application errors.</p>
+<pre data-lang="SQL" style="background-color:#393939;color:#dedede;" class="language-SQL "><code class="language-SQL" data-lang="SQL"><span style="font-weight:bold;color:#b7b7b7;">SELECT</span><span style="font-weight:bold;color:#95bff3;"> nation, o_year, </span><span style="font-weight:bold;color:#fffd87;">SUM</span><span style="font-weight:bold;color:#95bff3;">(amount) </span><span style="font-weight:bold;color:#ececec;">as</span><span style="font-weight:bold;color:#95bff3;"> sum_profit
+</span><span style="font-weight:bold;color:#95bff3;">  </span><span style="font-weight:bold;color:#b7b7b7;">FROM</span><span style="font-weight:bold;color:#95bff3;"> (
+</span><span style="font-weight:bold;color:#95bff3;">  </span><span style="font-weight:bold;color:#b7b7b7;">SELECT</span><span style="font-weight:bold;color:#95bff3;"> n_name </span><span style="font-weight:bold;color:#ececec;">as</span><span style="font-weight:bold;color:#95bff3;"> nation, EXTRACT(YEAR </span><span style="font-weight:bold;color:#b7b7b7;">FROM</span><span style="font-weight:bold;color:#95bff3;"> o_orderdate) </span><span style="font-weight:bold;color:#ececec;">AS</span><span style="font-weight:bold;color:#95bff3;"> o_year,
+</span><span style="font-weight:bold;color:#95bff3;">         l_extendedprice*(</span><span style="font-weight:bold;color:#87d6d5;">1</span><span style="font-weight:bold;color:#ececec;">-</span><span style="font-weight:bold;color:#95bff3;">l_discount)</span><span style="font-weight:bold;color:#ececec;">-</span><span style="font-weight:bold;color:#95bff3;">ps_supplycost*l_quantity </span><span style="font-weight:bold;color:#ececec;">AS</span><span style="font-weight:bold;color:#95bff3;"> amount
+</span><span style="font-weight:bold;color:#95bff3;">    </span><span style="font-weight:bold;color:#b7b7b7;">FROM</span><span style="font-weight:bold;color:#95bff3;"> part, supplier, lineitem, partsupp, orders, nation
+</span><span style="font-weight:bold;color:#95bff3;">   </span><span style="font-weight:bold;color:#b7b7b7;">WHERE</span><span style="font-weight:bold;color:#95bff3;"> s_suppkey </span><span style="font-weight:bold;color:#ececec;">=</span><span style="font-weight:bold;color:#95bff3;"> l_suppkey </span><span style="font-weight:bold;color:#ececec;">AND</span><span style="font-weight:bold;color:#95bff3;"> ps_suppkey </span><span style="font-weight:bold;color:#ececec;">=</span><span style="font-weight:bold;color:#95bff3;"> l_suppkey
+</span><span style="font-weight:bold;color:#95bff3;">     </span><span style="font-weight:bold;color:#ececec;">AND</span><span style="font-weight:bold;color:#95bff3;"> ps_partkey </span><span style="font-weight:bold;color:#ececec;">=</span><span style="font-weight:bold;color:#95bff3;"> l_partkey </span><span style="font-weight:bold;color:#ececec;">AND</span><span style="font-weight:bold;color:#95bff3;"> p_partkey </span><span style="font-weight:bold;color:#ececec;">=</span><span style="font-weight:bold;color:#95bff3;"> l_partkey
+</span><span style="font-weight:bold;color:#95bff3;">     </span><span style="font-weight:bold;color:#ececec;">AND</span><span style="font-weight:bold;color:#95bff3;"> o_orderkey </span><span style="font-weight:bold;color:#ececec;">=</span><span style="font-weight:bold;color:#95bff3;"> l_orderkey </span><span style="font-weight:bold;color:#ececec;">AND</span><span style="font-weight:bold;color:#95bff3;"> s_nationkey </span><span style="font-weight:bold;color:#ececec;">=</span><span style="font-weight:bold;color:#95bff3;"> n_nationkey
+</span><span style="font-weight:bold;color:#95bff3;">     </span><span style="font-weight:bold;color:#ececec;">AND</span><span style="font-weight:bold;color:#95bff3;"> p_name </span><span style="font-weight:bold;color:#ececec;">LIKE </span><span style="font-weight:bold;color:#d6d6d680;">&#39;</span><span style="font-weight:bold;color:#d68686;">%[COLOR]%</span><span style="font-weight:bold;color:#d6d6d680;">&#39;
+</span><span style="font-weight:bold;color:#95bff3;">) </span><span style="font-weight:bold;color:#ececec;">AS</span><span style="font-weight:bold;color:#95bff3;"> profit </span><span style="font-weight:bold;color:#b7b7b7;">GROUP BY</span><span style="font-weight:bold;color:#95bff3;"> nation,o_year </span><span style="font-weight:bold;color:#b7b7b7;">ORDER BY</span><span style="font-weight:bold;color:#95bff3;"> nation, o_year </span><span style="font-weight:bold;color:#fed6af;">DESC</span><span style="font-weight:bold;color:#95bff3;">;
+</span></code></pre>
+<p style="text-align: center;">
+<b>Listing 1:</b>
+<em>TPC-H Q9.</em>
+</p>
+<p>We now provide an overview of Boot’s macro- and micro-accelerators using the TPC-H Q9 query shown
+in Listing 1 as a running example. Executing 1000 iterations of Q9
+(with different strings substituted for <code>%COLOR%</code>) at scale-factor (SF) 100 on
+PostgreSQL (v15) takes 17 hours. Enabling Boot reduces the time required to 1 minute with minor
+degradation in ML model accuracy. We omit technical details for brevity and present only the
+high-level intuition in this blog post; we encourage interested readers to check out our paper.</p>
+<h2 id="macro-accelerator">Macro-Accelerator</h2>
+<p>Boot’s Macro-Accelerator (MA) module inspects each query request as it arrives to determine whether
+it should be executed again (i.e., whether executing it would increase the diversity of the
+training data gathered thus far).</p>
+<blockquote>
+<p>Macro-Accelerator = (1) Similarity + (2) Adaptivity<br />
+(1) <em>Fingerprinting</em> identifies similar queries<br />
+(2) <em>Exponential skipping</em> decides whether to re-execute queries</p>
+</blockquote>
+<p></p>
+<p>Figure 1 shows that <a class="step">1</a> when a SQL query arrives,
+the MA fingerprints it and checks whether it has executed the query before.
+This fingerprint is computed on raw SQL strings because the MA is placed before query planning
+to avoid the overhead of planning unnecessary queries.
+A simple example of a fingerprint is for the MA to remove the SQL string’s constants, producing a
+query template.
+In the Q9 example above, the MA replaces the ‘%[COLOR]%’ in the string with a placeholder.
+More complex schemes for fingerprinting may incorporate a query’s parametric behavior or the DBMS’s
+current configuration to increase the quality of the training data, which we elaborate on in the
+paper.</p>
+<p>Next, <a class="step">2</a> the MA looks up the query’s fingerprint in its <em>result cache</em> to
+determine whether the DBMS recently executed a similar query.
+This cache maps each fingerprint to a record containing (1) the query’s output and (2) the
+telemetry produced by the DBMS while executing the query.
+The former is necessary because existing workload replay and benchmarking tools assume the
+DBMS returns query results with a particular schema (e.g., JSON-formatted plans).
+After performing the lookup,</p>
+<ul>
+<li>If the cache does not contain a matching fingerprint, the Boot framework forwards the request
+for the DBMS’s processing as usual.</li>
+<li>However, if the MA’s cache contains a match, it then decides whether to skip the query.
+<ul>
+<li>To skip the query, it returns the cached result and records that it skipped.</li>
+<li>To execute the query, it again forwards the request to the DBMS for processing.</li>
+</ul>
+</li>
+</ul>
+<p>We now sketch a brief overview of the MA’s policies for skipping query re-execution, leaving
+the technical details to our paper.
+The high-level idea is similar to exponential backoff, which we now describe as <em>exponential
+skipping</em>.
+Each time the DBMS executes a query, the MA analyzes its resulting telemetry to see whether the
+run-time falls within two standard deviations of the fingerprint’s historical mean.</p>
+<ul>
+<li>If so, the latest query instance is considered similar. The MA exponentially increases the
+number of times to skip this fingerprint until the subsequent execution.</li>
+<li>Otherwise, the skipping algorithm resets. The MA clears the corresponding cache entry.</li>
+</ul>
+<p>For example, suppose that Q9 always takes a median run-time of 65 seconds and that the MA skips
+queries up to a threshold of 100 times.
+The number of times that the MA skips Q9 in between executions is given by the sequence
+<code>[1, 2, 4, 8, 16, 32, 64, 100, 100, ... ]</code>, dropping the time required for 1000 executions of Q9
+from 17 hours to 16 minutes.
+However, should a Q9 invocation exhibit new behavior, the skipping sequence is reset to sample
+future instances more frequently.
+The choice of run-time as a metric is an optimization to avoid storing and comparing against all
+executed plans, allowing the MA to maintain only approximately 10 KB of state
+(e.g., run-time, number of input rows per operator)
+per query template.
+As Table 1 shows, a workload typically contains up to a few thousand query templates, so the total
+storage overhead of MA is only in the tens of MBs.</p>
+<h2 id="micro-accelerator">Micro-Accelerator</h2>
+<blockquote>
+<p>Micro-Accelerator = (1) Modifying Tuple Flows + (2) Sampling + (3) Scaling<br />
+(1) When the flow of tuples stabilizes, the operator is predictable<br />
+(2) An operator’s output induces more work, so sample to control the work generated<br />
+(3) When stopping an operator early, scale up its telemetry to prevent underestimation</p>
+</blockquote>
+<p></p>
+<p>Each query that the MA module does not skip then goes to the DBMS’s query planner.
+The Boot’s Micro-Accelerator (µA) injects its special operators into the query plan at this stage.
+These injected components wrap a plan’s operators for the µA to monitor their run-time execution
+constantly.
+When the µA detects that an operator’s behavior has stabilized (i.e., more training data
+from that operator is unnecessary), it sends a message to the corresponding wrapper to alter
+the operator’s tuple processing behavior (e.g., reduce the amount of output produced).</p>
+<p>The core idea that the µA’s injection exploits is that the DBMS performs query processing at the
+granularity of its operators.
+For example, the
+<a rel="noopener" target="_blank" href="https://15445.courses.cs.cmu.edu/spring2023/notes/12-queryexecution1.pdf">Volcano model</a>
+requires every operator to implement a <em>Next()</em> function that returns its next tuple.
+Therefore, to support µA’s injection, the DBMS only needs to provide a way to wrap the tuple
+production function (e.g., by replacing an operator’s <em>Next()</em> function pointer), either at a
+source-code level or through
+<a rel="noopener" target="_blank" href="https://archive.fosdem.org/2021/schedule/event/postgresql_extensibility/">extensibility hooks</a>.
+Because most DBMSs have existing code paths that provide such functionality for
+<a rel="noopener" target="_blank" href="https://www.postgresql.org/docs/current/sql-explain.html">instrumentation</a>,
+implementing µA’s injection is relatively straightforward.</p>
+<p>Figure 1 shows that <a class="step">3</a> the µA encapsulates each of the DBMS’s physical
+plan operators (e.g., scans, joins) with a special wrapper operator to control its run-time
+behavior dynamically.
+For example, this wrapper can sample the wrapped operator’s output to emit only 10% of the tuples
+that it would otherwise produce.
+It can also terminate an operator’s execution early when the µA detects it should do so,
+stopping the operator from creating additional work.</p>
+<p>Since µA may short-circuit an operator’s execution, <a class="step">4</a> Boot scales each
+operator’s telemetry to approximate the telemetry of its full execution.
+For example, a scan operator that processes only 10% of its expected rows may have its measured
+timings scaled ten-fold.
+This scaling improves ML model accuracy as it guards against underpredicting query execution times.</p>
+<p>The key advantage of µA’s wrapper-based approach that directly modifies a physical query plan is
+that the DBMS is guaranteed to generate the same plan with and without Boot enabled.
+Some DBMSs alter the query plan when using other sampling techniques (e.g., SQL-level
+<em>TABLESAMPLE</em>), producing plans that differ in shape and performance characteristics.
+Because the DBMS is collecting training data to build models of its behavior, the training plans
+must resemble an actual deployment’s plans as much as possible.</p>
+<p>Lastly, after the DBMS executes the µA-wrapped plan, it forwards the query result and telemetry to
+the MA module.
+The MA module stores this information in its result cache for future invocations of similar
+queries.
+Boot’s MA and µA modules are independent: if either component is disabled, the DBMS will
+process data with its regular non-accelerated components instead.
+However, they enhance each other’s ability to accelerate workload execution.
+In the paper, we show that the combined effect of both accelerators obtains up to 225x speedup.</p>
+<h1 id="results">Results</h1>
+<p>We highlight a few key results on a “standard” benchmarking setup for PostgreSQL (v15), that is:</p>
+<ul>
+<li>Benchmark 1: <a rel="noopener" target="_blank" href="https://www.tpc.org/tpch/">TPC-H</a>, scale factor 100
+<ul>
+<li>Represents a workload with uniform data distribution.</li>
+</ul>
+</li>
+<li>Benchmark 2: <a rel="noopener" target="_blank" href="https://aka.ms/dsb/">DSB</a>, scale factor 10
+<ul>
+<li>Represents a workload with complex data distributions, join patterns, and skew.</li>
+</ul>
+</li>
+<li>Modeling technique: <a rel="noopener" target="_blank" href="https://github.com/autogluon/autogluon">AutoGluon</a>
+<ul>
+<li>AutoGluon automatically searches over hyperparameters and techniques (e.g., gradient-boosted
+trees, random forests, linear models, neural networks) that existing work uses to build models.</li>
+<li>We found that AutoGluon is competitive with (and often outperforms) hand-crafted models from
+prior work.</li>
+</ul>
+</li>
+</ul>
+<p>In this blog post, we compare four configurations:</p>
+<ol>
+<li>the default DBMS without Boot enabled (<strong>Original</strong>),</li>
+<li>the DBMS with only Boot’s macro-accelerator active (<strong>MA</strong>),</li>
+<li>the DBMS with only Boot’s micro-accelerator active (<strong>µA</strong>),</li>
+<li>the DBMS with both of Boot’s accelerators active (<strong>Combined</strong>).</li>
+</ol>
+<p>The full paper contains other scenarios, sensitivity analyses, and comparisons to different
+techniques.</p>
+<h2 id="collection-time">Collection Time</h2>
+<blockquote>
+<p>Boot achieves up to 225x speedup on the examples in this blog post.<br />
+The general scale of its improvement is improving collection time from weeks to days.</p>
+</blockquote>
+<p></p>
+<p>We first measure the <em>collection time</em> as previously defined; that is, the time the DBMS
+takes to generate training data by executing the workload.</p>
+<table style="pointer-events: none; box-shadow: none">
+<tr>
+  <td style="border: none"><img src="./tpch_sf_100_runtime_dataset.png" alt="TPC-H Collection Time."></img></td>
+  <td style="border: none"><img src="./dsb_sf_10_runtime_dataset.png" alt="DSB Collection Time."></img></td>
+</tr>
+<tr>
+  <td style="border: none; padding: 0"><p style="text-align: center;">Figure 2a: TPC-H</p></td>
+  <td style="border: none; padding: 0"><p style="text-align: center;">Figure 2b: DSB</p></td>
+</tr>
+<tr>
+  <td style="border: none; padding: 0" colspan="2">
+    <b>Figure 2, Collection Time:</b>
+    <em>
+    The time to generate training data with different modules of Boot active (lower is better).
+    </em>
+  </td>
+</tr>
+</table>
+<p>Figure 2 shows the following:</p>
+<ul>
+<li>MA obtains speedups of 2.26x on TPC-H and 3.14x on DSB.</li>
+<li>µA obtains speedups of 2.22x on TPC-H and 23.2x on DSB.</li>
+<li>Combined obtains speedups of 6.64x on TPC-H and 225x on DSB.</li>
+</ul>
+<p>We describe a broader range of speedups across different scale factors in the paper, with Boot
+generally performing better as the dataset size grows.
+The takeaway is that Boot reduces collection time from weeks to days, or from days to hours.
+This acceleration is significant because it allows an autonomous DBMS to obtain its ML models in a
+fraction of the time, minimizing the time it spends without autonomous capabilities.</p>
+<p>We also observe from Figure 2 that:</p>
+<ul>
+<li>The MA and µA obtain different speedups depending on the workload’s complexity and skew.
+We analyze speedup sources in the paper and only provide a summary here.
+<ul>
+<li>The MA executes exponentially fewer queries.
+On a histogram of query runtimes, enabling the MA maintains the overall shape but decreases
+each bar’s height significantly (i.e., fewer query invocations) because of exponential
+skipping.</li>
+<li>The µA executes the same number of queries but accelerates individual queries by reducing the
+time spent in individual operators.
+A bar chart of individual operator timings shows that the µA achieves up to 209x speedup on
+physical operators such as index scans, sequential scans, and hash joins.
+These speedups are from reducing the number of expensive disk operations and tuples processed.</li>
+</ul>
+</li>
+<li>The MA and µA achieve higher speedups together than they do individually.
+<ul>
+<li>In the paper, we show that this effect is most pronounced on queries that are long-running or
+have instances which time out.</li>
+</ul>
+</li>
+</ul>
+<h2 id="absolute-error">Absolute Error</h2>
+<blockquote>
+<p>Boot results in models with comparable mean absolute error.<br />
+Tuning methods are surprisingly robust to high errors.</p>
+</blockquote>
+<p></p>
+<p>We next evaluate the absolute error; that is, the absolute difference between a query’s actual
+latency and the corresponding model’s predicted latency. We also measure the mean absolute error
+(MAE). We visualize the absolute error across all predictions as a boxplot.</p>
+<table style="pointer-events: none; box-shadow: none">
+<tr>
+  <td style="border: none"><img src="./tpch_sf_100_ae_boxplot.png" alt="TPC-H Absolute Error."></img></td>
+  <td style="border: none"><img src="./dsb_sf_10_ae_boxplot.png" alt="DSB Absolute Error."></img></td>
+</tr>
+<tr>
+  <td style="border: none; padding: 0"><p style="text-align: center;">Figure 3a: TPC-H</p></td>
+  <td style="border: none; padding: 0"><p style="text-align: center;">Figure 3b: DSB</p></td>
+</tr>
+<tr>
+  <td style="border: none; padding: 0" colspan="2">
+    <b>Figure 3, Absolute Error:</b>
+    <em>
+    The absolute error of models that are trained on the individual datasets (lower is better).
+    The red circle shows sample mean and the whiskers extend to 1.5 interquartile range.
+    </em>
+  </td>
+</tr>
+</table>
+<p>Figure 3 shows that compared to the MAE of the Original configuration’s models:</p>
+<ul>
+<li>MA’s MAE is 2.64x on TPC-H and 1.06x on DSB.</li>
+<li>µA’s MAE is 11.0x on TPC-H and 0.999x on DSB.</li>
+<li>Combined’s MAE is 11.5x on TPC-H and 1.11x on DSB.</li>
+</ul>
+<p>Intuitively, these results make sense.</p>
+<ul>
+<li>The MA introduces less error because it produces telemetry under similar conditions.
+It only decides whether to execute a query and does not modify query execution itself.</li>
+<li>The µA results in more error because it (1) terminates execution early and (2) scales the
+telemetry.</li>
+<li>The Combined configuration generally has the worst of both errors.</li>
+</ul>
+<p>To contextualize these results, we present a scenario from the paper in which we summed the
+prediction error for all invocations of TPC-H’s Q1.</p>
+<ul>
+<li>Invoking Q1 for 1000 iterations took 3.7 hours.</li>
+<li>The Original models are off by 308 seconds (5 minutes), whereas the Combined models are off by
+2099 seconds (35 minutes).
+<ul>
+<li>The Combined models have a 7x more error. However, they only required four days of
+training data generation, whereas the Original models required three weeks.</li>
+<li>The final prediction of the Combined models, 3.1 hours when the actual time was 3.7 hours,
+remains accurate enough to be useful.</li>
+</ul>
+</li>
+</ul>
+<p>At this stage, a natural question is how bad the errors can get before the models are no
+longer usable.
+<a rel="noopener" target="_blank" href="https://www.vldb.org/pvldb/vol17/p823-zhao.pdf">Recent work</a>
+shows that even models with terrible errors (e.g., 10x, 50x) have comparable
+<a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/F-score">F1 scores</a> for the task of index recommendation.
+We started our investigation into this line of research after making similar observations in
+internal experiments; intuitively, for many tuning tasks, all that matters is getting the
+“direction” of tuning right.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Researchers have developed effective ML models for database tuning, but integrating these models
+into an end-to-end tuning loop is challenging because their construction requires an expensive and
+lengthy training data generation process.
+We introduce two acceleration techniques to expedite training data collection by leveraging the
+unique characteristics of the training data environment; unlike regular query execution, there is
+no need for the DBMS to compute accurate results.
+We integrate these techniques into our framework Boot that drops into existing modeling pipelines.
+Boot’s sharp reduction in training data collection time makes it well-suited for bootstrapping an
+autonomous DBMS’s initial models, minimizing the time spent without self-tuning capabilities.</p>
+<p>Our paper is under submission.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~wanshenl&#x2F;" target=_blank>
+  Wan Shen Lim
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;jigneshpatel.org&#x2F;" target=_blank>
+  Jignesh Patel,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~gibbons&#x2F;" target=_blank>
+  Phillip Gibbons,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;108anup.github.io&#x2F;" target=_blank>
+  Anup Agarwal
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/">#Systems</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/database-systems/">#database systems</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/training-data/">#training data</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/modeling/">#modeling</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/database-gyms/">#database gyms</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;streaming-csps&#x2F;">‹ Better streaming algorithms for Maximum Directed Cut via &#x27;snapshots&#x27;</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;t2fpv&#x2F;">T2FPV: Dataset and Method for Correcting First-Person View Errors in Pedestrian Trajectory Prediction ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Integrating Static and Data-Driven Resource Analyses for Programs</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#formulation-of-resource-analysis" class="toc-link">Formulation of Resource Analysis</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#static-analysis" class="toc-link">Static Analysis</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#aara" class="toc-link">AARA</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#incompleteness" class="toc-link">Incompleteness</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#data-driven-analysis" class="toc-link">Data-Driven Analysis</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#bayesian-resource-analysis" class="toc-link">Bayesian Resource Analysis</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#unsoundness" class="toc-link">Unsoundness</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#hybrid-analysis" class="toc-link">Hybrid Analysis</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#hybrid-aara" class="toc-link">Hybrid AARA</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#evaluation" class="toc-link">Evaluation</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;hybrid-resource-analysis&#x2F;">Integrating Static and Data-Driven Resource Analyses for Programs</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-03-16</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~longp&#x2F;" target=_blank>
+  Long Pham
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>Resource analysis of programs aims to infer their worst-case cost bounds. It has
+a number of practical use cases. For example, when executing a client’s program
+in cloud computing, a cloud-service provider (e.g., Amazon Web Services or
+Microsoft Azure) would like to to avoid both over-provisioning resources (which
+would reduce profits) and under-provisioning resources (which would violate the
+service-level agreement). So the provider would like to to estimate the resource
+usage of the client’s program in advance, thereby optimizing resource
+allocation.</p>
+<p>There are two approaches to resource analysis: <em>static analysis</em> and
+<em>data-driven analysis</em>. Static analysis infers a cost bound by examining the
+source code and reasoning about all theoretically possible behaviors of a
+program, including its worst-case behavior. Data-driven analysis
+first runs the program on many inputs and records the execution costs. It then
+analyzes the cost measurements to infer a cost bound.</p>
+<p>Static and data-driven analyses have complementary strengths and weaknesses.
+Static analysis is <em>sound</em>: if it returns some candidate cost bound, it is
+guaranteed to be a valid upper bound on the actual execution cost. However,
+resource analysis for a Turing-complete language is generally undecidable.
+Consequently, static analysis is <em>incomplete</em>: no matter how clever the static
+analysis is, there always exists a program that the static analysis cannot
+handle. In contrast to static analysis, data-driven analysis can infer a cost
+bound for any program. However, because data-driven analysis cannot rigorously
+reason about the program’s worst-case behavior, data-driven analysis offers no
+soundness guarantees of its inferred cost bounds.</p>
+<p>In this blog post, we describe how to integrate static and data-driven resource
+analyses into <em>hybrid resource analysis</em>. By combining the two complementary
+analysis techniques, hybrid resource analysis partially retains their respective
+strengths while mitigating their weaknesses. We first introduce static resource
+analysis, followed by data-driven resource analysis. We then describe hybrid
+resource analysis and demonstrate its advantages over static and data-driven
+analyses using an example of a linear-time selection algorithm.</p>
+<h1 id="formulation-of-resource-analysis">Formulation of Resource Analysis</h1>
+<p>Given a program \(P\), the goal of resource analysis is to infer its
+worst-case cost bound. Concretely, it is a function \(\text{cost}_{P} (x)\)
+parametric in an input \(x\) (or its size \(\lvert x \rvert\)) to the
+program \(P\) such that, for any input \(x\), the value \(\text{cost}_{P}
+(x)\) is a correct upper bound of the execution cost of \(P(x)\). The
+execution cost of the program \(P\) is defined by a resource metric such as
+running time, memory, or energy.</p>
+<p>To specify a resource metric of interest, a user inserts an instruction <code>tick q</code>
+throughout their code, where <code>q</code> is a (positive or negative) number. The
+instruction indicates that <code>q</code> many resources are consumed. For example, if we
+are interested in the amount of memory (in bits) consumed by a program, whenever
+a 64-bit memory cell is allocated in the source code, we indicate it by
+inserting an instruction <code>tick 64</code>.</p>
+<h1 id="static-analysis">Static Analysis</h1>
+<p>To automate resource analysis, <em>static resource analysis</em> automatically analyzes
+the source code of a program. In this blog post, we focus on <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/1926385.1926427">Automatic
+Amortized Resource Analysis</a>
+(AARA) as a concrete example of state-of-the-art static resource analysis.
+Taking as input a functional program \(P\), AARA tries to automatically infer
+a polynomial cost bound of the program \(P\).</p>
+<h2 id="aara">AARA</h2>
+<p>AARA builds on the potential method from <a rel="noopener" target="_blank" href="https://epubs.siam.org/doi/10.1137/0606031">amortized
+analysis</a>. Every data structure
+during program execution is equipped with <em>potential</em>, which we can consider as
+fuel for computation. To perform computation, data structures must come with
+enough potential to pay for the cost of computation. For example, if we are to
+run an instruction <code>tick 64</code>, we must have at least 64 units of potential
+available. The remaining potential can be later used to pay for subsequent
+computation. In the potential method, our goal is to figure out an appropriate
+amount of potential to store in data structures such that, whenever they go
+through computation, they have enough potential to pay for it. The overall cost
+is then bounded above by the initial potential minus the final potential stored
+in the data structures. So the difference between the initial and final
+potential serves as a cost bound.</p>
+<p>AARA uses types to express the amount of potential stored in data structures.
+For illustration, consider a variable \(x\) of the integer-list type \(
+L(\mathtt{int}) \). If we want the list \(x\) to come with one unit of
+potential per list element, we write
+$$
+x: L^{1} (\mathtt{int})
+$$
+where the superscript 1 indicates the amount of potential stored in each list
+element. The type \(L^{1} (\mathtt{int})\) is called a <em>resource-annotated
+type</em>, and the superscript 1 is called a <em>resource annotation</em>.</p>
+<p>Let’s look at a slightly more complicated example. Consider function <code>split</code>
+that splits an input list \(x\) into two equal halves. The function traverses
+the input \(x\) and processes each list element. If the cost of processing
+each element is one, the total computational cost is equal to the input list
+length \( \lvert x \rvert\). We express the resource usage of the function
+<code>split</code> by
+$$
+x : L^{1} (\mathtt{int}) \vdash \mathtt{split} \; x : L^{0} (\mathtt{int}) \times L^{0} (\mathtt{int})
+$$
+On the left-hand side of the turnstile (i.e., \(\vdash\)), we have \(x :
+L^{1} (\mathtt{int})\), which means the input \(x\) carries one unit of
+potential per element. On the right-hand side of the turnstile, we have
+\(\mathtt{split} \; x : L^{0} (\mathtt{int}) \times L^{0} (\mathtt{int})\),
+which means the two output lists of function <code>split</code> each carry zero units of
+potential per element. This assignment of potential makes sense. In the input
+list \(x\), each element initially carries one unit of potential. This
+potential is used to pay for the cost of function <code>split</code>, and the
+remaining zero units of potential are stored in the two output lists after
+splitting. The difference between the input potential (i.e., \(1 \cdot \lvert x
+\rvert\)) and output potential (i.e., zero) immediately translates to the cost
+bound \(\lvert x \vert\) of function <code>split</code>.</p>
+<p>Although the function <code>split</code> stores zero potential in the output, we will need
+a positive amount of potential in the output if it later undergoes computation
+that demands potential. In such a case, we can increase the potential stored in
+the input and output of the function <code>split</code>. For example, another valid
+assignment of potential is
+$$
+x : L^{3} (\mathtt{int}) \vdash \mathtt{split} \; x : L^{2} (\mathtt{int}) \times L^{2} (\mathtt{int})
+$$
+where the input carries three units of potential per list element and the output
+carries two unit of potential, which can be used to pay for subsequent
+computation.</p>
+<p>Given a program \(P\), how do we infer its resource-annotated type? First, we
+assign numeric variables to all inputs and outputs that appear in \(P\)’s
+source code. These variables stand for (yet-to-be-determined) resource
+annotations, which encode the amounts of potential. For example, in the program
+\(\mathtt{split} \; x\), the input and output of the whole program are
+assigned variables \(q_0, q_1, q_2 \in \mathbb{R}_{\geq 0}\):
+$$
+x : L^{q_0} (\mathtt{int}) \vdash \mathtt{split} \; x : L^{q_1} (\mathtt{int}) \times L^{q_2} (\mathtt{int})
+$$</p>
+<p>We then walk through the source code, collecting linear constraints that relate
+the variables assigned to the inputs and outputs. For example, if the program
+\(P\) contains instruction <code>tick 64</code>, AARA’s type system imposes a linear
+constraint that the input potential must be at least 64 plus the leftover
+potential after running <code>tick 64</code>. In the example of \(\mathtt{split} \; x\),
+we obtain two linear constraints
+$$
+q_1 + 1 \leq q_0 \qquad q_2 + 1 \leq q_0
+$$</p>
+<p>Finally, we solve the linear constraints using a linear-program (LP) solver. If
+we obtain a solution, we can extract a resource-annotated type of the program
+\(P\).</p>
+<h2 id="incompleteness">Incompleteness</h2>
+<p>The static resource analysis technique AARA is sound but incomplete. Soundness
+means that, if AARA returns a candidate cost bound, it is guaranteed to be a
+valid worst-case cost bound. However, AARA is incomplete: even if a program
+\(P\) has a polynomial cost bound, AARA can fail to infer it. This happens
+when the linear constraints collected during type inference are unsolvable. In
+fact, this limitation is not unique to AARA. All static resource analysis
+techniques suffer incompleteness because resource analysis is undecidable in
+general.</p>
+<p>To illustrate AARA’s incompleteness, let us consider the median-of-medians-based
+linear-time selection algorithm. Given an input list \(x\) and an input
+integer \(i\), the selection algorithm returns the \(i\)-th smallest element
+in the list \(x\).</p>
+<p>In this algorithm, we split input list \(x\) into blocks of five elements and
+compute each block’s median (e.g., by brute force). We then recursively call the
+algorithm on these medians to compute their median \(m\). The median of
+medians \(m\) (hence the name of the algorithm) is used to partition the input
+list \(x\) into two lists, \(x_1\) and \(x_2\). To prove the linear time
+complexity of this algorithm, we must show that the sublists \(x_1\) and
+\(x_2\) are each at most \(7/10\) of the list \(x\). Intuitively, the
+median of medians \(m\) partitions the list \(x\) <em>evenly</em> (up to some
+factor) even in the worst case.</p>
+<p>However, AARA cannot reason about the mathematical properties of medians. As a
+result, it cannot conclude that the median of medians \(m\) splits the list
+\(x\) evenly. Instead, AARA deduces that, in the worst case, the list \(x\)
+is split unevenly into a singleton list (i.e., containing only one element) and
+the remaining sublist. If the list \(x\) were split this way, the worst-case
+time complexity would be exponential. Hence, AARA is unable to infer a
+polynomial cost bound for this algorithm even though it has a linear cost bound.
+Furthermore, we are not aware of static analysis techniques that can correctly
+infer linear cost bounds for the linear-time selection algorithm.</p>
+<h1 id="data-driven-analysis">Data-Driven Analysis</h1>
+<p>The second approach to automatic resource analysis is <em>data-driven resource
+analysis</em>. It starts with collecting cost measurements of the program \(P\).
+Given inputs \( x_1, \ldots, x_n\), we run \( P \; x_i \) for each \(1
+\leq i \leq n\) and record its output  \( y_{i} \) and execution cost \(c_i
+\in \mathbb{R}_{\geq 0}\). This yields a runtime cost dataset \(\mathcal{D}\)
+defined as
+$$
+\mathcal{D} \coloneqq \{ (x_i, y_i, c_i) \mid 1 \leq i \leq n \}
+$$
+The dataset \(\mathcal{D}\) records output \(y_i\) as well as input
+\(x_i\) since we need to know output sizes to calculate a cost bound (i.e.,
+the difference between the input and output potential). We then infer a cost
+bound of the program \(P\) by analyzing the dataset \(\mathcal{D}\). We have
+a variety of choices for data-analysis techniques, ranging from linear
+regression to deep learning.</p>
+<h2 id="bayesian-resource-analysis">Bayesian Resource Analysis</h2>
+<p>This blog post introduces <em>Bayesian resource analysis</em>, where we apply <em>Bayesian
+inference</em> to resource analysis. In abstract, the goal of Bayesian inference is
+to infer <em>latent variables</em> \(\theta\) (i.e., variables that we want to know
+but cannot observe) from <em>observed variables</em> \(D\) (i.e., variables whose
+concrete values are available) using Bayes’ rule from probability theory. In
+Bayesian resource analysis, latent variables \(\theta\) are resource
+annotations (i.e., cost bounds), and observed variables \(D\) are the runtime
+cost dataset of the program.</p>
+<p>To conduct Bayesian resource analysis, the user first provides a <em>probabilistic
+model</em>, which specifies a joint probability distribution \( p (\theta, D) \)
+of resource annotations \(\theta\) and dataset \(D\). Next, by Bayes’ rule,
+the <em>posterior distribution</em> of the cost bound \(\theta\) conditioned on a
+concrete dataset \(\mathcal{D}\) is given by
+$$
+p (\theta \mid D = \mathcal{D})
+= \frac{p (\theta, D = \mathcal{D})}{p (D = \mathcal{D})}
+= \frac{p (\theta, D = \mathcal{D})}{\int p (\theta, D = \mathcal{D}) \, \mathrm{d} \theta}
+$$
+This equation suggests that we can compute the posterior distribution \(p
+(\theta \mid D = \mathcal{D})\) by taking the ratio between the joint
+distribution \(p (\theta, D = \mathcal{D})\) and the denominator \(\int p
+(\theta, D = \mathcal{D}) \, \mathrm{d} \theta\). However, because the
+denominator is an integral over the space of the resource annotations
+\(\theta\), which may have many dimensions, it is often intractable to compute
+the denominator. As a result, we cannot precisely compute the posterior
+distribution \(p (\theta \mid D = \mathcal{D})\) by directly applying Bayes’
+rule.</p>
+<p>Instead, in practice, we run a sampling-based Bayesian inference algorithm,
+drawing a large number of samples from the posterior distribution. We then use
+these samples, which serve as an approximation of the posterior distribution, to
+estimate various properties (e.g., mean, median, variance, etc.) of the
+posterior distribution.</p>
+<p>Figure 1 displays a schematic diagram of Bayesian resource analysis. We perform
+Bayesian inference to infer a posterior distribution of cost bounds (blue lines)
+from the runtime cost measurements (black dots).</p>
+<figure>
+<img src="./bayespc.jpg" alt="schematic diagram for Bayesian resource analysis" width="500"/>
+<figcaption>
+Figure 1. Schematic diagram of Bayesian resource analysis. We perform Bayesian
+inference to infer a posterior distribution of cost bounds (blue lines) from the
+runtime cost measurements (black dots).
+</figcaption>
+</figure>
+<p>To illustrate Bayesian resource analysis, consider the function <code>split</code> that was
+introduced <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#aara">earlier</a>. Its resource-annotated type has the form
+$$
+x : L^{q_0} (\mathtt{int}) \vdash \mathtt{split} \; x : L^{q_1} (\mathtt{int}) \times L^{q_2} (\mathtt{int})
+$$
+where the resource annotations \(q_0, q_1, q_2 \in \mathbb{R}_{\geq 0}\) are
+to be inferred by Bayesian inference.</p>
+<p>Let a dataset \(\mathcal{D}\) of runtime cost
+measurements be
+$$
+\mathcal{D} \coloneqq \{(x_i,(y_{i,1}, y_{i,2}),c_i) \mid 1 \leq i \leq n \}
+$$
+where \(x_i\) is an input list, \((y_{i,1}, y_{i,2})\) is a pair of
+two output lists, and \(c_i\) is the cost of running \(\mathtt{split} \;
+x_i\).</p>
+<p>The user constructs a probabilistic model \(p (\theta, D)\) based on whatever
+domain knowledge<sup class="footnote-reference"><a href="#domain_knowledge">1</a></sup> they have. For example, a probabilistic
+model for <code>split</code> can be
+$$
+\begin{aligned}
+q_0, q_1, q_2 &amp; \sim \mathrm{Normal}_{[0, \infty)}(0, 5) \\
+c_{i, \text{predict}} &amp; = q_0 \lvert x_i \rvert - q_1 \lvert y_{i,1} \rvert - q_2 \lvert y_{i,2} \rvert &amp; \qquad (i = 1, \ldots, n) \\
+c_i &amp; \sim \mathrm{Normal}_{[0, c_{i, \text{predict}}]}(c_{i, \text{predict}}, 2) &amp; (i = 1, \ldots, n)
+\end{aligned}
+$$
+The first line states that the resource annotations \(q_0, q_1, q_2\) follow a
+normal distribution truncated to the non-negative region. In the second line,
+the predicted costs \(c_{i, \text{predict}}\) are defined as \( q_1 \lvert
+v_i \rvert - q_2 \lvert y_{i,1} \rvert - q_3 \lvert y_{i,2} \rvert \),
+which is the difference between input and output potential. The third line
+states that the observed costs \(c_i\) from the dataset \(\mathcal{D}\)
+follow a normal distribution truncated to the interval \([0, c_{i,
+\text{predict}}]\). The distribution is truncated because the prediction of a
+<em>worst-case</em> cost bound must be larger than or equal to the observed cost.</p>
+<h2 id="unsoundness">Unsoundness</h2>
+<p>Data-driven analysis can infer a cost bound for any program \(P\), provided
+that it terminates. When we construct a dataset \(\mathcal{D}\) of the program
+\(P\)’s runtime cost measurements, the program must terminate on all inputs;
+otherwise, we will never finish collecting runtime cost measurements. Once we
+finish data collection, we statistically infer a polynomial cost bound from the
+dataset \(\mathcal{D}\). As the dataset \(\mathcal{D}\) is finite, for any
+degree \(d \geq 0\), we always have some degree-\(d\) polynomial bound
+\(\text{cost}_P\) that lies above all runtime cost measurements of
+\(\mathcal{D}\). Therefore, data-driven analysis always returns an inference
+result.</p>
+<p>However, data-driven analysis lacks the soundness guarantee<sup class="footnote-reference"><a href="#soundness">2</a></sup> of
+inference results. Data-driven analysis examines runtime cost data of the input
+program \(P\), rather than its source code. Consequently, data-driven analysis
+cannot reason about the theoretically worst-case behavior of the program
+\(P\), failing to provide a soundness guarantee.</p>
+<p>For illustration, we ran Bayesian resource analysis on the
+median-of-medians-based linear-time selection algorithm. To collect cost
+measurements, we randomly generated input lists. Figure 2 plots the inferred
+posterior distribution of cost bounds. Black dots are runtime cost measurements.
+The light-blue shade is the 10-90th percentile range of the posterior
+distribution, and the blue line is the median cost bound. The red line is the
+true worst-case cost bound.</p>
+<figure>
+<img src="./posterior_distribution_BayesPC.jpg" alt="posterior distributions of Bayesian resource analysis for the linear-time selection algorithm" width="400"/>
+<figcaption>
+Figure 2. Inference result of Bayesian resource analysis for the linear-time
+selection algorithm. Black dots are runtime cost measurements. The light-blue
+shade is the 10-90th percentile range of the cost bounds sampled from the
+posterior distribution, and the blue line is the median cost bound. The red line
+is the true worst-case cost bound.
+</figcaption>
+</figure>
+<p>Although the inferred cost bounds (light-blue shade) all lie above the observed
+costs (black dots), they are unsound worst-case cost bounds since they lie below
+the true worst-case cost bound (red line). The true cost bound (red line) is
+significantly larger than observed costs (black dots) because, when inputs are
+randomly generated, the worst-case behavior of the selection algorithm rarely
+arises.</p>
+<p>Certainly, we can fix this problem by adjusting the probabilistic model such
+that it adds more buffer on top of the maximum observed costs in the dataset
+\(\mathcal{D}\). However, it is difficult to tell a priori how much buffer we
+should add. On the other hand, static analysis is better suited for reasoning
+about the worst-case behavior than data-driven analysis. But if we perform
+static analysis on the entire source code of the linear-time selection
+algorithm, the analysis fails as described <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#incompleteness">earlier</a>. Can we
+perform static analysis on a fragment of the source code and data-driven
+analysis on the rest?</p>
+<h1 id="hybrid-analysis">Hybrid Analysis</h1>
+<p>To overcome the limitations of purely static analysis (e.g., conventional AARA)
+and purely data-driven analysis (e.g., Bayesian resource analysis), we integrate
+them into a framework called hybrid AARA.</p>
+<h2 id="hybrid-aara">Hybrid AARA</h2>
+<p>First, a user indicates which part of the source code should be analyzed by
+data-driven analysis. For example, if we want expression <code>e</code> to be analyzed by
+data-driven analysis, we enclose <code>e</code> with the annotation <code>statistics</code>, resulting
+in <code>statistics(e)</code>. The rest of the source code will be analyzed by static
+analysis. To construct a dataset \(\mathcal{D}\) of runtime cost measurements,
+we run the program \(P\) on many inputs (to \(P\)) and record the inputs,
+outputs, and costs of the expression <code>e</code> inside <code>statistics(e)</code>. Here, the input
+to the expression <code>e</code> is its evaluation context (i.e., the values of free
+variables appearing in <code>e</code>) during the program \(P\)’s execution.</p>
+<p>The data-driven analysis of the expression <code>e</code> incorporates its contextual
+information at runtime as the dataset \(\mathcal{D}\) captures this contextual
+information. For example, suppose <code>statistics(e)</code> appears inside the if-branch
+of a conditional expression <code>if ... then ... else ...</code>. If the if-branch
+satisfies some invariant (e.g., inside the if-branch, variable <code>x</code> appearing
+inside <code>e</code> is even), then all measurements recorded in the dataset
+\(\mathcal{D}\) satisfy this invariant. Thus, data-driven analysis does not
+analyze the expression <code>e</code> in isolation from its context.</p>
+<p>Next, we infer a cost bound in hybrid AARA. Given a program \(P\) containing
+<code>statistics(e)</code> for some expression <code>e</code>, we perform data-driven analysis on <code>e</code>
+and static analysis on the rest of the source code, and then combine their
+inference results. Just like we did for the cost-bound inference of
+<a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/#aara">conventional AARA</a>, we assign variables to inputs and outputs throughout
+the source code of the program \(P\), where these variables stand for
+yet-to-be-inferred resource annotations. In hybrid AARA, however, we do not
+assign variables <em>inside</em> the expression <code>e</code>. That is, the expression <code>e</code> is
+treated as a black box whose source code is invisible. Let \(\theta_e\) be the
+set of resource annotations in the input and output of the expression
+<code>statistics(e)</code>. Also, let \(\theta \supseteq \theta_e\) be a set of all
+variables in the program \(P\)’s entire source code.</p>
+<p>A key challenge in hybrid AARA is the interface between conventional AARA and
+Bayesian resource analysis. Suppose conventional AARA generates a set \(C\) of
+linear constraints over the variables \(\theta\). Any solution to the linear
+constraints \(C\) is a valid cost bound. Conventional AARA optimizes the
+variables \(\theta\) subject to the linear constraints \(C\). This
+optimization problem is solved by an LP solver. On the other hand, Bayesian
+resource analysis infers a posterior distribution of the variables \(\theta_e
+\subseteq \theta\) by running a sampling-based Bayesian inference algorithm.
+Thus, conventional AARA and Bayesian resource analysis both involve the
+variables \(\theta_e\) in common, but they each use different algorithms for
+inference. How do we design their interface?</p>
+<p>One idea is to restrict the state space of the sampling algorithm to the
+feasible region of the linear constraints \(C\). We first construct a
+probabilistic model over all variables \(\theta \supseteq \theta_e\), which
+represent resource annotations in the program \(P\)’s source code. We then run
+a sampling-based Bayesian inference algorithm over these variables, subject to
+the linear constraints \(C\). Thanks to the constraints \(C\), any cost
+bound drawn from the posterior distribution is a valid cost bound according to
+conventional AARA.</p>
+<p>To implement hybrid AARA, we rely on recent advances in the literature of
+sampling algorithms. In 2021, a C++ library
+<a rel="noopener" target="_blank" href="https://github.com/GeomScale/volesti">volesti</a> started to support
+sampling from a user-specified probability distribution subject to arbitrary
+linear constraints. This is the first (and so far, only) tool that supports such
+sampling. Popular programming languages for Bayesian inference, such as
+<a rel="noopener" target="_blank" href="https://mc-stan.org/">Stan</a>, only support box constraints (i.e., upper and
+lower bounds) on random variables, but not arbitrary linear constraints that may
+involve multiple variables.</p>
+<h2 id="evaluation">Evaluation</h2>
+<p>We ran Hybrid AARA on the linear-time selection algorithm. Inside the selection
+algorithm’s source code, the code fragment <code>partition x m</code>, which partitions
+list <code>x</code> around the median of medians <code>m</code>, is analyzed by data-driven analysis.
+The rest of the source code is analyzed by static analysis. Figure 3 displays
+the inference results.</p>
+<figure>
+<img src="./posterior_distribution_hybrid_BayesPC.jpg" alt="posterior distributions of hybrid resource analysis for the linear-time selection algorithm" width="400"/>
+<figcaption>
+Figure 3. Inference results of hybrid AARA for the linear-time selection
+algorithm. Black dots are runtime cost measurements. The light-blue shade is the
+10-90th percentile range of the cost bounds sampled from the posterior
+distribution, and the blue line is the median cost bound. The red line is the
+true cost bound.
+</figcaption>
+</figure>
+<p>In Figure 3, the 10-90th percentile ranges (light-blue shade) of inferred cost
+bounds now contain or lie above the ground truth (red line). This is a
+significant improvement over Bayesian resource analysis (Figure 2), where the
+inferred cost bounds are below the true worst-case bounds.</p>
+<p>More generally, we have evaluated hybrid AARA on a suite of seven benchmarks:
+<code>MapAppend</code>, <code>Concat</code>, <code>InsertionSort2</code>, <code>QuickSort</code>, <code>QuickSelection</code>,
+<code>MedianOfMedians</code> (this is the linear-time selection algorithm we have seen in
+this blog post), and <code>ZAlgorithm</code>. Conventional AARA fails in all benchmarks as
+they each contain a code fragment that cannot be analyzed statically by
+conventional AARA. Further, in all benchmarks, hybrid AARA infers cost bounds
+closer to the true worst-case cost bounds than purely data-driven resource
+analysis. Thus, our evaluation demonstrates the benefits of hybrid resource
+analysis: hybrid analysis infers more accurate worst-case cost bounds than
+purely data-driven analysis, while overcoming the incompleteness of purely
+static analysis. The details of the evaluation can be found in out paper <em>Robust
+Resource Bounds with Static Analysis and Bayesian Inference</em>.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Hybrid resource analysis combines purely static analysis, which offers soundness
+guarantees of worst-case cost bounds but is incomplete, and purely data-driven
+analysis, which is not sound but can infer a cost bound for any program. By
+combining these two complementary analysis techniques, hybrid resource analysis
+successfully infers cost bounds that neither purely static analysis nor purely
+data-driven analysis can infer. This is demonstrated by the experiment results
+of the linear-time selection algorithm.</p>
+<p>Hybrid AARA has a limitation that its data-driven analysis only infers resource
+annotations, but not other quantities (e.g., depth of recursion). As a result,
+hybrid AARA cannot handle some programs such as bubble sort. In bubble sort,
+conventional AARA cannot infer the number of recursive calls, but it can still
+correctly infer a cost bound of each recursive call. Therefore, ideally, we
+would like to infer (i) the number of recursive calls by data-driven analysis
+and (ii) the cost of each recursive call by conventional AARA. This requires a
+different hybrid analysis technique from hybrid AARA presented in this blog
+post, and we plan to investigate it as future work.</p>
+<p>Acknowledgement: hybrid AARA is joint work with <a rel="noopener" target="_blank" href="https://www.cs.cmu.edu/~fsaad/">Feras
+Saad</a> and <a rel="noopener" target="_blank" href="https://www.cs.cmu.edu/~janh/">Jan
+Hoffmann</a>. Our paper <em>Robust Resource Bounds with
+Static Analysis and Bayesian Inference</em> is currently under review, and hopefully
+we can share it soon.</p>
+<p>Further reading: the <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/pdf/10.1145/640128.604148">original paper on
+AARA</a> targets linear cost
+bounds. Subsequently, AARA has been extended to <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1007/978-3-642-11957-6_16">univariate polynomial cost
+bounds</a> and <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/1926385.1926427">multivariate
+polynomial cost bounds</a>.
+<a rel="noopener" target="_blank" href="https://www.raml.co/">Resource-aware ML</a> is an implementation for AARA for
+analyzing OCaml programs. Papers on data-driven resource analysis include the
+<a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/1287624.1287681">trend profiler</a>, <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/2254064.2254074">algorithmic
+profiler</a>, and <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/2254064.2254076">input-sensitive
+profiler</a>. They are all
+concerned with average-case cost bounds, rather than worst-case cost bounds as
+in this blog post. Also, these papers all use optimization instead of Bayesian
+inference.</p>
+<div class="footnote-definition" id="domain_knowledge"><sup class="footnote-definition-label">1</sup>
+<p>In contrast to static analysis, data-driven analysis
+(including Bayesian resource analysis) always requires the user’s domain
+knowledge to construct a statistical model. This dependency on domain
+knowledge is inherent in statistics: the inference result depends on our
+choice of data-analysis methodologies (e.g., optimization or Bayesian
+inference), statistical models, and hyperparameters.</p>
+</div>
+<div class="footnote-definition" id="soundness"><sup class="footnote-definition-label">2</sup>
+<p>Here, by the lack of soundness guarantee, we mean that the cost
+bound inferred by data-driven analysis is not guaranteed to be a valid
+worst-case cost bound for all possible inputs to the program. Nonetheless,
+data-driven analysis is sound with respect to the probabilistic model and
+dataset used, as long as we use a correct inference algorithm.</p>
+</div>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~longp&#x2F;" target=_blank>
+  Long Pham
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~fp&#x2F;" target=_blank>
+  Frank Pfenning,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~rwh&#x2F;" target=_blank>
+  Robert Harper,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~davidkah&#x2F;" target=_blank>
+  David Kahn
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/programming-languages/">#Programming Languages</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/aara/">#AARA</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/amortized/">#amortized</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/cost/">#cost</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/resource-analysis/">#resource analysis</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/program-analysis/">#program analysis</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/static-analysis/">#static analysis</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/data-driven-analysis/">#data-driven analysis</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/bayesian-inference/">#Bayesian inference</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/type-system/">#type system</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;baleen-ml-flash-caching&#x2F;">‹ Baleen: ML admission &amp; prefetching for flash caches</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;streaming-csps&#x2F;">Better streaming algorithms for Maximum Directed Cut via &#x27;snapshots&#x27; ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Measuring and Exploiting Network Usable Information</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#what-is-an-attributed-graph" class="toc-link">What is an attributed graph?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#what-are-the-common-graph-tasks" class="toc-link">What are the common graph tasks?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#what-are-message-passing-methods" class="toc-link">What are message-passing methods?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#measuring-nui-would-a-message-passing-method-work-in-a-given-setting" class="toc-link">Measuring NUI: Would a message-passing method work in a given setting?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#exploiting-nui-how-to-solve-graph-tasks" class="toc-link">Exploiting NUI: How to solve graph tasks?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#how-well-does-our-proposed-method-perform" class="toc-link">How well does our proposed method perform?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/#references" class="toc-link">References</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;network-usable-information&#x2F;">Measuring and Exploiting Network Usable Information</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-06-21</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;mengchillee.github.io&#x2F;" target=_blank>
+  Meng-Chieh Lee
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>In large cloud service providers such as AWS, the customer provides an attributed graph and would like to perform tasks such as recommendations (i.e., link prediction in a graph) using message-passing methods within restricted budgets.
+An attributed graph consists of both the graph structure and the node features.
+As one of the message-passing methods, Graph Neural Networks (GNNs) are commonly used for graph tasks by propagating node features through the graph structure.
+However, it is possible that not all the information in the provided graph is usable for solving the task.
+Training a GNN would thus be a waste of time and resources for the customer.
+Therefore, we aim to answer two questions:</p>
+<ol>
+<li>Given a graph with node features, how can we tell whether utilizing both graph structure and node features will yield better performance than utilizing either of them separately?</li>
+<li>How can we know what information in the graph (if any) is usable to solve the tasks, namely, node classification and link prediction?</li>
+</ol>
+<p>Our goal is to design a metric for measuring how informative the graph structure and node features are for the task at hand, which we call network usable information (NUI).</p>
+<p>In this blog post, we introduce how to measure the information in the graph, and to exploit it for solving the graph tasks. This blog post is based on our research paper, “NetInfoF Framework: Measuring and Exploiting Network Usable Information” [1], presented at ICLR 2024.</p>
+<h2 id="what-is-an-attributed-graph">What is an attributed graph?</h2>
+<figure>
+<img src="./figure1.png" alt="attributed graph" width="500"/>
+<figcaption>
+Figure 1. An example of an attributed social network graph, where the nodes denote the users, and the edges denote whether two users are friends.
+</figcaption>
+</figure>
+<p>A graph is a data structure that includes nodes and edges, representing the connections between nodes.
+An attributed graph indicates that each node in the graph has a set of features.
+For example, Figure 1 shows the attributed graph for a social network.
+The nodes represent the users, illustrated as circles with university acronyms.
+The edges indicate whether two users are friends, illustrated as black lines connecting circles.
+A node might also contain additional information:</p>
+<ol>
+<li><strong>Node ID</strong>: illustrated as a thumbnail image of the user along with the user’s text name.</li>
+<li><strong>Node attributes/features</strong>: represent whether the user is located in the US and whether the user likes to bike, illustrated as a \( 2 \times 2 \) table.</li>
+<li><strong>Node label</strong>: signifies the user’s university, categorized into two groups represented by blue and red colors with acronyms: Carnegie Mellon University (CMU) or National Chiao Tung University (NCTU).</li>
+</ol>
+<p>In fact, node labels are similar to node features, but they often contain missing values, which we are interested in predicting.</p>
+<figure>
+<img src="./figure2.png" alt="mathematical representation of graph" width="500"/>
+<figcaption>
+Figure 2. The mathematical representation of the attributed graph, including an adjacency matrix, node features, and node labels. The red question mark denotes unknown.
+</figcaption>
+</figure>
+<p>In Figure 2, the graph structure can be represented by an adjacency matrix, where 1 denotes the presence of an edge between two nodes, and 0 denotes no edge.
+The node features are also represented by a matrix, where each feature is binary in the example, but it can also be continuous.
+The node labels are represented by a matrix with one-hot encoding of the class label.</p>
+<h2 id="what-are-the-common-graph-tasks">What are the common graph tasks?</h2>
+<p>We consider the two common graph tasks:</p>
+<ul>
+<li><strong>Node Classification</strong>
+<ul>
+<li><em>Goal:</em> Classify the unlabeled nodes, while some labeled nodes are given.</li>
+<li><em>Example:</em> Given a social network with features, can we guess which university Bob goes to, i.e., the label of the gray node in Figure 1?</li>
+</ul>
+</li>
+<li><strong>Link Prediction</strong>
+<ul>
+<li><em>Goal:</em> Predict the potential additional edges in the graph.</li>
+<li><em>Example:</em> Given a social network with features, can we guess whether David and Grace could become friends, i.e., the potential additional red-dash line in Figure 1?</li>
+</ul>
+</li>
+</ul>
+<h2 id="what-are-message-passing-methods">What are message-passing methods?</h2>
+<!-- | U<sub>[n×r]</sub> | Left singular vectors of adjacency matrix | -->
+<!-- | r | Rank for matrix decomposition | -->
+<figure>
+<img src="./figure3.png" alt="node embedding" width="500"/>
+<figcaption>
+Figure 3. Illustration of the nodes in a given graph projected into low-dimensional embedding space. The nodes that are more similar in the graph are closer in the embedding space.
+</figcaption>
+</figure>
+<p>Message-passing methods utilize the graph structure to propagate information from the neighbors of a node to the node itself.
+Known as sum-product message-passing, belief propagation methods [2, 3] directly perform inference on the graph through several propagation iterations.
+Although they are fast and effective because they require neither parameters nor training, belief propagation methods are mainly designed to solve node classification problems based solely on the graph structure and usually do not consider node features.</p>
+<p>Another variety of message-passing methods, Graph Neural Networks (GNNs) [4], are a class of deep learning models.
+They are commonly used to generate low-dimensional embeddings of nodes to perform graph tasks by learning end-to-end with a training objective.
+As shown in Figure 3, the nodes that are better connected in the graph are expected to have closer embeddings in the low-dimensional space.</p>
+<p>Some studies remove the non-linear functions in GNNs, and still achieve good performance, which we call linear GNNs [5, 6].
+One of the many advantages of linear GNNs is that their node embeddings are available prior to model training.
+A comprehensive study on linear GNNs can be found in [6].</p>
+<!-- | Symbol | Definition |
+| -------- | -------- |
+| \\( A_{[n \times n]} \\) | Adjacency matrix |
+| \\( X_{[n \times f]} \\) | Node feature matrix |
+| \\( W_{[f \times c]} \\) | Learnable parameter matrix in linear GNNs |
+| \\( \hat{Y}_{[n \times c]} \\) | Predicted node label matrix |
+| \\( n \\) | Number of nodes |
+| \\( f \\) | Number of features |
+| \\( c \\) | Number of classes | -->
+<h2 id="measuring-nui-would-a-message-passing-method-work-in-a-given-setting"><em>Measuring NUI:</em> Would a message-passing method work in a given setting?</h2>
+<figure>
+<img src="./figure4.png" alt="scenarios" width="400"/>
+<figcaption>
+Figure 4. Scenarios in which the message-passing method may not work well. (a): The graph structure exhibits no network effects. (b): Node features are not correlated with node labels.
+</figcaption>
+</figure>
+<p>Given an attributed graph, how can we measure the network usable information (NUI)? The message-passing method may not work well in the following two conditions:</p>
+<ol>
+<li><strong>No network effects:</strong> the graph structure is not useful to solve the graph task. In Figure 4(a), since every labeled node has one blue and one red neighbor, we cannot infer the label for Bob by examining its neighbors.</li>
+<li><strong>Useless node features:</strong> the node features are not useful to solve the graph task. In Figure 4(b), we can see that whether a user likes to bike is not correlated with the user’s university.</li>
+</ol>
+<p>If either of these two extreme conditions applies, a message-passing method is likely to fail in inferring the unknown node label, i.e., Bob’s university.
+However, it is very likely that the graph information has varying levels of usefulness, ranging between completely useful and completely useless.
+For example, in Figure 2, only 1 out of 2 node features is useful: the node feature ‘located in the US’ is useful, while the node feature ‘likes to bike’ is not.</p>
+<figure>
+<img src="./figure5.png" alt="structural and neighbors' feature embedding" width="800"/>
+<figcaption>
+Figure 5. Illustration of structural embedding (left) and neighbors' feature embedding (right). (a): SVD is conducted on the adjacency matrix to extract structural embedding. (b): Dimensionality reduction is conducted on the node features. (c): Messages passed from a node's neighbors are aggregated to generate its node embedding.
+</figcaption>
+</figure>
+<p>We focus on analyzing whether GNNs will perform well in a given setting, which is an important problem in the industry.
+The reason is that, for large cloud service providers, the customer provides them with an attributed graph and requests them to solve the graph task (e.g., recommendation) using GNNs within restricted budgets.
+However, if the given graph lacks network usable information (NUI), the resources spent on training GNNs will be wasted.
+Therefore, our method serves as a preliminary tool to determine whether resources should be allocated for training expensive deep models.</p>
+<p>A straightforward way is to analyze the node embedding of the given graph generated by GNNs, but this is only available after training, which is expensive and time-consuming.
+For this reason, we propose to analyze the derived node embedding in linear GNNs, which can be precomputed before model training.
+More specifically, we derive three types of node embedding that can comprehensively represent the information of the given graph, namely:</p>
+<ol>
+<li><strong>Structural embedding (\( U \)):</strong> for the information of the graph structure. It is extracted by decomposing the adjacency matrix with singular value decomposition (SVD). Intuitively, the left singular vectors U give the information of the node community. For example, in Figure 5(a), U identifies that the first three users belong to the blue community, while the last four belong to the red community. This is useful when the node features are not useful to solve the graph task.</li>
+<li><strong>Feature embedding (\( F \)):</strong> for the information of the node features. It consists of the original node features after dimensionality reduction. As shown in Figure 5(b), Principal Component Analysis (PCA) [7] is used as the dimensionality reduction technique. This is useful when there are no network effects, i.e. the graph structure is not useful to solve the graph task.</li>
+<li><strong>Neighbors’ feature embedding (\( S \)):</strong> for the information of the features aggregated from the neighbors. As shown in Figure 5(c), the messages are passed and aggregated from the neighbors for two steps. The intuition is that, in addition to the information from the user, the user’s neighbors also provide useful information to the task. Leveraging their information leads to better performance on the graph task. This is useful when both the graph structure and the node features are useful to solve the graph task.</li>
+</ol>
+<p>Once we have the embedding that can represent the information of the nodes of the graph, we propose NetInfoF_Score, and link the metrics of graph information and task performance with the following proposed theorem:</p>
+<p><strong>Definition 1</strong> (NetInfoF_Score of \( Y \) given \( X \)).
+<em>Given two discrete random variables \( X \) and \( Y \), NetInfoF_Score \( s \) of \( Y \) given \( X \) is defined as:</em>
+\[ s = 2^{-H(Y|X)} \]
+<em>where \( H(\cdot | \cdot) \) denotes the conditional entropy [8].</em></p>
+<p><strong>Theorem 1</strong> (NetInfoF_Score).
+<em>Given two discrete random variables \( X \) and \( Y \), NetInfoF_Score \( s \) of \( Y \) given \( X \) lower-bounds the accuracy:</em>
+\[ s = 2^{-H(Y|X)} \leq accuracy(Y|X) = \sum_{x \in X}{\max_{y \in Y}{p_{x, y}}} \]
+<em>where \( p_{x, y} \) is the joint probability of \( x \) and \( y \).</em></p>
+<p>The proof is in [1].
+The intuition behind this theorem is that the conditional entropy of \( Y \) (e.g. labels) given \( X \) (e.g. “like biking”), is a strong indicator of how good of a predictor \( X \) is, to guess the target \( Y \).
+It provides an advantage to NetInfoF_Score by giving it an intuitive interpretation, which is the lower-bound of the accuracy. When there is little usable information for the task, the value of NetInfoF_Score is close to random guessing.</p>
+<figure>
+<img src="./figure6.png" alt="Emperical study" width="400"/>
+<figcaption>
+Figure 6. Our theorem holds, where NetInfoF_Score is always less than or equal to validation accuracy.
+</figcaption>
+</figure>
+<p>In Figure 6, each point represents the accuracy and NetInfoF_Score obtained by solving graph tasks using one type of node embedding.
+We find that NetInfoF_Score lower-bounds the accuracy of the given graph task, as expected.
+If an embedding has no usable information to solve the given task, NetInfoF_Score gives a score close to random guessing (see lower left corner in Figure 6).
+The details of the experiment can be found in [1].</p>
+<h2 id="exploiting-nui-how-to-solve-graph-tasks"><em>Exploiting NUI:</em> How to solve graph tasks?</h2>
+<p>In this blog, we focus on explaining how to solve node classification. How to solve link prediction is more complicated, and the details can be found in [1].</p>
+<p>To solve node classification, we concatenate different types of embedding, and the input of the classifier is as follows:
+\[ U \parallel F \parallel S , \]
+where \( \parallel \) is concatenation, \( U \) is the structural embedding, \( F \) is the feature embedding, and \( S \) is the neighbors’ feature embedding. Among all the choices, we use logistic regression as the node classifier, as it is fast and interpretable.</p>
+<h2 id="how-well-does-our-proposed-method-perform">How well does our proposed method perform?</h2>
+<figure>
+<img src="./table1.png" alt="Node classification" width="1000"/>
+</figure>
+<p>As shown in Table 1, applied on 12 real-world graphs, NetInfoF outperforms GNN baselines in 7 out of 12 datasets on node classification.</p>
+<figure>
+<img src="./figure7.png" alt="NetInfoF_Score on real-world datasets" width="200"/>
+<figcaption>
+Figure 7. NetInfoF_Score highly correlates to test performance in real-world datasets. Each point denotes the result of one type of embedding in each dataset.
+</figcaption>
+</figure>
+<p>In Figure 7, NetInfoF_Score is highly correlated with test performance on node classification.
+This indicates that NetInfoF_Score is a reliable measure for deciding whether to use a GNN on the given graph or not in a short time, without any model training.
+Noting that although our theorem proves that NetInfoF_Score is a lower bound on <em>training</em> accuracy, it is possible for <em>testing</em> accuracy to be lower than the NetInfoF_Score (blue points below 45 degree line in Figure 7).</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In this blog post we investigate the problem of predicting whether a message-passing method would work well on a given graph.
+To solve this problem, we introduce our approach called NetInfoF to measure and exploit the network usable information (NUI).
+Applied on real-world graphs, NetInfoF not only correctly measures NUI with NetInfoF_Score, but also outperforms other baselines 7 out of 12 times on node classification.</p>
+<p>Please find more details in our paper [1].</p>
+<h2 id="references">References</h2>
+<p>[1] Lee, M. C., Yu, H., Zhang, J., Ioannidis, V. N., Song, X., Adeshina, S., … &amp; Faloutsos, C. NetInfoF Framework: Measuring and Exploiting Network Usable Information. International Conference on Learning Representations (ICLR), 2024.</p>
+<p>[2] Koutra, D., Ke, T. Y., Kang, U., Chau, D. H., Pao, H. K. K., &amp; Faloutsos, C. Unifying guilt-by-association approaches: Theorems and fast algorithms. Machine Learning and Knowledge Discovery in Databases: European Conference (ECML PKDD), 2011</p>
+<p>[3] Günnemann, W. G. S., Koutra, D., &amp; Faloutsos, C. Linearized and Single-Pass Belief Propagation. VLDB Endowment, 2015.</p>
+<p>[4] Kipf, T. N., &amp; Welling, M. Semi-Supervised Classification with Graph Convolutional Networks. International Conference on Learning Representations (ICLR), 2017.</p>
+<p>[5] Wu, F., Souza, A., Zhang, T., Fifty, C., Yu, T., &amp; Weinberger, K. Simplifying Graph Convolutional Networks. PMLR International Conference on Machine Learning (ICML), 2019.</p>
+<p>[6] Yoo, J., Lee, M. C., Shekhar, S., &amp; Faloutsos, C. Less is More: SlimG for Accurate, Robust, and Interpretable Graph Mining. ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD), 2023.</p>
+<p>[7] Principal component analysis. In Wikipedia. <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Principal_component_analysis">https://en.wikipedia.org/wiki/Principal_component_analysis</a>, 2024.</p>
+<p>[8] Conditional entropy. In Wikipedia. <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Conditional_entropy">https://en.wikipedia.org/wiki/Conditional_entropy</a>, 2024.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;mengchillee.github.io&#x2F;" target=_blank>
+  Meng-Chieh Lee
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;csd.cmu.edu&#x2F;people&#x2F;faculty&#x2F;jignesh-patel" target=_blank>
+  Jignesh Patel,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~dst&#x2F;" target=_blank>
+  David Touretzky,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;csd.cmu.edu&#x2F;people&#x2F;doctoral-student&#x2F;ananya-joshi" target=_blank>
+  Ananya Joshi
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/artificial-intelligence/">#Artificial Intelligence</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/graph-mining/">#graph-mining</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/information-theory/">#information-theory</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;piano-private-information-retrieval&#x2F;">‹ Piano: Extremely Simple, Single-Server Private Information Retrieval</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;max-extractable-value&#x2F;">Maximal Extractable Value in Ethereum ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

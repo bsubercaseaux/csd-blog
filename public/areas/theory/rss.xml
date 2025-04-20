@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>CMU CSD PhD Blog - Theory</title>
+      <link>https://www.cs.cmu.edu/~csd-phd-blog</link>
+      <description></description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://www.cs.cmu.edu/~csd-phd-blog/areas/theory/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Mon, 24 Mar 2025 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Computer Assisted Mathematics: A Case Study in Discrete Geometry</title>
+          <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
+          <author>Bernardo Subercaseaux</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/</guid>
+          <description><![CDATA[
+In the last couple of years a pressing question has started to permeate the mathematical community: how will mathematicians’ jobs coexist harmoniously with AI as it gets progressively better at mathematics? “A.I. Is Coming for Mathematics, Too” was the title chosen by the NY Tim… ]]></description>
+      </item>
+      <item>
+          <title>Tight Lower Bound for Directed Cut Sparsification</title>
+          <pubDate>Wed, 11 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Honghao Lin</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/directed-cut-sketch/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/directed-cut-sketch/</guid>
+          <description><![CDATA[In this blog post, I will begin by introducing the concept of cut sparsifier for a given graph \(G\), which has been a powerful tool in the design of graph algorithms. Following that, I will present a tight lower bound for the directed cut sparsifier of a balanced directed graph,… ]]></description>
+      </item>
+      <item>
+          <title>YOSO Randomness Generation with Worst-Case Corruptions</title>
+          <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+          <author>Elisaweta Masserova</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/</guid>
+          <description><![CDATA[Randomness is a fundamental component of numerous real-world protocols. It is used everywhere, from ensuring fairness in the green card lottery to its application in clinical trials, financial audits, and various blockchain technologies.
+For these protocols, randomness must satis… ]]></description>
+      </item>
+      <item>
+          <title>miniCodeProps: a Benchmark for Proving Code Properties</title>
+          <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
+          <author>Evan Lohn</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/mini-code-props/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/mini-code-props/</guid>
+          <description><![CDATA[It is nearly inevitable that bugs will appear in a codebase during software development. To catch these bugs before they lead to real-world consequences,
+the formal verification community has developed a wide variety of tools for ensuring code correctness. These tools fall
+into t… ]]></description>
+      </item>
+      <item>
+          <title>Efficient Anonymous Blocklisting</title>
+          <pubDate>Wed, 31 Jul 2024 00:00:00 +0000</pubDate>
+          <author>Orestis Chardouvelis</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/anonymous-blocklisting/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/anonymous-blocklisting/</guid>
+          <description><![CDATA[
+
+Truly Anonymous Service Providers can offer users confirmed privacy, but also allow inappropriate behavior 😳
+Anonymous Blocklisting permits blocking ill-behaved users without denanonymizing them. Specifically, the service provider blocks individual posts, and the benign users u… ]]></description>
+      </item>
+      <item>
+          <title>Maximal Extractable Value in Ethereum</title>
+          <pubDate>Thu, 27 Jun 2024 00:00:00 +0000</pubDate>
+          <author>Junxi Song</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/max-extractable-value/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/max-extractable-value/</guid>
+          <description><![CDATA[In 2008, a groundbreaking development in the world of finance occurred: the birth of Bitcoin, the first decentralized digital currency. This innovation, introduced by blockchain technology, enables value transfer between parties without the need for traditional intermediaries lik… ]]></description>
+      </item>
+      <item>
+          <title>Understanding Setup Times</title>
+          <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
+          <author>Jalani Williams</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/understanding-setup/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/understanding-setup/</guid>
+          <description><![CDATA[
+
+Nobody likes waiting in line.
+But some of the most frustrating experiences that I’ve ever had waiting are when I get in a super long line, I peek around to the front of the line, and I see that the server isn’t even ready to serve –they’re still setting up!
+It’s terrible, and i… ]]></description>
+      </item>
+      <item>
+          <title>Better streaming algorithms for Maximum Directed Cut via &#x27;snapshots&#x27;</title>
+          <pubDate>Thu, 11 Apr 2024 00:00:00 +0000</pubDate>
+          <author>Noah G. Singer</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/streaming-csps/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/streaming-csps/</guid>
+          <description><![CDATA[
+In this blog post, I’ll discuss a new algorithm based on two joint papers of mine with Raghuvansh Saxena, Madhu Sudan, and Santhoshini Velusamy (appearing in SODA’23 and FOCS’23). The goal of this algorithm is to “approximate” the value of a graph optimization problem called “ma… ]]></description>
+      </item>
+      <item>
+          <title>Code Conversion in Distributed Storage Systems</title>
+          <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
+          <author>Francisco Maturana</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/</guid>
+          <description><![CDATA[
+
+Figure 1: diagram showing the code conversion process in a distributed storage system.
+
+Today’s society is data-driven, and many of the applications that society relies on require storing ever-increasing amounts of data.
+To this end, distributed storage systems have become the … ]]></description>
+      </item>
+      <item>
+          <title>Time-Traveling Simulation for Security</title>
+          <pubDate>Tue, 06 Dec 2022 00:00:00 +0000</pubDate>
+          <author>Justin Raizes</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/</guid>
+          <description><![CDATA[Blockchains are a powerful technology which allow decentralized agreement with an immutable history. Since transactions can be added, but not removed, blockchains allow distributed banking as a trustworthy alternative to central banking.
+A vast amount of cryptographic research on… ]]></description>
+      </item>
+    </channel>
+</rss>

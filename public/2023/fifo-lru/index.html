@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - FIFO is Better than LRU: the Power of Lazy Promotion and Quick Demotion</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/fifo-lru/#introduction" class="toc-link">Introduction</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/fifo-lru/#why-fifo-and-what-it-needs" class="toc-link">Why FIFO and What it needs</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/fifo-lru/#lazy-promotion" class="toc-link">Lazy Promotion</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/fifo-lru/#quick-demotion" class="toc-link">Quick Demotion</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/fifo-lru/#discussion" class="toc-link">Discussion</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;fifo-lru&#x2F;">FIFO is Better than LRU: the Power of Lazy Promotion and Quick Demotion</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2023-09-20</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;junchengyang.com" target=_blank>
+  Juncheng Yang
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <blockquote>
+<p><strong>TL;DR:</strong>
+Historically FIFO-based algorithms are thought to be less efficient (having higher miss ratios) than LRU-based algorithms.
+In this blog, we introduce two techniques, <strong>lazy promotion</strong>, which promotes objects only at eviction time, and <strong>quick demotion</strong>, which evicts most new objects quickly. We will show that</p>
+<ul>
+<li>Conventional-wisdom-suggested “weak LRUs”, e.g., FIFO-Reinsertion, is actually more efficient (having lower miss ratios) than LRU;</li>
+<li>Simply evicting most new objects quickly can improve the state-of-the-art algorithm’s efficiency.</li>
+<li>Eviction algorithms can be designed like building with LEGOs by adding <strong>lazy promotion</strong> and <strong>quick demotion</strong> on top of FIFO.</li>
+</ul>
+</blockquote>
+<h2 id="introduction">Introduction</h2>
+<p>Caching is a well-known and widely deployed technique to speed up data access, reduce repeated computation and data transfer.
+A core component of a cache is the eviction algorithm, which chooses the objects stored in the limited cache space.
+Two metrics describe the performance of an eviction algorithm: efficiency measured by the miss ratio and throughput measured by the number of requests served that can be served per second.</p>
+<p>The study of cache eviction algorithms has a long history, with a majority of the work centered around LRU (that is, to evict the least-recently-used object).
+Generally, LRU maintains a doubly-linked list, promoting objects to the head of the list upon cache hits and evicting the object at the tail of the list when needed.
+<a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/3399709">Belady and others found</a> that memory access patterns often exhibit temporal locality — “the most recently used pages were most likely to be reused in the immediate future”. Thus, LRU using <em>recency</em> to promote objects was found to be better than FIFO.</p>
+<p>Most eviction algorithms designed to achieve high efficiency start from LRU.
+For example, many algorithms, such as <a rel="noopener" target="_blank" href="https://www.usenix.org/conference/fast-03/arc-self-tuning-low-overhead-replacement-cache">ARC</a>, <a rel="noopener" target="_blank" href="https://research.facebook.com/publications/an-analysis-of-facebook-photo-caching/">SLRU</a>, <a rel="noopener" target="_blank" href="https://www.vldb.org/conf/1994/P439.PDF">2Q</a>, <a rel="noopener" target="_blank" href="https://www.usenix.org/legacy/events/usenix01/full_papers/zhou/zhou.pdf">MQ</a>, and <a rel="noopener" target="_blank" href="https://lwn.net/Articles/856931/">multi-generational LRU</a>, use multiple LRU queues to separate hot and cold objects. Some algorithms, e.g., <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/abs/10.1145/511399.511340?casa_token=x3My6rber5UAAAAA%3A7Gbpkgt2k6RMf95GUwvxrsY0-R-q5EpEN_uXRAfF4loxK2vo9yFtFh6Vo5R-30Vlkv1_3BtwnJiomlw">LIRS</a>, maintain an LRU queue but use different metrics to promote objects. While other algorithms, e.g., <a rel="noopener" target="_blank" href="https://www.computer.org/csdl/journal/tc/2001/12/t1352/13rRUxBJhES">LRFU</a>, <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/pdf/10.1145/301464.301486">EE-LRU</a>, <a rel="noopener" target="_blank" href="https://www.usenix.org/system/files/conference/hotstorage18/hotstorage18-paper-vietri.pdf">LeCaR</a>, and <a rel="noopener" target="_blank" href="https://www.usenix.org/system/files/fast21-rodriguez.pdf">CACHEUS</a>, augment LRU’s recency with different metrics. In addition, many recent works, e.g., <a rel="noopener" target="_blank" href="https://ieeexplore.ieee.org/abstract/document/7056022">Talus</a>, improve LRU’s ability to handle scan and loop requests.</p>
+<p>Besides efficiency (miss ratio), there have been fruitful studies on enhancing the cache’s execution performance and thread scalability. Each cache hit in LRU promotes an object to the head of the queue, which requires updating at least six pointers guarded by locks.
+These overheads are not acceptable in many deployments that need high performance.
+Thus, performance-centric systems often use FIFO-based algorithms to avoid LRU’s overheads.
+For example, FIFO-Reinsertion and variants of CLOCK have been developed, which serve as LRU approximations.
+<em>It is often perceived that these algorithms trade miss ratio for better throughput and scalability.</em></p>
+<p>In this blog, I am going to show that FIFO is in-fact better than LRU not only because of higher throughput, better scalability, but also because of improved effectiveness (having lower miss ratios).</p>
+<h2 id="why-fifo-and-what-it-needs">Why FIFO and What it needs</h2>
+<p>FIFO has many benefits over LRU.
+For example, FIFO has <em>less metadata</em> and requires no metadata update on each cache hit, and thus is <em>faster and more scalable</em> than LRU. In contrast, LRU requires updating six pointers on each cache hit, which is not friendly for modern computer architecture due to random memory accesses. Moreover, FIFO is always the first choice when implementing a flash cache because it does not incur write amplification. Although FIFO has throughput and scalability benefits, it is conventional wisdom that FIFO is less effective (having higher miss ratio) than LRU.</p>
+<p align="center">
+<figure class="image"><img src="cacheAbs.svg" alt="A cache abstraction" style="width:80%; display: block; margin-left: auto; margin-right: auto;">
+<figcaption>A cache can be viewed as a logically ordered queue with four operations: insertion, removal, promotion and demotion. Most eviction algorithms can be viewed as promotion algorithms because they focus on how to promote objects. </figcaption>
+</figure>
+</p>
+<p>To understand the various factors that affect the miss ratio, we introduce a cache abstraction.
+A cache can be viewed as a logically total-ordered queue with four operations: <span style="font-family:monaco;">insertion</span>, <span style="font-family:monaco;">removal</span>, <span style="font-family:monaco;">promotion</span>, and <span style="font-family:monaco;">demotion</span>.
+Objects in the cache can be compared and ordered based on some metric (e.g., time since the last request), and the eviction algorithm evicts the least valuable object based on the metric.
+<span style="font-family:monaco;">Insertion</span> and <span style="font-family:monaco;">removal</span> are user-controlled operations, where <span style="font-family:monaco;">removal</span> can either be directly invoked by the user or indirectly via the use of time-to-live (TTL).
+<span style="font-family:monaco;">Promotion</span> and <span style="font-family:monaco;">demotion</span> are internal operations of the cache used to maintain the logical ordering between objects.</p>
+<p>We observe that most eviction algorithms use <span style="font-family:monaco;">promotion</span> to update the ordering between objects.
+For example, LRU-based algorithms promote objects to the head of the queue on cache hits, which we call <span style="font-family:monaco;">eager promotion</span>.
+Meanwhile, <span style="font-family:monaco;">demotion</span> is performed implicitly: when an object is promoted, other objects are passively demoted.
+We call this process <span style="font-family:monaco;">passive demotion</span>, a slow process as objects need to traverse through the cache queue before being evicted.
+However, we will show that instead of eager promotion and passive demotion, eviction algorithms should use <strong>lazy promotion</strong> and <strong>quick demotion</strong>.</p>
+<h2 id="lazy-promotion">Lazy Promotion</h2>
+<p>To avoid popular objects from being evicted while not incurring much performance overhead, we propose adding <strong>lazy promotion</strong> on top of FIFO (called <span style="font-family:arial; font-variant-cap:petite-caps"> LP-FIFO</span>), which <em>promotes objects only when they are about to be evicted</em>.
+<strong>lazy promotion</strong> aims to retain popular objects with minimal effort.
+An example is FIFO-Reinsertion (note that FIFO-Reinsertion, 1-bit CLOCK, and Second Chance are different implementations of the same eviction algorithm): an object is reinserted at eviction time if it has been requested while in the cache.</p>
+<p><span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> has several benefits over eager promotion (promoting on every access) used in LRU-based algorithms.
+First, <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> inherits FIFO’s throughput and scalability benefits because few metadata operations are needed when an object is requested. For example, FIFO-Reinsertion only needs to update a Boolean field upon the <em>first</em> request to a cached object without locking.
+Second, performing promotion at eviction time allows the cache to make better decisions by accumulating more information about the objects, e.g., how many times an object has been requested.</p>
+<style>
+td,th {
+  font-size: 96%;
+}
+</style>
+<table><thead><tr><th>Trace</th><th>approx time</th><th style="text-align: right">#trace</th><th style="text-align: right">cache type</th><th style="text-align: right">#req (millions)</th><th style="text-align: right">#obj (millions)</th></tr></thead><tbody>
+<tr><td>MSR</td><td>2007</td><td style="text-align: right">13</td><td style="text-align: right">block</td><td style="text-align: right">410</td><td style="text-align: right">74</td></tr>
+<tr><td>FIU</td><td>2008</td><td style="text-align: right">9</td><td style="text-align: right">block</td><td style="text-align: right">514</td><td style="text-align: right">20</td></tr>
+<tr><td>Cloudphysics</td><td>2015</td><td style="text-align: right">106</td><td style="text-align: right">block</td><td style="text-align: right">2,114</td><td style="text-align: right">492</td></tr>
+<tr><td>Major CDN</td><td>2018</td><td style="text-align: right">219</td><td style="text-align: right">object</td><td style="text-align: right">3,728</td><td style="text-align: right">298</td></tr>
+<tr><td>Tencent Photo</td><td>2018</td><td style="text-align: right">2</td><td style="text-align: right">object</td><td style="text-align: right">5,650</td><td style="text-align: right">1,038</td></tr>
+<tr><td>Wiki CDN</td><td>2019</td><td style="text-align: right">3</td><td style="text-align: right">object</td><td style="text-align: right">2,863</td><td style="text-align: right">56</td></tr>
+<tr><td>Tencent CBS</td><td>2020</td><td style="text-align: right">4030</td><td style="text-align: right">block</td><td style="text-align: right">33,690</td><td style="text-align: right">551</td></tr>
+<tr><td>Alibaba</td><td>2020</td><td style="text-align: right">652</td><td style="text-align: right">block</td><td style="text-align: right">19,676</td><td style="text-align: right">1702</td></tr>
+<tr><td>Twitter</td><td>2020</td><td style="text-align: right">54</td><td style="text-align: right">KV</td><td style="text-align: right">195,441</td><td style="text-align: right">10,650</td></tr>
+<tr><td>Social Network</td><td>2020</td><td style="text-align: right">219</td><td style="text-align: right">KV</td><td style="text-align: right">549,784</td><td style="text-align: right">42,898</td></tr>
+</tbody></table>
+<p>To understand <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span>’s efficiency,
+we performed a large-scale simulation study on 5307 production traces from 10 data sources, which include open-source and proprietary datasets collected between 2007 and 2020.
+The 10 datasets contain 814 billion (6,386 TB) requests and 55.2 billion (533 TB) objects, and cover different types of caches, including block, key-value (KV), and object caches.
+We further divide the traces into block and web (including Memcached and CDN).
+We choose small/large cache size as 0.1%/10% of the number of unique objects in the trace.</p>
+<p>We compare the miss ratios of LRU with two <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> algorithms:
+FIFO-Reinsertion and 2-bit CLOCK.
+2-bit CLOCK tracks object frequency up to three, and an object’s frequency decreases by one each time the CLOCK hand scans through it. Objects with frequency zero are evicted.</p>
+<p>Common wisdom suggests that these two <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> examples are LRU approximations and will exhibit higher miss ratios than LRU.
+However, we found that <strong><span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> often exhibits miss ratios lower than LRU</strong>.</p>
+<div style="display: flex; justify-content: space-around;">
+<img src="multi_LRU_FIFO_Reinsertion_1.svg" alt="small cache" style="width:40%">
+<img src="multi_LRU_FIFO_Reinsertion_3.svg" alt="large cache" style="width:40%">
+</div>
+<div style="width: 88%; margin: 0 auto;">
+Comparison of FIFO-Reinsertion and LRU on 10 datasets with 5307 traces. Left: small cache, right: large cache. 
+</div>
+<div style="display: flex; justify-content: space-around;">
+<img src="multi_LRU_Clock-2_1.svg" alt="small cache" style="width:40%">
+<img src="multi_LRU_Clock-2_3.svg" alt="large cache" style="width:40%">
+</div>
+<div style="width: 88%; margin: 0 auto;">
+Comparison of 2-bit CLOCK and LRU on 10 datasets with 5307 traces. Left: small cache, right: large cache. A longer bar means the algorithm is more efficient (having lower miss ratios on more traces). Note that we do not consider the overhead of LRU metadata in these evaluations. 
+</div>
+<p>The figure above shows that FIFO-Reinsertion and 2-bit CLOCK are better than LRU on most traces.
+Specifically, FIFO-Reinsertion is better than LRU on 9 and 7 of the 10 datasets using a small and large cache size, respectively.
+Moreover, on half of the datasets, more than 80% of the traces in each dataset favor FIFO-Reinsertion over LRU at both sizes.
+On the two social network datasets, LRU is better than FIFO-Reinsertion (especially at the large cache size). This is because most objects in these two datasets are accessed more than once, and using one bit to track object access is insufficient. Therefore, when increasing the one bit in FIFO-Reinsertion (CLOCK) to two bits (2-bit CLOCK), we observe that the number of traces favoring <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> increases to around 70%.
+Across all datasets, 2-bit CLOCK is better than FIFO on all datasets at the small cache size and 9 of the 10 datasets at the large cache size.</p>
+<figure class="image">
+<img src="LP.svg" alt="Lazy promotion leads to quick demotion" style="width:64%">
+<figcaption>FIFO-Reinsertion demotes new objects faster than LRU because objects requested before the new object also pushes it down the queue.</figcaption>
+</figure>
+<p>Two reasons contribute to <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span>’s high effectiveness.
+First, <strong>lazy promotion</strong> often leads to <strong>quick demotion</strong>. For example, under LRU, a newly-inserted object <em>G</em> is pushed down the queue only by (1) new objects and (2) cached objects that are requested after <em>G</em>. However, besides the objects requested after <em>G</em>, the objects requested before <em>G</em> (but have not been promoted, e.g., <em>B</em>, <em>D</em>) also push <em>G</em> down the queue when using FIFO-Reinsertion.
+Second, compared to promotion at each request, object ordering in <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> is closer to the insertion order, which we conjecture is better suited for many workloads that exhibit popularity decay — old objects have a lower probability of getting a request.</p>
+<p>While <span style="font-family:arial; font-variant-cap:small-caps">LP-FIFO</span> surprisingly wins over LRU in miss ratio, it does not outperform state-of-the-art algorithms. We next discuss another building block that bridges this gap.</p>
+<h2 id="quick-demotion">Quick Demotion</h2>
+<p>Efficient eviction algorithms not only need to keep popular objects in the cache but also need to evict unpopular objects fast. In this section, we show that <strong>quick demotion</strong> (QD) is critical for an efficient eviction algorithm, and it enables FIFO-based algorithms to achieve state-of-the-art efficiency.</p>
+<p>Because demotion happens passively in most eviction algorithms, an object typically traverses through the cache before being evicted. Such traversal gives each object a good chance to prove its value to be kept in the cache.
+However, cache workloads often follow Zipf popularity distribution, with most objects being unpopular.
+This is further exacerbated by (1) the scan and loop access patterns in the block cache workloads, and (2) the vast existence of dynamic and short-lived data, the use of versioning in object names, and the use of short TTLs in the web cache workloads.
+We believe the <em>opportunity cost of new objects demonstrating their values is often too high</em>: the object being evicted at the tail of the queue may be more valuable than the objects recently inserted.</p>
+<figure class="image">
+<img src="QD.svg" alt="An examplf of quick demotion" style="width:64%">
+<figcaption>An example of quick demotion: adding a small FIFO to filter most new objects that do not have a request soon after insertion.</figcaption>
+</figure>
+<p>To illustrate the importance of <strong>quick demotion</strong>, we add a simple QD technique on top of state-of-the-art eviction algorithms.
+The QD technique consists of a small probationary FIFO queue storing cached data and a ghost FIFO queue storing metadata of objects evicted from the probationary FIFO queue.
+The probationary FIFO queue uses 10% of the cache space and acts as a filter for unpopular objects: objects not requested after insertion are evicted early from the FIFO queue. The main cache runs a state-of-the-art algorithm and uses 90% of the space.
+And the ghost FIFO stores as many entries as the main cache.
+Upon a cache miss, the object is written into the probationary FIFO queue unless it is in the ghost FIFO queue, in which case, it is written into the main cache.
+When the probationary FIFO queue is full, if the object to evict has been accessed since insertion, it is inserted into the main cache. Otherwise, it is evicted and recorded in the ghost FIFO queue.</p>
+<p>We add this FIFO-based QD technique to five state-of-the-art eviction algorithms, ARC, LIRS, CACHEUS, LeCaR, and LHD.
+We used the open-source LHD implementation from the authors, implemented the others following the corresponding papers, and cross-checked with open-source implementations.
+We evaluated the QD-enhanced and original algorithms on the 5307 traces.
+Because the traces have a wide range of miss ratios, we choose to present each algorithm’s miss ratio reduction from FIFO calculated as <em>(mr<sub>FIFO</sub> - mr<sub>algo</sub>) / mr<sub>FIFO</sub></em>. Therefore, higher values are better.</p>
+<div style="display: flex; justify-content: space-around;">
+<img src="block_1.svg" alt="block cache traces, small cache size" style="width:48%">
+<img src="block_3.svg" alt="block cache traces, large cache size" style="width:48%">
+</div>
+<div style="display: flex; justify-content: space-around;">
+<img src="web_1.svg" alt="web cache traces, small cache size" style="width:48%">
+<img src="web_3.svg" alt="web cache traces, large cache size" style="width:48%">
+</div>
+<div style="width: 88%; margin: 0 auto;">
+On the block (first row) and web traces (second row), quick demotion can improve most state-of-the-art algorithm's efficiency. Left: small cache, right: large cache.
+</div>
+<p>The figures above show that the QD-enhanced algorithms further reduce the miss ratio of each state-of-the-art algorithm on almost all percentiles. For example, QD-ARC (QD-enhanced ARC) reduces ARC’s miss ratio by up to 59.8% with a mean reduction of 1.5% across all workloads on the two cache sizes, QD-LIRS reduces LIRS’s miss ratio by up to 49.6% with a mean of 2.2%, and QD-LeCaR reduces LeCaR’s miss ratio by up to 58.8% with a mean of 4.5%.
+Note that achieving a large miss ratio reduction on a large number of diverse traces is non-trivial. For example, the best state-of-the-art algorithm, ARC, can only reduce the miss ratio of LRU by 6.2% on average.</p>
+<p>The gap between the QD-enhanced algorithm and an original algorithm is wider (1) when the state-of-the-art is relatively weak, (2) when the cache size is large, and (3) on the web workloads.
+First, With a weaker state-of-the-art, the opportunity for improvement is larger, allowing QD to provide more prominent benefits. For example, QD-LeCaR reduces LeCaR’s miss ratios by 4.5% on average, larger than the reductions on other state-of-the-art algorithms.
+Second, when the cache size is large, unpopular objects spend more time in the cache, and <strong>quick demotion</strong> becomes more valuable.
+For example, QD-ARC and ARC have similar miss ratios on the block workloads at the small cache size. But QD-ARC reduces ARC’s miss ratio by 2.3% on average at the large cache size.
+However, when the cache size is too large, e.g., 80% of the number of objects in the trace,
+adding QD may increase the miss ratio (not shown).
+Third, QD provides more benefits on the web workloads than the block workloads, especially when the cache size is small. We conjecture that web workloads have more short-lived data and exhibit stronger popularity decay, which leads to a more urgent need for <strong>quick demotion</strong>.
+While <strong>quick demotion</strong> improves the efficiency of most state-of-the-art algorithms, for a small subset of traces, QD may increase the miss ratio when the cache size is small because the probationary FIFO is too small to capture some potentially popular objects.</p>
+<p>Although adding the probationary FIFO improves efficiency, it further increases the complexity of the already complicated state-of-the-art algorithms.
+To reduce complexity, we add the same QD technique on top of 2-bit CLOCK and call it <span style="font-family:arial; font-variant-cap:small-caps">QD-LP-FIFO</span>.
+<span style="font-family:arial; font-variant-cap:small-caps">QD-LP-FIFO</span> uses two FIFO queues to cache data and a ghost FIFO queue to track evicted objects.
+It is not hard to see <span style="font-family:arial; font-variant-cap:small-caps">QD-LP-FIFO</span> is simpler than all state-of-the-art algorithms — it requires at most one metadata update on a cache hit and no locking for any cache operation. Therefore, we believe it will be faster and more scalable than all state-of-the-art algorithms.
+Besides enjoying all the benefits of simplicity, <span style="font-family:arial; font-variant-cap:small-caps">QD-LP-FIFO</span> also achieves lower miss ratios than state-of-the-art algorithms.
+For example, compared to LIRS and LeCaR, <span style="font-family:arial; font-variant-cap:small-caps">QD-LP-FIFO</span> reduces miss ratio by 1.6% and 4.3% on average, respectively, across the 5307 traces.
+While the goal of this work is not to propose a new eviction algorithm, <span style="font-family:arial; font-variant-cap:small-caps">QD-LP-FIFO</span> illustrates how we can build simple yet efficient eviction algorithms by adding <strong>quick demotion</strong> and <strong>lazy promotion</strong> techniques to a simple base eviction algorithm such as FIFO.</p>
+<h2 id="discussion">Discussion</h2>
+<p>We have demonstrated reinsertion as an example of LP and the use of a small probationary FIFO queue as an example of QD. However, these are not the only techniques.
+For example, reinsertion can leverage different metrics to decide whether the object should be reinserted. Besides reinsertion, several other techniques are often used to reduce promotion and improve scalability, e.g., periodic promotion, batched promotion, promoting old objects only, and promoting with try-lock.
+Although these techniques do not fall into our strict definition of <strong>lazy promotion</strong> (promotion on eviction), many of them effectively retain popular objects from being evicted.
+On the <strong>quick demotion</strong> side, besides the small probationary FIFO queue, one can leverage other techniques to define and discover unpopular objects such as <a rel="noopener" target="_blank" href="https://www.usenix.org/system/files/conference/atc17/atc17-blankstein.pdf">Hyperbolic</a> and <a rel="noopener" target="_blank" href="https://www.usenix.org/system/files/conference/nsdi18/nsdi18-beckmann.pdf">LHD</a>.
+Moreover, admission algorithms, e.g., <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/pdf/10.1145/3149371">TinyLFU</a>, Bloom Filter, probabilistic, and <a rel="noopener" target="_blank" href="https://www.usenix.org/system/files/nsdi19-eisenman.pdf">ML-based admission algorithms</a>, can be viewed as a form of QD — though some of them are too aggressive at demotion (rejecting objects from entering the cache).</p>
+<p>Note that QD bears similarity with some <a rel="noopener" target="_blank" href="https://wiki.c2.com/?GenerationalGarbageCollection">generational garbage collection algorithms</a>, which separately store short-lived and long-lived data in young-gen and old-gen heaps.
+Therefore, ideas from garbage collection may be borrowed to strengthen cache eviction algorithms.</p>
+<p>The design of <span style="font-family:arial; font-variant-cap:small-caps">QD-LP-FIFO</span> opens the door to designing simple yet efficient cache eviction algorithms by innovating on LP and QD techniques. And we envision future eviction algorithms can be designed like building LEGO — adding <strong>lazy promotion</strong> and <strong>quick demotion</strong> on top of a base eviction algorithm.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;junchengyang.com" target=_blank>
+  Juncheng Yang
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Greg Ganger,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  George Amvrosiadis,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Tian Li
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/">#Systems</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/cache/">#cache</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/eviction/">#eviction</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/fifo/">#FIFO</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/lru/">#LRU</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;rust-verification-with-verus&#x2F;">‹ Verus: A tool for verified systems code in Rust</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;ktn&#x2F;">Transfer Learning within a Heterogeneous Graph ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

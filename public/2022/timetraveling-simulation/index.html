@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Time-Traveling Simulation for Security</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#the-philosophy-of-security" class="toc-link">The Philosophy of Security</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#security-implications-of-time-traveling-simulation" class="toc-link">Security Implications of Time-Traveling Simulation</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#application-time-traveling-simulators-for-zero-knowledge" class="toc-link">Application: Time-Traveling Simulators for Zero Knowledge</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#zero-knowledge-in-three-rounds" class="toc-link">Zero Knowledge in Three Rounds</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2022&#x2F;timetraveling-simulation&#x2F;">Time-Traveling Simulation for Security</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2022-12-06</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;sites.google.com&#x2F;view&#x2F;justinraizes" target=_blank>
+  Justin Raizes
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>Blockchains are a powerful technology which allow decentralized agreement with an immutable history. Since transactions can be added, but not removed, blockchains allow distributed banking as a trustworthy alternative to central banking.
+A vast amount of cryptographic research on constructing secure blockchains has led to them being trusted to secure currency worth <a rel="noopener" target="_blank" href="https://coinmarketcap.com/currencies/bitcoin/">hundreds of billions</a> of US dollars.</p>
+<p>Recently, blockchains have received attention as an enabler of cryptography rather than just a goal of it. Several works have used blockchains to build a variety of cryptographic tools, including <a rel="noopener" target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-319-70500-2_18">one-time programs</a> and <a rel="noopener" target="_blank" href="https://link.springer.com/article/10.1007/s10623-018-0461-x">time-lock encryption</a>. These tools are impossible to construct without special assumptions. These works model cryptographic protocols as occurring in a world where a blockchain protocol is being executed. The cryptographic protocol is therefore able to perform actions such as reading the state of the blockchain or posting transactions to it. The exact security definitions vary significantly between these approaches.</p>
+<p>Time-traveling simulation is a new security model for protocols executed in the presence of a blockchain. Intuitively, time-traveling simulation captures the philosophy that “any extra information an adversary learns in a real execution could have been learned on their own by waiting for the natural passage of time”. Since a blockchain will naturally progress no matter what the adversary does, it provides the notion of time needed to formalize this philosophy.</p>
+<p>Time-traveling simulation bypasses many impossibility results, while the same time yielding an arguably stronger notion of security than prior blockchain based works. For example, time-traveling simulation enables zero knowledge arguments and secure two-party computation in three messages. It is currently not known how to construct these protocols in three messages with the standard notion of security, without relying on new hardness assumptions.</p>
+<p>In this article, we will dive into the <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#the-philosophy-of-security">definition of time-traveling simulation</a> and how it <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#comparison-to-other-relaxed-security-notions">compares to other security notions</a>. Additionally, we will explore how it can be used to bypass impossibility results for <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#application-time-traveling-simulators-for-zero-knowledge">three message zero knowledge arguments</a>.</p>
+<h1 id="the-philosophy-of-security">The Philosophy of Security</h1>
+<p>In modern cryptography, the central philosophy for security is “any extra information an adversary learns in a real execution could have been learned on their own”. In other words, the adversary learns nothing from participating in the real execution, beyond what they were supposed to learn. For example, in a zero knowledge argument, the adversary only learns that a given NP statement is true, without learning a witness for <em>why</em> it is true. This particular notion is actually too strong for many applications, so cryptographers usually consider weakenings of this philosophy with the same spirit. The most common weakening is “any extra information an adversary learns in a real execution could have been learned on their own using a little extra computation”.</p>
+<p>These philosophies are captured formally by a mathematical object called a simulator. A simulator’s job is to reproduce whatever knowledge the adversarial verifier would have learned in a real execution of the protocol. However, it must do this without access to the real prover; it only has the adversary’s code. If such a simulator exists, then the adversary could run the simulator on its own. By doing so, it learns everything it would have learned in a real interaction, without interacting with the real prover.</p>
+<p>More formally, a simulator (for zero knowledge) takes as input the adversary’s code and the statement being proven, then outputs a transcript of a protocol execution, along with the adversary’s internal state. In the real world, without loss of generality, the adversary outputs the transcript of the protocol execution along with its own internal state. This is before any post-processing. A protocol is zero knowledge if there exists a simulator whose output distribution is indistinguishable from the output distribution of the adversary in the real world. This guarantees that whatever information can be derived from the output of the adversary in the real world is indistinguishable from what can be derived from the simulator. Thus, by running the simulator, the adversary can learn whatever it would have learned in a real execution.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/./simulator-paradigm.png" alt="In the real world, the adversary interacts with someone who knows a secret. In the ideal world, the simulator does not know the secret, and may internally interact with the adversary to produce a realistic looking view." /></p>
+<div style="margin-left: 50px; margin-right:  40px;"><b>Figure:</b> The simulator imagines an interaction between the adversarial verifier and an imaginary prover. This interaction is indistinguishable from a real interaction, from the adversary's point of view.</div>
+<p>In some sense, a simulator can be viewed as a method for the adversary to fool itself into accepting the truth of a statement without knowing a witness. It is important that the adversary can only fool itself - an adversarial prover should not be able to fool an honest verifier. This requires some asymmetry between the simulator and a real-world adversary. One of the most basic forms of asymmetry is knowledge of the adversary’s code, which allows the simulator to internally run and interact with the adversary. Any adversary knows its own code, but it certainly shouldn’t know anyone else’s!</p>
+<p>To relax the security philosophy, the simulator is provided with some form of additional power which represents additional asymmetry between the simulator and a real-world adversary. The more asymmetry, the easier it is to create a simulator without allowing an adversarial prover to convince an honest verifier of a false statement. In general, providing more extra power to the simulator corresponds to a weaker security notion. The adversary can learn whatever the simulator can learn, so a more powerful simulator corresponds to an adversary which can learn more information. The table below compares common relaxations to time-traveling simulation in terms of their philosophies and what extra power is given to the simulator.</p>
+<table><thead><tr><th style="text-align: left">Security Notion</th><th style="text-align: left">Philosophy: <br/>“Any extra information an adversary learns in a real execution could have been learned on their own…”</th><th style="text-align: left">Simulator</th></tr></thead><tbody>
+<tr><td style="text-align: left">Expected PPT (Standard)</td><td style="text-align: left">in expected PPT.</td><td style="text-align: left">Runs in expected poly time.</td></tr>
+<tr><td style="text-align: left">Superpolynomial Simulation</td><td style="text-align: left">in superpolynomial time.</td><td style="text-align: left">Runs in superpolynomial time.</td></tr>
+<tr><td style="text-align: left">Common Reference String (CRS)</td><td style="text-align: left">using the CRS trapdoor.</td><td style="text-align: left">Can choose the CRS used by both parties. This allows adding a trapdoor to it.</td></tr>
+<tr><td style="text-align: left">Majority Simulation</td><td style="text-align: left">if they controlled the blockchain.</td><td style="text-align: left">Controls the majority of blockchain participants.</td></tr>
+<tr><td style="text-align: left">Time-Traveling Simulation</td><td style="text-align: left">shortly into the future.</td><td style="text-align: left">Can look into the future.</td></tr>
+</tbody></table>
+<h2 id="security-implications-of-time-traveling-simulation">Security Implications of Time-Traveling Simulation</h2>
+<p>As mentioned previously, time-traveling simulation captures the philosophy that “any extra information an adversary learns in a real execution could have been learned on their own by waiting for the natural passage of time”. This is realized by allowing the simulator to see a potential future state of the blockchain, which consists of a valid extension by \( F \) blocks. Since such a state will become public information after a short time regardless of what the adversary does, this only reveals information that would have anyway been revealed with the natural passage of time.</p>
+<p>Simulator access to a future state allows time-traveling simulation to bypass impossibility results for expected probabilistic polynomial time simulation, which is considered the standard notion of simulation.
+A common blockchain property is that a computationally-bounded adversary cannot compute a valid extension by \( F \) blocks faster than the honest parties can extend the chain by, say, \( \sqrt{F} \) blocks. Therefore access to a future state represents additional asymmetry between the simulator and a real adversary.
+This additional asymmetry makes it possible for the simulator to “imagine” the adversary’s real-world view in protocols where it otherwise would not have been able to, bypassing the impossibility results for expected PPT simulation (aka standard simulation).</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/./future-state.png" alt="A blockchain comes equipped with a validity predicate which allows checking whether a state is a valid extension of a previous state. A future state is a valid extension of the current state." /></p>
+<div style="margin-left: 50px; margin-right:  40px;"><b>Figure:</b> A blockchain comes equipped with a validity predicate which allows checking whether a state is a valid extension of a previous state. A future state is a valid extension of the current state.</div>
+<p>Time-traveling simulation is almost as meaningful as standard simulation when it comes to long-term knowledge.
+For example, imagine the task of constructing multi-party computation protocols which are secure against malicious adversaries. A malicious adversary may deviate from the protocol arbitrarily. Another kind of adversary is a semi-honest adversary, which follows the protocol, but may attempt to analyze the transcript later. It is much easier to construct multi-party computation protocols which are secure against semi-honest adversaries. A multi-party computation protocol with semi-honest security can be transformed to have malicious security by using the <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/pdf/10.1145/28395.28420">GMW compiler</a>. To do the transformation, each party proves the statement “I executed the protocol honestly using some input” in zero knowledge. This convinces the other parties that they did indeed behave honestly, but does not reveal an explanation for the honest behavior. Crucially, this means that the zero knowledge argument preserves the privacy of each party’s inputs. Now consider using a zero knowledge argument with time-traveling simulation to instantiate the GMW compiler. Since honest behavior in a non-time-sensitive protocol does not depend on the passage of time, this does not reveal an explanation for the honest behavior. In particular, the inputs of each party are still private.</p>
+<p>In contrast, time-traveling simulation may not be suitable for applications which are inherently time sensitive. For example, consider using a zero knowledge argument with time-traveling simulation to prove knowledge of a solution to a time-lock puzzle. A time-lock puzzle can be solved in some set amount of time (for example, a day), but cannot be solved faster than that. Since the simulator has access to a future state from after the time-lock puzzle can be solved, in this situation time-traveling simulation may allow the solution to be leaked today instead of tomorrow.</p>
+<h3 id="comparison-to-other-relaxed-security-notions">Comparison to Other Relaxed Security Notions</h3>
+<p>Several of these security notions also bypass impossibility results for expected PPT simulation. One way to further compare security notions is comparing how powerful their simulators are. As mentioned previously, a security notion which allows the simulator more power may allow the adversary to learn more information. In many cases, time-traveling simulation gives the simulator less power than other simulation notions, so it corresponds to better security guarantees.</p>
+<p><strong>Super-Polynomial Time Simulation.</strong> Time-traveling simulation can be seen as a very restricted form of super-polynomial time or angel-based simulation. Angel-based simulation is similar to super-polynomial time simulation, but restricts the extra computational power to performing one specific task. For example, an angel may break the security of a particular commitment scheme. Both super-polynomial time and angel-based simulators are very powerful and can bypass many impossibility results. However, it can be challenging to argue that the simulator cannot break the security of other primitives. These primitives may only have security against polynomial-time adversaries, so they can be broken using any super-polynomial time computation. Continuing the example of commitments, if the simulator could also break a second commitment scheme, then it cannot guarantee that the second scheme is secure against the real adversary.</p>
+<p>In the case of time-traveling simulation, the angel’s task is to quickly compute a potential future state of the blockchain exactly once. It is worth emphasizing the special nature of this task: it is computing something which will be publicly available information in just a short while. As such, whatever security a time-traveling simulator breaks would have been broken soon anyway. For example, regardless of which commitment scheme the parties use, the commitment to their input can never be broken by a time-traveling simulator.</p>
+<p><strong>Common Reference String.</strong> Another good point of comparison is the common reference string model, since the blockchain state represents a pre-agreed-upon string. One important difference between a CRS and the way time-traveling simulation uses a blockchain is that the format of a common reference string often depends on the exact protocol being run (for example, a zero knowledge proof or a secure computation protocol). However, a blockchain does not adapt to auxiliary protocols. A second, and perhaps more important difference, is the notion of control. In the CRS model, the simulator has full control over the CRS. A time-traveling simulator, on the other hand, has no actual control over the blockchain, only some extra information about it. This means that a time-traveling simulator can learn less information than a simulator with full control over the blockchain. Since an adversary might be able to learn whatever a simulator can, the security notion is stronger if the simulator only has extra information, instead of full control.</p>
+<p><strong>Majority Simulation.</strong> This difference in control over versus knowledge about the blockchain is especially illustrated when comparing time-traveling simulation to majority simulation. Majority simulation is another relaxed security model for protocols executed alongside a blockchain. In majority simulation, the simulator is allowed control over all honest parties which are participating in the progression of the blockchain. Since blockchain security requires the honest parties to be in control of the blockchain, this allows a majority simulator to perform tasks such as pausing or even rewinding the blockchain. Such capabilities should even allow computation of future states of the blockchain, which is the only power given to a time-traveling simulator.</p>
+<p>In particular, majority simulation can introduce security vulnerabilities when running two different protocols using the same blockchain. Since the two protocols rely on the security of the blockchain, a simulator with full control over the blockchain can easily break the security of either protocol. Therefore majority simulation does not guarantee that a party which participates in one protocol cannot violate the security of the other protocol. Although it is nontrivial to see, time-traveling simulation can allow multiple protocols to use the same blockchain at the same time if they are careful.</p>
+<h1 id="application-time-traveling-simulators-for-zero-knowledge">Application: Time-Traveling Simulators for Zero Knowledge</h1>
+<p>Time-traveling simulators allow a particularly simple construction for zero knowledge arguments with three messages. As mentioned previously, constructing zero knowledge arguments with three messages is very difficult under the standard notion of security (expected PPT simulation). <a rel="noopener" target="_blank" href="https://iacr.org/archive/tcc2008/49480068/49480068.pdf">Prior work</a> shows that any security proof for a three message zero knowledge argument must make non-blackbox use of the adversary’s code. However, non-blackbox techniques are notoriously difficult. The only <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/3188745.3188870">current construction</a> for three message zero knowledge relies on new cryptographic hardness assumptions.</p>
+<p>A zero knowledge argument is, first and foremost, an argument. A prover attempts to convince a verifier that an NP statement \( x\) is in an NP language \( L\). The prover should not be able to convince the verifier of a false statement; this property is called soundness. The zero knowledge property requires that the argument does allow the verifier to learn anything about the witness for \( x \in L\). This is formalized using the simulator definition discussed <a href="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/#the-philosophy-of-security">above</a>. As a reminder, the simulator must approximate a real view of the argument, except it does not have access to the real prover. In the standard notion of simulation, the simulator is an expected PPT algorithm.</p>
+<p>In time-traveling simulation for zero knowledge arguments, the simulator additionally receives a valid extension of the blockchain by \(F\) blocks. Then it must produce the adversary’s view. If left alone, the blockchain will generate extensions of itself which are independent of the statement \(x\) or its witnesses. Therefore the future state which the simulator receives is effectively harmless and contains no information about the witness beyond what is naturally leaked with the passage of time.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2022/timetraveling-simulation/./timetraveling-simulator-zk.png" alt="In a real zero knowledge argument execution, the prover knows the witness. A time-traveling simulator for zero knowledge receives a future state of the blockchain instead of the witness." /></p>
+<div style="margin-left: 50px; margin-right:  40px;"><b>Figure:</b> In a real zero knowledge argument execution, the prover knows the witness. A time-traveling simulator for zero knowledge receives a future state of the blockchain instead of the witness.</div>
+<h2 id="zero-knowledge-in-three-rounds">Zero Knowledge in Three Rounds</h2>
+<p>The construction of a three round zero knowledge argument uses a three round witness indistinguishable proof of knowledge (WIPoK). In a WIPoK, a prover convinces a verifier that they “know” a witness for some NP statement. The witness indistinguishability property guarantees that if there are two possible witnesses for the statement, then the verifier cannot tell which one the prover knows. This is a weaker security guarantee than zero knowledge, so it is possible to construct a WIPoK in just three rounds (even without assuming special setup like a CRS or a blockchain).</p>
+<p>The construction is as follows. To prove the truth of an NP statement \( x\), the prover and verifier engage in a WIPoK for the statement “I know a witness for \( x\) or I know a blockchain state \(F\) blocks ahead of the current state”. Showing zero knowledge requires constructing a time-traveling simulator, which is initialized with a future state. The simulator acts as a prover in the WIPoK with the adversary, using the future state as its witness. Witness indistinguishability guarantees that an execution using the future state as a witness is indistinguishable from an execution using a witness for \(x \). The latter case is exactly what occurs in a real execution, so the simulator’s output is indistinguishable from a real execution.</p>
+<p>To show soundness, observe that any adversarial prover must know a witness for the statement. This is either a witness for \( x \) or it is a future state of the blockchain. Since a real adversary cannot possibly know a future state of the blockchain without violating the blockchain’s security, it must know a witness for \( x\). The full argument for soundness requires some additional care in order to use the proof of knowledge property, since the WIPoK is composed in parallel with a blockchain protocol and many security properties break down during parallel composition. See the <a rel="noopener" target="_blank" href="https://eprint.iacr.org/2022/035.pdf">full paper</a> for details.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;sites.google.com&#x2F;view&#x2F;justinraizes" target=_blank>
+  Justin Raizes
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Anup Agarwal,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Aayush Jain,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Elaine Shi
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/security/">#Security</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/theory/">#Theory</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/security-models/">#Security Models</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/zero-knowledge/">#Zero-Knowledge</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/blockchain/">#Blockchain</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2022&#x2F;kangaroo&#x2F;">‹ Kangaroo: Caching billions of tiny objects on flash</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;collaborative-data-design&#x2F;">Designing Data Structures for Collaborative Apps ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

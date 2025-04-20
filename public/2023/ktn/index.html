@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Transfer Learning within a Heterogeneous Graph</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#can-we-transfer-knowledge-between-different-data-types-using-their-connectivity-information" class="toc-link">Can we transfer knowledge between different data types using their connectivity information?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#what-is-a-heterogeneous-graph-hg" class="toc-link">What is a heterogeneous graph (HG)?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#heterogeneous-graph-neural-networks-hgnns-and-label-scarcity-issues" class="toc-link">Heterogeneous graph neural networks (HGNNs) and label scarcity issues</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#transfer-learning-on-heterogeneous-graphs" class="toc-link">Transfer Learning on Heterogeneous Graphs</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#our-approach-transfer-learning-between-node-types-within-a-heterogeneous-graph" class="toc-link">Our approach: transfer learning between node types within a heterogeneous graph</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#main-technical-challenge" class="toc-link">Main technical challenge</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#ktn-trainable-cross-type-transfer-learning-for-hgnns" class="toc-link">KTN: Trainable Cross-Type Transfer Learning for HGNNs</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#experimental-results" class="toc-link">Experimental results</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/#takeaway" class="toc-link">Takeaway:</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;ktn&#x2F;">Transfer Learning within a Heterogeneous Graph</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2023-10-31</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.minjiyoon.xyz" target=_blank>
+  Minji Yoon
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <h3 id="can-we-transfer-knowledge-between-different-data-types-using-their-connectivity-information">Can we transfer knowledge between different data types using their connectivity information?</h3>
+<p>Ecosystems in industry are commonly composed of various data types in terms of data modalities or feature distributions. <strong>Heterogeneous graphs</strong> (HGs) present these multimodal data systems in a unified view by defining multiple types of nodes and edges — for instance, e-commerce networks with (<em>user, product, review</em>) nodes or video platforms with (<em>channel, user, video, comment</em>) nodes. <strong>Heterogeneous graph neural networks</strong> (HGNNs) learn node embeddings, which summarize each node’s heterogeneous local structure into a vector. Unfortunately, there is a <strong>label imbalance</strong> issue between different node types in real-world HGs. For instance, publicly available content node types such as product nodes are abundantly labeled, whereas labels for user or account nodes may not be available due to privacy restrictions. Because of this, label-scarce node types cannot exploit HGNNs, hampering the broader applicability of HGNNs.</p>
+<p>In this blog, we introduce how to pre-train an HGNN model on label-abundant node types and then transfer the model to label-scarce node types using relational information given in HGs. You can find details of the work in our paper “<em>Zero-shot Transfer Learning within a Heterogeneous Graph via Knowledge Transfer Networks</em>” [1], presented at NeurIPS 2022.</p>
+<h2 id="what-is-a-heterogeneous-graph-hg">What is a heterogeneous graph (HG)?</h2>
+<figure>
+<img src="./figure1.png" alt="e-commerce heterogeneous graph" width="400"/>
+<figcaption>Figure 1. E-commerce heterogeneous graph: Can we transfer knowledge from label-abundant node types (e.g., products) to zero-labeled node types (e.g., users) through relational information given in a heterogeneous graph?
+</figcaption>
+</figure>
+<p>An HG is composed of multiple node and edge types. Figure 1 shows an e-commerce network presented as an HG. In e-commerce, “users” purchase “products” and write “reviews”. HG presents this ecosystem using three node types (“user”, “product”, “review”) and three edge types (“user-buy-product”, “user-write-review”, review-on-product”). Individual products, users, and reviews are then presented as nodes and their relationships as edges in the HG with the corresponding node/edge types.</p>
+<p>In addition to all relational information, HGs are commonly provided with <em>input node attributes</em> that summarize each node’s information. For instance, product nodes could have product images as input node attributes, while review nodes could have review texts as their input attributes. As in the example, input node attributes could have different modalities across different node types.  The goal is to predict <em>node labels</em> on each node, such as the category of each product or the category each user is most interested in.</p>
+<p>In the following section, we introduce the main challenge we face while training HGNNs to predict labels using input node attributes and relational information from HGs.</p>
+<h2 id="heterogeneous-graph-neural-networks-hgnns-and-label-scarcity-issues">Heterogeneous graph neural networks (HGNNs) and label scarcity issues</h2>
+<p>HGNNs compute node embeddings that summarize each node’s local graph structures including the node and its neighbor’s input attribute distributions. Node embeddings are then fed into a classifier to predict each node’s label. To train an HGNN model and a classifier to predict labels for a specific node type, we require a good amount of labels for the node type.</p>
+<p>A common issue in real-world applications of deep learning is label scarcity. With their diverse node types, HGNNs are even more likely to face this challenge. For instance, publicly available content node types are abundantly labeled, whereas labels for user nodes may not be available due to privacy restrictions. This means that in most standard training settings, HGNN models can only learn to make good inferences for a few label-abundant node types and can usually not make any inferences for the remaining node types, given the absence of any labels for them.</p>
+<p>To solve this label scarcity issue, we will use a technique called zero-shot transfer learning that improves the performance of a model on a zero-labeled domain.</p>
+<h2 id="transfer-learning-on-heterogeneous-graphs">Transfer Learning on Heterogeneous Graphs</h2>
+<p>To improve the performance on a zero-labeled “target” domain, transfer learning exploits the knowledge earned from a related “source” domain, which has adequate labeled data. For instance, transfer learning on heterogeneous graphs first trains an HGNN model on the source domain using their labels, then reuses the HGNN model on the target domain.</p>
+<p>In order to apply transfer learning on heterogeneous graphs to solve the label scarcity issue we described above, it is clear the target domain should be the zero-labeled node types. The question remained of what would be the source domain. Previous works commonly set the source domain as the same type of nodes but located in an external HG, assuming those nodes are abundantly labeled (Figure 2). For instance, the source domain is user nodes in the Yelp review graph, while the target domain is user nodes in the Amazon e-commerce graph. This approach, also known as <em>graph-to-graph transfer learning</em>, pre-trains an HGNN model on the external HG and then runs the model on the original label-scarce HG [2, 3].</p>
+<center>
+<figure>
+<img src="./figure2.png" alt="graph-to-graph transfer learning" width="600"/>
+<figcaption>Figure 2. Illustration of graph-to-graph transfer learning on heterogeneous graph.</figcaption>
+</figure>
+</center>
+<p>However, this approach is not applicable in many real-world scenarios for three reasons. First, any external HG that could be used in a graph-to-graph transfer learning setting would almost surely be <em>proprietary</em>, thereby, making it hard to get access to. Second, even if practitioners could obtain access to an external HG, it is unlikely that the <em>distribution of the external HG</em> would match our target HG well enough to apply transfer learning. Finally, node types suffering from <em>label scarcity</em> are likely to suffer the same issue on other HGs. For instance, user nodes on the external HG also have scarce labels with privacy constraints.</p>
+<h2 id="our-approach-transfer-learning-between-node-types-within-a-heterogeneous-graph">Our approach: transfer learning between node types within a heterogeneous graph</h2>
+<p>To overcome the limitation of usage of external HGs for transfer learning, we introduce a practical source domain, <em>other node types with abundant labels located on the same HG</em>. Instead of using extra HGs, we transfer knowledge across different types of nodes within a single HG assumed to be fully owned by the practitioners. More specifically, we first pre-train an HGNN model and a classifier on a label-abundant “source” node type. Then, we reuse the models on the zero-labeled “target” node types located in the same HG without additional finetuning. The one requirement for this approach is that the source and target node types share the same label set. This requirement is frequently satisfied in real-world settings. For instance, product nodes have a label set describing product categories, and user nodes share the same label set describing their favorite shopping categories in e-commerce HGs.</p>
+<h2 id="main-technical-challenge">Main technical challenge</h2>
+<p>We now describe the main challenge in realizing our approach. We cannot directly reuse the pretrained HGNN and classifier on the target node type as described above because HGNN maps the source and target embeddings into the different embedding spaces.</p>
+<figure>
+<img src="./figure3.png" alt="l2 norm of gradients passed to each module in the HGNN" width="450"/>
+<figcaption>
+Figure 3. The L2 norm of gradients passed to each module in the HGNN while pretraining on the source node type. Green and Red lines show large amounts of gradients passed to source node type-specific modules, while blue and orange lines show little or no gradients passed to target type-specific modules.
+</figcaption>
+</figure>
+<p>This happens because of one crucial characteristic of HGNNs — HGNNs are composed of modules specialized to each node type and use distinct sets of modules to compute embeddings for each node type. During pretraining HGNNs on the source node type, modules specialized to the source node type are well-trained, while modules specialized to the target node are untrained or under-trained. In Figure 3, we can observe the source modules (green and red lines) receive high L2 norms of gradients during pretraining. On the other hand, because of the specialization, the target modules (orange and blue lines) receive little or no gradients. With under-trained modules for the target node type, the pretrained HGNN model outputs poor node embeddings for the target node type, and, consequently, poor performance on the node prediction task.</p>
+<h2 id="ktn-trainable-cross-type-transfer-learning-for-hgnns">KTN: Trainable Cross-Type Transfer Learning for HGNNs</h2>
+<p>Now, we introduce a method to transform the under-trained poor embeddings of the target node type to follow source embeddings. This allows us to reuse the classifier that was trained on source node types. In order to derive the transformation in a principled manner, let us look into how HGNNs compute node embeddings and analyze the relationship between source and target embeddings.</p>
+<figure>
+<img src="./figure4.png" alt="HGNN structure" width="600"/>
+<figcaption>
+Figure 4. (left) In HGNNs, the final L-layer node embeddings for both source and target types are computed using the same input, the previous (L-1)-layer’s node embeddings. (right) The L-layer node embeddings of the source type (product, blue) can be represented by the L-layer node embeddings of the target type (user, red) using (L-1)-layer node embeddings as intermediate values.
+</figcaption>
+</figure>
+<p>In each layer, HGNNs aggregate connected nodes’ embeddings from the previous layer to update each target node’s embeddings. Node embeddings for both source and target node types are updated using the same input: the previous layer’s node embeddings of any connected node types (Figure 4, left). This means that they can be represented by each other using the previous layer embeddings as intermediate values (Figure 4, right).</p>
+<p>We prove there is a mapping matrix from the target domain to the source domain, which is defined by HGNN parameters (Theorem 1 in [1]). Based on this theorem, we introduce an auxiliary network, named Knowledge Transfer Networks (KTN), that learns the mapping matrix from scratch during pretraining HGNN on the source domain. At test time, we first compute target embeddings using the pretrained HGNN, then map the target embeddings to the source domain using our trained KTN. Finally, we can reuse the classifier with transformed target embeddings.</p>
+<h2 id="experimental-results">Experimental results</h2>
+<figure>
+<img src="./figure5.png" alt="zero-shot transfer learning results on OAG and Pubmed" width="600"/>
+<figcaption>
+Figure 5. Zero-shot transfer learning performance measured in NDCG on Open Academic Graph (OAG) and Pubmed datasets. Higher is better. Our proposed method KTN (red bar) shows the highest accuracy among all baselines.
+</figcaption>
+</figure>
+<p>To examine the effectiveness of our proposed KTN, we ran 18 different zero-shot transfer learning tasks on two public heterogeneous graphs, Open Academic Graph [4] and Pubmed [5]. We compare KTN with 8 state-of-the-art transfer learning methods. We show our results in Figure 5. Our proposed method KTN consistently outperforms all baselines on all tasks by up to 73.3%. The naive approach we discussed earlier — reuse the pretrained models directly on the target domain without any transfer learning — is presented as blue bar. We see our method KTN provides relative gains of up to 340% higher than the naive approach without using any labels from the target domain.</p>
+<figure>
+<img src="./figure6.png" alt="KTN with 6 different HGNN models" width="450"/>
+<figcaption>
+Figure 6. KTN can be applied to 6 different HGNN models and improve their zero-shot performance on target domains. Performance is measured in NDCG. Higher is better.
+</figcaption>
+</figure>
+<p>KTN can be applied to almost all HGNN models that have node/edge type-specific modules and improve their zero-shot performance on target domains. In Figure 6, KTN improves accuracy on zero-labeled node types across 6 different HGNN models by up to 960%.</p>
+<h2 id="takeaway">Takeaway:</h2>
+<p>Various real-world applications can be presented as heterogeneous graphs. Heterogeneous graph neural networks (HGNNs) are an effective technique for summarizing heterogeneous graphs into concise embeddings. However, label scarcity issues on certain types of nodes have prevented the broader application of HGNNs. In this post, we introduced KTN, the first cross-type transfer learning method designed for HGNNs. With KTN, we can fully exploit the rich relational information of heterogeneous graphs with HGNNs on any nodes regardless of their label scarcity.</p>
+<p>For more details about KTN, check out our paper [1].</p>
+<p>[1] Minji Yoon, John Palowitch, Dustin Zelle, Ziniu Hu, Ruslan Salakhutdinov, Bryan Perozzi. <em>Zero-shot Transfer Learning within a Heterogeneous Graph via Knowledge Transfer Networks</em>, Neural Information Processing Systems (NeurIPS) 2022.</p>
+<p>[2] Tiancheng Huang, Ke Xu, and Donglin Wang. <em>Da-hgt: Domain adaptive heterogeneous graph transformer.</em> arXiv preprint arXiv:2012.05688, 2020.</p>
+<p>[3] Shuwen Yang, Guojie Song, Yilun Jin, and Lun Du. <em>Domain adaptive classification on heterogeneous information networks.</em> International Joint Conferences on Artificial Intelligence (IJCAI) 2021.</p>
+<p>[4] Fanjin Zhang, Xiao Liu, Jie Tang, Yuxiao Dong, Peiran Yao, Jie Zhang, Xiaotao Gu, Yan Wang, Bin Shao, Rui Li, et al. <em>Oag: Toward linking large-scale heterogeneous entity graphs.</em> In Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery &amp; Data Mining 2019.</p>
+<p>[5] Carl Yang, Yuxin Xiao, Yu Zhang, Yizhou Sun, and Jiawei Han. <em>Heterogeneous network representation learning: A unified framework with survey and benchmark.</em> IEEE Transactions on Knowledge and Data Engineering, 2020.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.minjiyoon.xyz" target=_blank>
+  Minji Yoon
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Anupam Gupta,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Nihar Shah,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Sara McAllister
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/artificial-intelligence/">#Artificial Intelligence</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/graph-neural-network/">#graph neural network</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/heterogeneous-graph/">#heterogeneous graph</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/transfer-learning/">#transfer learning</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;fifo-lru&#x2F;">‹ FIFO is Better than LRU: the Power of Lazy Promotion and Quick Demotion</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;mimir&#x2F;">Mimir: Finding cost-efficient storage configurations in the public cloud ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

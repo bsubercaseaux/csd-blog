@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Designing Data Structures for Collaborative Apps</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#introduction-collaborative-apps-via-crdts" class="toc-link">Introduction: Collaborative Apps via CRDTs</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#the-challenge-designing-crdts" class="toc-link">The Challenge: Designing CRDTs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#related-work" class="toc-link">Related Work</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#basic-designs" class="toc-link">Basic Designs</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#unique-set" class="toc-link">Unique Set</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#lists" class="toc-link">Lists</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#registers" class="toc-link">Registers</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#composing-crdts" class="toc-link">Composing CRDTs</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#crdt-objects" class="toc-link">CRDT Objects</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#crdt-valued-map" class="toc-link">CRDT-Valued Map</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#collections-of-crdts" class="toc-link">Collections of CRDTs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#using-composition" class="toc-link">Using Composition</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#new-concurrent-causal-for-each-operations" class="toc-link">New: Concurrent+Causal For-Each Operations</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#case-study-a-collaborative-spreadsheet" class="toc-link">Case Study: A Collaborative Spreadsheet</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#design-walkthrough" class="toc-link">Design Walkthrough</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#finished-design" class="toc-link">Finished Design</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#conclusion" class="toc-link">Conclusion</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#acknowledgments" class="toc-link">Acknowledgments</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;collaborative-data-design&#x2F;">Designing Data Structures for Collaborative Apps</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2023-02-17</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="http:&#x2F;&#x2F;mattweidner.com&#x2F;" target=_blank>
+  Matthew Weidner
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+    <div class="post-content">
+      <h1 id="introduction-collaborative-apps-via-crdts">Introduction: Collaborative Apps via CRDTs</h1>
+<blockquote>
+<p>An extended version of this post appears <a rel="noopener" target="_blank" href="https://mattweidner.com/2022/02/10/collaborative-data-design.html">on my personal site</a>.</p>
+</blockquote>
+<p></p><br />
+<p>Suppose you’re building a collaborative app, along the lines of Google Docs/Sheets/Slides, Figma, Notion, etc., but <em>without a central server</em>. One challenge you’ll face is the actual collaboration: when one user changes the shared state, their changes need to show up for every other user. For example, if multiple users type at the same time in a text field, the result should reflect all of their changes and be consistent (identical for all users).</p>
+<p><a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type"><strong>Conflict-free Replicated Data Types (CRDTs)</strong></a> provide a solution to this challenge. They are data structures that look like ordinary data structures (maps, sets, text strings, etc.), except that they are collaborative: when one user updates their copy of a CRDT, their changes automatically show up for everyone else. Each user sees their own changes immediately, while under the hood, the CRDT broadcasts a message describing the change to everyone else.  Other users see the change once they receive this message.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/message_sending.png" alt="CRDTs broadcast messages to relay changes" /></p>
+<p><a name="correctness"></a>Note that multiple users might make changes at the same time, e.g., both typing at once. Since each user sees their own changes immediately, their views of the document will temporarily diverge. However, CRDTs guarantee that once the users receive each others’ messages, they’ll see identical document states again: this is the definition of <strong>CRDT correctness</strong>. Ideally, this state will also be “reasonable”, i.e., it will incorporate both of their edits in the way that the users expect.</p>
+<blockquote>
+<p>In distributed systems terms, CRDTs are <em>Available</em>, <em>Partition tolerant</em>, and have <em>Strong Eventual Consistency</em>.</p>
+</blockquote>
+<p></p><br />
+<p>CRDTs work even if messages might be arbitrarily delayed, or delivered to different users in different orders. This lets you make collaborative experiences that don’t need a central server, work offline, and/or are end-to-end encrypted (<a rel="noopener" target="_blank" href="https://www.inkandswitch.com/local-first/"><strong>local-first software</strong></a>).</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/google_docs_offline.png" alt="Google Docs doesn’t let you type while offline" /></p>
+<p align="center"><i>CRDTs allow offline editing, unlike Google Docs.</i></p>
+<p>I’m particularly excited by the potential for <strong>open-source collaborative apps</strong> that anyone can distribute or modify, without requiring app-specific hosting.</p>
+<h2 id="the-challenge-designing-crdts">The Challenge: Designing CRDTs</h2>
+<p>Having read all that, let’s say you choose to use a CRDT for your collaborative app. All you need is a CRDT representing your app’s state, a frontend UI, and a network of your choice (or a way for users to pick the network themselves). But where do you get a CRDT for your specific app?</p>
+<p>If you’re lucky, it’s described in a <a rel="noopener" target="_blank" href="https://crdt.tech/papers.html">paper</a>, or even better, implemented in a <a rel="noopener" target="_blank" href="https://crdt.tech/implementations">library</a>. But those tend to have simple or one-size-fits-all data structures: maps, text strings, unstructured JSON, etc. You can usually rearrange your app’s state to make it fit in these CRDTs; and if users make changes at the same time, CRDT correctness guarantees that you’ll get <em>some</em> consistent result. However, it might not be what you or your users expect. Worse, you have little leeway to customize this behavior.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/json_anomaly.png" alt="Anomaly in a published JSON CRDT: In a collaborative todo-list, concurrently deleting an item and marking it done results in a nonsense list item with no text field." /></p>
+<p align="center"><i>
+In a <a href="https://doi.org/10.1109/TPDS.2017.2697382" target="_blank">published JSON CRDT</a>, when representing a todo-list using items with "title" and "done" fields, you can end up with an item <code>{"done": true}</code> having no "title" field. Image credit: Figure 6 from the paper.
+</i></p>
+<!--figure: hypothetical user Q&A asking for a change in the conflict-resolution, and you just reply "sorry".-->
+<p>This blog post will instead teach you how to design CRDTs from the ground up. I’ll present a few simple CRDTs that are obviously correct, plus ways to compose them together into complicated whole-app CRDTs that are still obviously correct. I’ll also present principles of CRDT design to help guide you through the process. To cap it off, we’ll design a CRDT for a collaborative spreadsheet.</p>
+<p><strong>Ultimately, I hope that you will gain not just an understanding of some existing CRDT designs, but also the confidence to tweak them and create your own!</strong></p>
+<h2 id="related-work">Related Work</h2>
+<p>The CRDTs I describe are based on <a rel="noopener" target="_blank" href="http://dx.doi.org/10.1007/978-3-642-24550-3_29">Shapiro et al. 2011</a> unless noted otherwise. However, the way I describe them, and the design principles and composition techniques, are my own way of thinking about CRDT design. It’s inspired by the way <a rel="noopener" target="_blank" href="https://www.figma.com/blog/how-figmas-multiplayer-technology-works/">Figma</a> and <a rel="noopener" target="_blank" href="https://hex.tech/blog/a-pragmatic-approach-to-live-collaboration">Hex</a> describe their collaboration platforms; they likewise support complex apps by composing simple, easy-to-reason-about pieces. Relative to those platforms, I incorporate more academic CRDT designs, enabling more flexible behavior and server-free operation.</p>
+<!--I'll describe most CRDTs in terms of an implementation, because I find implementations easier to explain. However, my real goal is to describe their *semantics*: what users see after they perform various operations, possibly concurrently. If you can find alternate implementations that have the same behavior as the ones I describe but are more efficient, then by all means, use those instead. -->
+<h1 id="basic-designs">Basic Designs</h1>
+<p>I’ll start by going over some basic CRDT designs.</p>
+<h2 id="unique-set">Unique Set</h2>
+<p>Our foundational CRDT is the <strong>Unique Set</strong>.  It is a set in which each added element is considered unique.</p>
+<p>Formally, the user-facing operations on the set, and their collaborative implementations, are as follows:</p>
+<ul>
+<li><code>add(x)</code>: Adds an element <code>e = (t, x)</code> to the set, where <code>t</code> is a <em>unique new tag</em>, used to ensure that <code>(t, x)</code> is unique. To implement this, the adding user generates <code>t</code>, e.g., as a pair (device id, device-specific counter), then serializes <code>(t, x)</code> and broadcasts it to the other users.  The receivers deserialize <code>(t, x)</code> and add it to their local copy of the set.</li>
+<li><code>delete(e)</code>: Deletes the element <code>e = (t, x)</code> from the set.  To implement this, the deleting user serializes <code>t</code> and broadcasts it to the other users.  The receivers deserialize <code>t</code> and remove the element with tag <code>t</code> from their local copy, if it has not been deleted already.</li>
+</ul>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/message_flow.png" alt="In response to user input, the operator calls “Output message”. The message is then delivered to every user’s “Receive &amp; Update display” function." /></p>
+<p align="center"><i>The lifecycle of an <code>add</code> or <code>delete</code> operation.</i></p>
+<p>When displaying the set to the user, you ignore the tags and just list out the data values <code>x</code>, keeping in mind that (1) they are not ordered (at least not consistently across different users), and (2) there may be duplicates.</p>
+<p><strong>Example:</strong> In a collaborative flash card app, you could represent the deck of cards as a Unique Set, using <code>x</code> to hold the flash card’s value (e.g., its front and back strings). Users can edit the deck by adding a new card or deleting an existing one, and duplicate cards are allowed. <!--Note that the collaborative state is just the *set* of cards; there is no ordering info. You could perhaps sort them alphabetically in editing mode (to make them consistent), and randomly in practice mode (deliberately inconsistent).--></p>
+<p><a name="causal-order"></a>When broadcasting messages, we require that they are delivered <em>reliably</em> and <em>in causal order</em>, but it’s okay if they are arbitarily delayed.  (These rules apply to all CRDTs, not just the Unique Set.) Delivery <strong>in causal order</strong> means that if a user sends a message \(m\) after receiving or sending a message \(m^\prime\), then all users delay receiving \(m\) until after receiving \(m^\prime\). This is the strictest ordering we can implement without a central server and without extra round-trips between users, e.g., by using <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Vector_clock">vector clocks</a>.</p>
+<p>Messages that aren’t ordered by the causal order are <strong>concurrent</strong>, and different users might receive them in different orders. But for <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#correctness">CRDT correctness</a>, we must ensure that all users end up in the same state regardless, once they have received the same messages.</p>
+<p>For the Unique Set, it is obvious that the state of the set, as seen by a specific user, is always the set of elements for which they have received an <code>add</code> message but no <code>delete</code> messages. This holds regardless of the order in which they received concurrent messages. Thus the Unique Set is correct.</p>
+<blockquote>
+<p>Note that delivery in causal order is important—a <code>delete</code> operation only works if it is received after its corresponding <code>add</code> operation.</p>
+</blockquote>
+<p></p><br />
+<p>We now have our first principle of CRDT design:</p>
+<p><a name="principle-1"></a><strong>Principle 1. Use the Unique Set CRDT for operations that “add” or “create” a unique new thing.</strong></p>
+<p>Although it is simple, the Unique Set forms the basis for the rest of our CRDTs.</p>
+<!-- > **Aside.** Traditionally, one proves CRDT correctness by proving that concurrent messages *commute*---they have the same effect regardless of delivery order ([Shapiro et al. 2011](http://dx.doi.org/10.1007/978-3-642-24550-3_29))---or that the final state is a function of the causally-ordered message history ([Baquero, Almeida, and Shoker 2014](https://doi.org/10.1007/978-3-662-43352-2_11)). However, as long as you stick to the techniques in this blog post, you won't need explicit proofs: everything builds on the Unique Set in ways that trivially preserve CRDT correctness. For example, a deterministic view of a Unique Set is obviously still a CRDT.
+
+<p></p><br /> -->
+<h2 id="lists">Lists</h2>
+<p>Our next CRDT is a <strong>list CRDT</strong>. It represents a list of elements, with <code>insert</code> and <code>delete</code> operations. For example, you can use a list CRDT of characters to store the text in a collaborative text editor, using <code>insert</code> to type a new character and <code>delete</code> for backspace.</p>
+<p>Formally, the operations on a list CRDT are:</p>
+<ul>
+<li><code>insert(i, x)</code>: Inserts a new element with value <code>x</code> at index <code>i</code>, between the existing elements at indices <code>i</code> and <code>i+1</code>. All later elements (index <code>&gt;= i+1</code>) are shifted one to the right.</li>
+<li><code>delete(i)</code>: Deletes the element at index <code>i</code>. All later elements (index <code>&gt;= i+1</code>) are shifted one to the left.</li>
+</ul>
+<p>We now need to decide on the semantics, i.e., what is the result of various insert and delete operations, possibly concurrent. The fact that insertions are unique suggests using a Unique Set (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-1">Principle 1</a>). However, we also have to account for indices and the list order.</p>
+<p>One approach would use indices directly: when a user calls <code>insert(i, x)</code>, they send <code>(i, x)</code> to the other users, who use <code>i</code> to insert <code>x</code> at the appropriate location. The challenge is that your intended insertion index might move around as a result of users’ inserting/deleting in front of <code>i</code>.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/ot.png" alt="The gray cat jumped on the table." /></p>
+<p align="center"><i>Alice typed " the" at index 17, but concurrently, Bob typed " gray" in front of her. From Bob's perspective, Alice's insert should happen at index 22.</i></p>
+<p>It’s possible to work around this by “transforming” <code>i</code> to account for concurrent edits. That idea leads to <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Operational_transformation"><strong>Operational Transformation (OT)</strong></a>, the earliest-invented approach to collaborative text editing, and the one used in Google Docs and most existing apps. Unfortunately, OT algorithms are quite complicated, leading to numerous <a rel="noopener" target="_blank" href="https://core.ac.uk/download/pdf/54049928.pdf">flawed algorithms</a>. You can reduce complexity by using a central server to manage the document, like Google Docs does, but that precludes decentralized networks, end-to-end encryption, and server-free open-source apps.</p>
+<!--Several incorrect attempts at server-free OT were published before the [first correct one](https://core.ac.uk/download/pdf/54049928.pdf) in 2005 (cite, check correctness via citations)---the same year the [first CRDT paper](https://hal.inria.fr/inria-00071240/document) was published. -->
+<p>List CRDTs use a different perspective from OT.  When you type a character in a text document, you probably don’t think of its position as “index 17” or whatever; instead, its position is at a certain place within the existing text.</p>
+<p>“A certain place within the existing text” is vague, but at a minimum, it should be between the characters left and right of your insertion point (“on” and “ table“ in the example above)  Also, unlike an index, this intuitive position is <em>immutable</em>.</p>
+<p>This leads to the following implementation. The list’s state is a Unique Set whose values are pairs <code>(p, x)</code>, where <code>x</code> is the actual value (e.g., a character), and <code>p</code> is a <strong>unique immutable position</strong> drawn from some abstract total order. The user-visible state of the list is the list of values <code>x</code> ordered by their positions <code>p</code>. Operations are implemented as:</p>
+<ul>
+<li><code>insert(i, x)</code>: The inserting user looks up the positions <code>pL</code>, <code>pR</code> of the values to the left and right (indices <code>i</code> and <code>i+1</code>), generates a unique new position <code>p</code> such that <code>pL &lt; p &lt; pR</code>, and calls <code>add((p, x))</code> on the Unique Set.</li>
+<li><code>delete(i)</code>: The deleting user finds the element <code>e</code> of the Unique Set at index <code>i</code>, then calls <code>delete(e)</code> on the Unique Set.</li>
+</ul>
+<p>Of course, we need a way to create the positions <code>p</code>. That’s the hard part—in fact, the hardest part of any CRDT—and I don’t have space to go into it here; you should use an existing algorithm (e.g., <a rel="noopener" target="_blank" href="http://dx.doi.org/10.1016/j.jpdc.2010.12.006">RGA</a>) or implementation (e.g., <a rel="noopener" target="_blank" href="https://docs.yjs.dev/api/shared-types/y.array">Yjs’s <code>Y.Array</code></a>).  <!--Generally, solutions involve a tree, sorted by the tree walk on nodes; you create a unique new position in between `pL` and `pR` by adding a new leaf somewhere between `pL` and `pR`, e.g., as a right child of `pL`.--></p>
+<p>The important lesson here is that we had to translate indices (the language of normal, non-CRDT lists) into unique immutable positions (what the user intuitively means when they say “insert here”).  That leads to our second principle of CRDT design:</p>
+<p><a name="principle-2"></a><strong>Principle 2. Express operations in terms of user intention—what the operation means to the user, intuitively. This might differ from the closest ordinary data type operation.</strong></p>
+<h2 id="registers">Registers</h2>
+<p>Our last basic CRDT is the <strong>register</strong>. This is a variable that holds an arbitrary value that can be set and get. If multiple users set the value at the same time, you pick one of them arbitrarily, or perhaps average them together.</p>
+<p><strong>Example uses for registers:</strong></p>
+<ul>
+<li>The font size of a character in a collaborative rich-text editor.</li>
+<li>The name of a document.</li>
+<li>The color of a specific pixel in a collaborative whiteboard.</li>
+<li>Basically, anything where you’re fine with users overwriting each others’ concurrent changes and you don’t want to use a more complicated CRDT.</li>
+</ul>
+<p>Registers are very useful and suffice for many tasks (e.g., <a rel="noopener" target="_blank" href="https://www.figma.com/blog/how-figmas-multiplayer-technology-works/">Figma</a> and <a rel="noopener" target="_blank" href="https://hex.tech/blog/a-pragmatic-approach-to-live-collaboration">Hex</a> use them almost exclusively).</p>
+<p>The only operation on a register is <code>set(x)</code>, which sets the value to <code>x</code> (in the absence of concurrent operations). We can’t perform these operations literally, since if two users receive concurrent <code>set</code> operations in different orders, they’ll end up with different values.</p>
+<p>However, we can <em>add</em> the value <code>x</code> to a Unique Set, following <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-1">Principle 1</a>. The state is now a set of values instead of a single value, but we’ll address that soon. We can also delete old values each time <code>set(x)</code> is called, overwriting them.</p>
+<p>Thus the implementation of <code>set(x)</code> becomes:</p>
+<ul>
+<li>For each element <code>e</code> in the Unique Set, call <code>delete(e)</code> on the Unique Set; then call <code>add(x)</code>.</li>
+</ul>
+<p>The result is that at any time, the register’s state is the set of all the most recent concurrently-set values.</p>
+<p>Loops of the form “for each element of a collection, do something” are common in programming. We just saw a way to extend them to CRDTs: “for each element of a Unique Set, do some CRDT operation”. I call this a <strong>causal for-each operation</strong> because it only affects elements that are prior to the for-each operation in the <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#causal-order">causal order</a>. It’s useful enough that we make it our next principle of CRDT design:</p>
+<p><a name="principle-3a"></a><strong>Principle 3a. For operations that do something “for each” element of a collection, one option is to use a <em>causal for-each operation</em> on a Unique Set (or list CRDT).</strong></p>
+<p>(Later we will expand on this with <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-3b">Principle 3b</a>, which also concerns for-each operations.)</p>
+<p>Returning to registers, we still need to handle the fact that our state is a set of values, instead of a specific value.</p>
+<p>One option is to accept this as the state, and present all conflicting values to the user.  That gives the <strong>Multi-Value Register (MVR)</strong>.</p>
+<p><a name="lww-register"></a>Another option is to pick a value arbitrarily but deterministically.  E.g., the <strong>Last-Writer Wins (LWW) Register</strong> tags each value with the wall-clock time when it is set, then picks the value with the latest timestamp.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/pixelpusher.png" alt="Grid of pixels, some conflicting (outlined in red). One conflicting pixel has been clicked on, revealing the conflicting choices." /></p>
+<p align="center"><i>In <a href="https://medium.com/@pvh/pixelpusher-real-time-peer-to-peer-collaboration-with-react-7c7bc8ecbf74" target="_blank">Pixelpusher</a>, a collaborative pixel art editor, each pixel shows one color by default (LWW Register), but you can click to pop out all conflicting colors (MVR). Image credit: Peter van Hardenberg (<a href="https://miro.medium.com/max/270/1*tXSBtdqf6yBCO6i77VVH1A.png" target="_blank">original</a>).</i></p>
+<p>In general, you can define the value getter to be an arbitrary deterministic function of the set of values.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>If the values are colors, you can average their RGB coordinates.</li>
+</ul>
+<!--figure: illustration-->
+<ul>
+<li><a name="enable-wins-flag"></a>If the values are booleans, you can choose to prefer <code>true</code> values, i.e., the register’s value is <code>true</code> if its set contains any <code>true</code> values. That gives the <strong>Enable-Wins Flag</strong>.</li>
+</ul>
+<h1 id="composing-crdts">Composing CRDTs</h1>
+<p>We now have enough basic CRDTs to start making more complicated data structures through composition. I’ll describe three techniques: CRDT objects, CRDT-valued maps, and collections of CRDTs.</p>
+<h2 id="crdt-objects">CRDT Objects</h2>
+<p>The simplest composition technique is to use multiple CRDTs side-by-side. By making them instance fields in a class, you obtain a <strong>CRDT Object</strong>, which is itself a CRDT (trivially correct). The power of CRDT objects comes from using standard OOP techniques, e.g., implementation hiding.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>In a collaborative flash card app, to make individual cards editable, you could represent each card as a CRDT object with two text CRDT (list CRDT of characters) instance fields, one for the front and one for the back.</li>
+<li>You can represent the position and size of an image in a collaborative slide editor by using separate registers for the left, top, width, and height. <!--To get a complete image object, you might also add registers for border color/size/style, a text CRDT for the caption, a register for the image source (unless it's immutable, in which case you can use an ordinary, non-CRDT instance field), etc.--></li>
+</ul>
+<!--- Recall that we defined lists and registers in terms of the Unique Set. We can consider these as CRDT objects as well, even though they just have one instance field (the set). The object lets us delegate operations and reads to the inner set while exposing the API of a list/register.-->
+<p>To implement a CRDT object, each time an instance field requests to broadcast a message, the CRDT object broadcasts that message tagged with the field’s name. Receivers then deliver the message to their own instance field with the same name. <!--When nesting CRDT objects, this effectively creates a tree with a [basic CRDT](#basic-designs) at each leaf; each basic CRDT message is sent tagged with its path to the root.--></p>
+<h2 id="crdt-valued-map">CRDT-Valued Map</h2>
+<p>A CRDT-valued map is like a CRDT object but with potentially infinite instance fields, one for each allowed map key. Every key/value pair is implicitly always present in the map, but values are only explicitly constructed in memory as needed, using a predefined factory method (like Apache Commons’ <a rel="noopener" target="_blank" href="https://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/map/LazyMap.html">LazyMap</a>).</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li><a id="add-wins-set"></a>Consider a shared notes app in which users can archive notes, then restore them later. To indicate which notes are normal (not archived), we want to store them in a set. A Unique Set won’t work, since the same note can be added (restored) multiple times. Instead, you can use a CRDT-valued map whose keys are the documents and whose values are <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#enable-wins-flag">enable-wins flags</a>; the value of the flag for key <code>doc</code> indicates whether <code>doc</code> is in the set. This gives the <strong>Add-Wins Set</strong>.</li>
+<li><a rel="noopener" target="_blank" href="https://quilljs.com/">Quill</a> lets you easily display and edit rich text in a browser app. In a Quill document, each character has an <code>attributes</code> map, which contains arbitrary key-value pairs describing formatting (e.g., <code>"bold": true</code>). You can model this using a CRDT-valued map with arbitrary keys and <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#lww-register">LWW register</a> values; the value of the register for key <code>attr</code> indicates the current value for <code>attr</code>.</li>
+</ul>
+<p>A CRDT-valued map is implemented like a CRDT object: each message broadcast by a value CRDT is tagged with its serialized key. Internally, the map stores only the explicitly-constructed key-value pairs; each value is constructed using the factory method the first time it is accessed by the local user or receives a message. However, this is not visible externally—from the outside, the other values still appear present, just in their initial states. (If you want an explicit set of “present” keys, you can track them using an <a href="#add-wins-set">Add-Wins Set</a>.)</p>
+<blockquote>
+<p>CRDT-valued maps are based on the <a rel="noopener" target="_blank" href="https://docs.riak.com/riak/kv/2.2.3/learn/concepts/crdts/index.html#maps">Riak map</a>.</p>
+</blockquote>
+<p></p><br />
+<h2 id="collections-of-crdts">Collections of CRDTs</h2>
+<p>Our above definition of a Unique Set implicitly assumed that the data values <code>x</code> were immutable and serializable (capable of being sent over the network). However, we can also make a <strong>Unique Set of CRDTs</strong>, whose values are dynamically-created CRDTs.</p>
+<p>To add a new value CRDT, a user sends a unique new tag and any arguments needed to construct the value. Each recipient passes those arguments to a predefined factory method, then stores the returned CRDT in their copy of the set. When a value CRDT is deleted, it is forgotten and can no longer be used.</p>
+<p>Note that unlike in a CRDT-valued map, values are explicitly created (with dynamic constructor arguments) and deleted—the set effectively provides collaborative <code>new</code> and <code>free</code> operations.</p>
+<p>We can likewise make a <strong>list of CRDTs</strong>.</p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>In a shared folder containing multiple collaborative documents, you can define your document CRDT, then use a Unique Set of document CRDTs to model the whole folder. (You can also use a CRDT-valued map from names to documents, but then documents can’t be renamed, and documents “created” concurrently with the same name will end up merged.)</li>
+</ul>
+<!--- In a todo-list app, you can define a "todo-item CRDT" with fields `text` and `done`, giving the item text and whether it is done. The whole app's state is then a list of todo-item CRDTs.-->
+<ul>
+<li>Continuing the Quill rich-text example from the previous section, you can model a rich-text document as a list of “rich character CRDTs”, where each “rich character CRDT” consists of an immutable (non-CRDT) character plus the <code>attributes</code> map CRDT. This is sufficient to build <a rel="noopener" target="_blank" href="https://compoventuals-tests.herokuapp.com/host.html?network=ws&amp;container=demos/rich-text/dist/rich_text.html">a simple Google Docs-style app with CRDTs</a> (<a rel="noopener" target="_blank" href="https://github.com/composablesys/collabs/blob/master/demos/apps/rich-text/src/rich_text.ts">source</a>).</li>
+</ul>
+<h2 id="using-composition">Using Composition</h2>
+<p>You can use the above composition techniques and basic CRDTs to design CRDTs for many collaborative apps. Choosing the exact structure, and how operations and user-visible state map onto that structure, is the main challenge.</p>
+<p>A good starting point is to design an ordinary (non-CRDT) data model, using ordinary objects, collections, etc., then convert it to a CRDT version. So variables become registers, sets become Unique Sets or Add-Wins Sets, etc. You can then tweak the design as needed to accommodate extra operations or fix weird concurrent behaviors.</p>
+<p>To accommodate as many operations as possible while preserving user intention, I recommend:</p>
+<p><a name="principle-4"></a><strong>Principle 4. Independent operations (in the user’s mind) should act on independent state.</strong></p>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>As mentioned earlier, you can represent the position and size of an image in a collaborative slide editor by using separate registers for the left, top, width, and height. If you wanted, you could instead use a single register whose value is a tuple (left, top, width, height), but this would violate Principle 4. Indeed, then if one user moved the image while another resized it, one of their changes would overwrite the other, instead of both moving and resizing. <!--Likewise, it would be a mistake to replace (left, top, width, height) with (left, top, right, bottom) (this also violates [Principle 2](#principle-2)).--></li>
+<li>Again in a collaborative slide editor, you might initially model the slide list as a list of slide CRDTs. However, this provides no way for users to move slides around in the list, e.g., swap the order of two slides. You could implement a move operation using cut-and-paste, but then slide edits concurrent to a move will be lost, even though they are intuitively independent operations.<br />
+<a name="list-with-move"></a>Following Principle 4, you should instead implement move operations by modifying some state independent of the slide itself. You can do this by replacing the <em>list</em> of slides with a <em>Unique Set</em> of objects <code>{ slide, positionReg }</code>, where <code>positionReg</code> is an LWW register indicating the position. To move a slide, you create a unique new position like in a list CRDT, then set the value of <code>positionReg</code> equal to that position. This construction gives the <a rel="noopener" target="_blank" href="https://doi.org/10.1145/3380787.3393677"><strong>list-with-move</strong></a> CRDT.</li>
+</ul>
+<h1 id="new-concurrent-causal-for-each-operations">New: Concurrent+Causal For-Each Operations</h1>
+<p>There’s one more trick I want to show you. Sometimes, when performing a for-each operation on a Unique Set or list CRDT (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-3a">Principle 3a</a>), you don’t just want to affect existing (causally prior) elements. You also want to affect <em>elements that are added/inserted concurrently</em>.</p>
+<p>For example:</p>
+<ul>
+<li>In a rich text editor, if one user bolds a range of text, while concurrently, another user types in the middle of the range, the latter text should also be bolded.
+<br />
+<img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/weird_bolding.png" alt="One user bolds a range of text, while concurrently, another user types “ the“ in the middle. In the final result, “ the“ is also bolded." />
+<br />
+In other words, the first user’s intended operation is “for each character in the range <em>including ones inserted concurrently</em>, bold it”.</li>
+<li>In a collaborative recipe editor, if one user clicks a “double the recipe” button, while concurrently, another user edits an amount, then their edit should also be doubled. Otherwise, the recipe will be out of proportion, and the meal will be ruined!</li>
+</ul>
+<p>I call such an operation a <strong>concurrent+causal for-each operation</strong>. To accomodate the above examples, I propose the following addendum to <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-3a">Principle 3a</a>:</p>
+<p><a name="principle-3b"></a><strong>Principle 3b. For operations that do something “for each” element of a collection, another option is to use a <em>concurrent+causal for-each operation</em> on a Unique Set (or list CRDT).</strong></p>
+<p>To implement this, the initiating user first does a causal for-each operation. They then send a message describing how to perform the operation on concurrently added elements. The receivers apply the operation to any concurrently added elements they’ve received already (and haven’t yet deleted), then store the message in a log. Later, each time they receive a new element, they check if it’s concurrent to the stored message; if so, they apply the operation.</p>
+<!-- > **Aside.** It would be more general to split Principle 3 into "causal for-each" and "concurrent for-each" operations. However, I haven't yet found a good use-case for a concurrent for-each operation that isn't part of a concurrent+causal for-each.
+
+<p></p><br /> -->
+<p>Concurrent+causal for-each operations are novel as far as I’m aware. They are based on <a rel="noopener" target="_blank" href="https://doi.org/10.1145/3408976">a paper</a> I, <a rel="noopener" target="_blank" href="https://heather.miller.am/">Heather Miller</a>, and <a rel="noopener" target="_blank" href="http://christophermeiklejohn.com/">Christopher Meiklejohn</a> wrote last year, about a composition technique we call the <em>semidirect product</em>, which can implement them (albeit in a confusing way). <!--Unfortunately, the paper doesn't make clear what the semidirect product is doing intuitively (since we didn't understand this ourselves!). My current opinion is that concurrent+causal for-each operations are what it's really trying to do; the semidirect product is a special case of an optimized implementation, but written in the confusing traditional style (implementation + proof that concurrent operations commute). --></p>
+<!-- > If you do want to use the semidirect product as an optimized implementation, be aware that it is not as general as it could be. E.g., the recipe example can be optimized, but not using the semidirect product. I'll write up a tech report about a more general approach at some point.
+
+<p></p><br /> -->
+<!-- Aside: dual view: controller for the for-each part plus oppositely-adjusted state. E.g. for scaling, or reversible list? Perhaps contrast with that approach---ours should be easier, in comparison to e.g. rich-text CRDT using invisible formatting characters (direct construction approach). -->
+<!--# Summary: Principles of CRDT Design
+
+also non-principle advice (basic designs, composition techniques)
+
+For easy reference, here are our principles of CRDT design.
+
+[**Principle 1.**](#principle-1) Use the Unique Set CRDT for operations that "add" or "create" a unique new thing.
+
+[**Principle 2.**](#principle-2) Express operations in terms of user intention---what the operation means to the user, intuitively. This might differ from the closest ordinary data type operation.
+
+**Principle 3([a](#principle-3a), [b](#principle-3b)).** For operations that do something "for each" element of a collection, use a *causal for-each operation* or a *concurrent+causal for-each operation* on a Unique Set (or list CRDT).
+
+[**Principle 4.**](#principle-4) Independent operations (in the user's mind) should act on independent state.-->
+<h1 id="case-study-a-collaborative-spreadsheet">Case Study: A Collaborative Spreadsheet</h1>
+<p>Now let’s get practical: we’re going to design a CRDT for a collaborative spreadsheet editor (think Google Sheets).</p>
+<p>As practice, try sketching a design yourself before reading any further. The rest of this section describes how I would do it, but don’t worry if you come up with something different—there’s no one right answer! The point of this blog post is to give you the confidence to design and tweak CRDTs like this yourself, not to dictate “the one true spreadsheet CRDT™”.</p>
+<h2 id="design-walkthrough">Design Walkthrough</h2>
+<p>To start off, consider an individual cell. Fundamentally, it consists of a text string. We could make this a text (list) CRDT, but usually, you don’t edit individual cells collaboratively; instead, you type the new value of the cell, hit enter, and then its value shows up for everyone else. This suggests instead using a register, e.g., an LWW register.</p>
+<p>Besides the text content, a cell can have properties like its font size, whether word wrap is enabled, etc. Since changing these properties are all independent operations, following <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-4">Principle 4</a>, they should have independent state. This suggests using a CRDT object to represent the cell, with a different CRDT instance field for each property. In pseudocode (classes are implicitly <a href="#crdt-objects">CRDT objects</a>):</p>
+<pre data-lang="ts" style="background-color:#393939;color:#dedede;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#fffb9d;">class </span><span style="color:#f4a020;">Cell </span><span>{
+</span><span>  content</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#fffb9d;">string</span><span>&gt;;
+</span><span>  fontSize</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#fffb9d;">number</span><span>&gt;;
+</span><span>  wordWrap</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">EnableWinsFlag</span><span>;
+</span><span style="color:#a0cfa1;">  //</span><span style="color:#87ae86;"> ...
+</span><span>}
+</span></code></pre>
+<p>The spreadsheet itself is a grid of cells. Each cell is indexed by its location (row, column), suggesting a map from locations to cells. (A 2D list could work too, but then we’d have to put rows and columns on an unequal footing, which might cause trouble later.) Thus let’s use a <code>Cell</code>-CRDT-valued map.</p>
+<p>What about the map keys? It’s tempting to use conventional row-column indicators like “A1”, “B3”, etc. However, then we can’t easily insert or delete rows/columns, since doing so renames other cells’ indicators. (We could try making a “rename” operation, but that violates <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-2">Principle 2</a>, since it does not match the user’s original intention: inserting/deleting a different row/column.)</p>
+<p>Instead, let’s identify cell locations using pairs (row, column), where “row” means “the line of cells horizontally adjacent to this cell”, independent of that row’s literal location (1, 2, etc.), and likewise for “column”. That is, we create an opaque <code>Row</code> object to represent each row, and likewise for columns, then use pairs <code>(Row, Column)</code> for our map keys.</p>
+<p>The word “create” suggests using Unique Sets (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-1">Principle 1</a>), although since the rows and columns are ordered, we actually want list CRDTs. Hence our app state looks like:</p>
+<pre data-lang="ts" style="background-color:#393939;color:#dedede;" class="language-ts "><code class="language-ts" data-lang="ts"><span>rows: ListCRDT</span><span style="color:#ececec;">&lt;</span><span>Row</span><span style="color:#ececec;">&gt;</span><span>;
+</span><span>columns: ListCRDT</span><span style="color:#ececec;">&lt;</span><span>Column</span><span style="color:#ececec;">&gt;</span><span>;
+</span><span>cells: CRDTValuedMap</span><span style="color:#ececec;">&lt;</span><span style="color:#78cecc80;">[</span><span>row: Row, column: Column</span><span style="color:#78cecc80;">]</span><span>, Cell</span><span style="color:#ececec;">&gt;</span><span>;
+</span></code></pre>
+<p>Now you can insert or delete rows and columns by calling the appropriate operations on <code>columns</code> and <code>rows</code>, without affecting the <code>cells</code> map at all. (Due to the lazy nature of the map, we don’t have to explicitly create cells to fill a new row or column; they implicitly already exist.)</p>
+<p>Speaking of rows and columns, there’s more we can do here. For example, rows have editable properties like their height, whether they are visible, etc. These properties are independent, so they should have independent states (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-4">Principle 4</a>). This suggests making <code>Row</code> into a CRDT object:</p>
+<pre data-lang="ts" style="background-color:#393939;color:#dedede;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#fffb9d;">class </span><span style="color:#f4a020;">Row </span><span>{
+</span><span>  height</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#fffb9d;">number</span><span>&gt;;
+</span><span>  isVisible</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">EnableWinsFlag</span><span>;
+</span><span style="color:#a0cfa1;">  //</span><span style="color:#87ae86;"> ...
+</span><span>}
+</span></code></pre>
+<p>Also, we want to be able to move rows and columns around. We already described how to do this using a <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#list-with-move">list-with-move</a>:</p>
+<pre data-lang="ts" style="background-color:#393939;color:#dedede;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#fffb9d;">class </span><span style="color:#f4a020;">ListWithMove</span><span>&lt;</span><span style="color:#d6d6d6;">C</span><span>&gt; {
+</span><span>  state</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">UniqueSet</span><span>&lt;{value</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">C</span><span>, positionReg</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#d6d6d6;">ListCRDTPosition</span><span>&gt;}&gt;;
+</span><span>}
+</span><span>
+</span><span>rows: ListWithMove</span><span style="color:#ececec;">&lt;</span><span>Row</span><span style="color:#ececec;">&gt;</span><span>;
+</span><span>columns: ListWithMove</span><span style="color:#ececec;">&lt;</span><span>Column</span><span style="color:#ececec;">&gt;</span><span>;
+</span></code></pre>
+<p>Next, we can also perform operations on every cell in a row, like changing the font size of every cell. For each such operation, we have three options:</p>
+<ol>
+<li>Use a causal for-each operation (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-3a">Principle 3a</a>). This will affect all current cells in the row, but not any cells that are created concurrently (when a new column is inserted). E.g., a “clear” operation that sets every cell’s value to <code>""</code>.</li>
+<li>Use a concurrent+causal for-each operation (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-3b">Principle 3b</a>). This will affect all current cells in the row <em>and</em> any created concurrently. E.g., changing the font size of a whole row.</li>
+<li>Use an independent state that affects the row itself, not the cells (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#principle-4">Principle 4</a>). E.g., our usage of <code>Row.height</code> for the height of a row.</li>
+</ol>
+<!-- > **Aside.** Note that the for-each loops loop over every cell in the row, even blank cells that have never been used. This has the downside of making all those cells explicitly exist in the CRDT-valued map, increasing memory usage. We tolerate this since our focus is to pin down the semantics, not give an efficient implementation. Once the semantics are pinned down, though, you are free to optimize the implementation.
+
+<p></p><br /> -->
+<!--Lastly, let's take another look at cell contents. Before I said it was just a string, but it's more interesting than that: cells can reference other cells in formulas, e.g., "= A2 + B3". If a column is inserted in front of column A, these references should update to "= B2 + C3", since they intuitively describe a *cell*, not the indicators themselves. So, we should store them using a pair `[row: Row, column: Column]`, like the map keys. The content then becomes an array of tokens, which can be literal strings or cell references:
+```ts
+class Cell {
+  content: LWWRegister<(string | [row: Row, column: Column])[]>;
+  fontSize: LWWRegister<number>;
+  wordWrap: EnableWinsFlag;
+  // ...
+}
+```-->
+<h2 id="finished-design">Finished Design</h2>
+<p>In summary, the state of our spreadsheet is as follows.</p>
+<pre data-lang="ts" style="background-color:#393939;color:#dedede;" class="language-ts "><code class="language-ts" data-lang="ts"><span style="color:#a0cfa1;">//</span><span style="color:#87ae86;"> ---- CRDT Objects ----
+</span><span style="color:#fffb9d;">class </span><span style="color:#f4a020;">Row </span><span>{
+</span><span>  height</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#fffb9d;">number</span><span>&gt;;
+</span><span>  isVisible</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">EnableWinsFlag</span><span>;
+</span><span style="color:#a0cfa1;">  //</span><span style="color:#87ae86;"> ...
+</span><span>}
+</span><span>
+</span><span style="color:#fffb9d;">class </span><span style="color:#f4a020;">Column </span><span>{
+</span><span>  width</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#fffb9d;">number</span><span>&gt;;
+</span><span>  isVisible</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">EnableWinsFlag</span><span>;
+</span><span style="color:#a0cfa1;">  //</span><span style="color:#87ae86;"> ...
+</span><span>}
+</span><span>
+</span><span style="color:#fffb9d;">class </span><span style="color:#f4a020;">Cell </span><span>{
+</span><span>  content</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#fffb9d;">string</span><span>&gt;;
+</span><span>  fontSize</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#fffb9d;">number</span><span>&gt;;
+</span><span>  wordWrap</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">EnableWinsFlag</span><span>;
+</span><span style="color:#a0cfa1;">  //</span><span style="color:#87ae86;"> ...
+</span><span>}
+</span><span>
+</span><span style="color:#fffb9d;">class </span><span style="color:#f4a020;">ListWithMove</span><span>&lt;</span><span style="color:#d6d6d6;">C</span><span>&gt; {
+</span><span>  state</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">UniqueSet</span><span>&lt;{value</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">C</span><span>, positionReg</span><span style="color:#ececec;">: </span><span style="color:#d6d6d6;">LWWRegister</span><span>&lt;</span><span style="color:#d6d6d6;">ListCRDTPosition</span><span>&gt;}&gt;;
+</span><span>}
+</span><span>
+</span><span style="color:#a0cfa1;">//</span><span style="color:#87ae86;"> ---- App state ----
+</span><span>rows: ListWithMove</span><span style="color:#ececec;">&lt;</span><span>Row</span><span style="color:#ececec;">&gt;</span><span>;
+</span><span>columns: ListWithMove</span><span style="color:#ececec;">&lt;</span><span>Column</span><span style="color:#ececec;">&gt;</span><span>;
+</span><span>cells: CRDTValuedMap</span><span style="color:#ececec;">&lt;</span><span style="color:#78cecc80;">[</span><span>row: Row, column: Column</span><span style="color:#78cecc80;">]</span><span>, Cell</span><span style="color:#ececec;">&gt;</span><span>;
+</span></code></pre>
+<p>Note that I never explicitly mentioned <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/#correctness">CRDT correctness</a>—the claim that all users see the same document state after receiving the same messages. Because we assembled the design from existing CRDTs using composition techniques that preserve CRDT correctness, it is trivially correct. Plus, it should be straightforward to reason out what would happen in various concurrency scenarios.</p>
+<p>As exercises, here are some further tweaks you can make to this design, phrased as user requests:</p>
+<ol>
+<li>“I’d like to have multiple sheets in the same document, accessible by tabs at the bottom of the screen, like in Excel.” <em>Hint (highlight to reveal): <font color="white">Use a list of CRDTs.</font></em></li>
+<li>“I’ve noticed that if I change the font size of a cell, while at the same time someone else changes the font size for the whole row, sometimes their change overwrites mine. I’d rather keep my change, since it’s more specific.” <em>Hint: <font color="white">Use a register with a custom getter.</font></em></li>
+<li>“I want to reference other cells in formulas, e.g., <code>= A2 + B3</code>. Later, if <code>B3</code> moves to <code>C3</code>, its references should update too.” <em>Hint: <font color="white">Store the reference as something immutable.</font></em></li>
+</ol>
+<h1 id="conclusion">Conclusion</h1>
+<p>I hope you’ve gained an understanding of how CRDTs work, plus perhaps a desire to apply them in your own apps. We covered a lot:</p>
+<ul>
+<li><strong>Traditional CRDTs:</strong> Unique Set, List/Text, LWW Register, Enable-Wins Flag, Add-Wins Set, CRDT-Valued Map, and List-with-Move.</li>
+<li><strong>Novel Operations</strong>: Concurrent+causal for-each operations on a Unique Set or list.</li>
+<li><strong>Whole Apps</strong>: Spreadsheet, rich text, and pieces of various other apps.</li>
+</ul>
+<p>For more info, <a rel="noopener" target="_blank" href="https://crdt.tech/">crdt.tech</a> collects most CRDT resources in one place.</p>
+<p>I’ve also started putting these ideas into practice in a library, <a rel="noopener" target="_blank" href="https://www.npmjs.com/package/@collabs/collabs">Collabs</a>. You can learn more about Collabs, and see how open-source collaborative apps might work in practice, in <a rel="noopener" target="_blank" href="https://www.youtube.com/watch?v=Exr0iY_D-vw">my Strange Loop talk</a>.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>I thank Justine Sherry, Jonathan Aldrich, and Pratik Fegade for reviewing this post and giving helpful feedback. I also thank Heather Miller, Ria Pradeep, and Benito Geordie for numerous CRDT design discussions that led to these ideas.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="http:&#x2F;&#x2F;mattweidner.com&#x2F;" target=_blank>
+  Matthew Weidner
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.justinesherry.com&#x2F;" target=_blank>
+  Justine Sherry,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~aldrich&#x2F;" target=_blank>
+  Jonathan Aldrich,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;pratikfegade.github.io&#x2F;" target=_blank>
+  Pratik Fegade
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/">#Systems</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/programming-languages/">#Programming Languages</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/collaborative-apps/">#collaborative apps</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/data-structures/">#data structures</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/crdts/">#CRDTs</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/composition/">#composition</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2022&#x2F;timetraveling-simulation&#x2F;">‹ Time-Traveling Simulation for Security</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;withheld&#x2F;">Classification with Strategically Withheld Data ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

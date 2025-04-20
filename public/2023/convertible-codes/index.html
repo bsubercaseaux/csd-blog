@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Code Conversion in Distributed Storage Systems</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#introduction" class="toc-link">Introduction</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#background" class="toc-link">Background on storage systems</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#design" class="toc-link">Distributed storage system design</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#erasure-codes" class="toc-link">Background on erasure codes</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#conversion" class="toc-link">The code conversion problem</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#framework" class="toc-link">The convertible codes framework</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#conversion-procedure" class="toc-link">Conversion procedure</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#conversion-regimes" class="toc-link">Conversion regimes</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#access-opt" class="toc-link">Minimizing the access cost of conversion</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#merge-regime" class="toc-link">Merge regime</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#split-regime" class="toc-link">Split regime</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#general-regime" class="toc-link">General regime</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#references" class="toc-link">References</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;convertible-codes&#x2F;">Code Conversion in Distributed Storage Systems</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2023-07-19</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~fmaturan" target=_blank>
+  Francisco Maturana
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p><a name="fig-intro"></a>
+<img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/conversion_intro.png" alt="Code conversion" />
+<em>Figure 1: diagram showing the code conversion process in a distributed storage system.</em></p>
+<h2 id="introduction">Introduction</h2>
+<p>Today’s society is data-driven, and many of the applications that society relies on require storing ever-increasing amounts of data.
+To this end, distributed storage systems have become the foundation of the data infrastructure, for example cloud storage systems.
+These large-scale systems are typically run on massive clusters which have thousands to millions of disks, and store amounts of data on the scale of exabytes (\(10^{18}\) bytes).
+At this large scale, failures become a common ocurrence.
+Given the fundamental role that distributed storage systems play in supporting other applications, they must guarantee high levels of reliability despite these failures.
+One common way to ensure reliability is through replication.
+However, duplicating (or triplicating) the amount space used with replication is prohibitively expensive.
+Instead, most current large-scale storage systems primarily employ <em>erasure codes</em>.
+An erasure code encodes data in a way that makes it resilient against failures with lower overhead than replication.</p>
+<p>The level of fault tolerance and the storage space consumed by an erasure code are determined by its parameters.
+For example, the popular Reed-Solomon codes (and other traditional maximum-distance separable codes) have two main parameters: code length (\(n\)) and dimension (\(k\)).
+These parameters are typically set based on the failure rate of storage devices, the required degree of reliability, and some additional requirements on system performance and storage overhead.</p>
+<p>In practice, there are multiple reasons which necessitate changing the parameters of an erasure code for <em>already-encoded data</em>.
+The process of transforming the data from the old encoding to the new encoding is known as <em>code conversion</em> (see <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#fig-intro">figure 1</a>).
+One of the reasons for doing code conversions is <em>disk-adaptive redundancy</em> (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#kadekodi2019cluster">Kadekodi et al. 2019</a>):
+it has been shown that the failure rate of disks can vary drastically across make/models and over time (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#schroeder2007disk">Schroeder and Gibson, 2007</a>), and that significant savings in storage space (and hence operating costs) can be achieved by tuning the code parameters to the observed failure rates.
+For example, on production cluster traces from Google, disk-adaptive redundancy can lead to up to 25% space savings (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#kadekodi2020pacemaker">Kadekodi et al. 2020</a>).
+Due to the large scale, this translates to savings of millions of dollars and significant reductions in the carbon footprint.
+Another reason for code conversion is the changes in the popularity of data.
+More popular data is typically encoded with higher redundancy (to support faster reads) and less popular data is encoded with less redundancy (for storage efficiency).
+Thus, as popularity of the data changes, it is beneficial to change the parameters of the code used to encode the data (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#xia2015tale">Xia et al. 2015</a>).
+In this case, data needs to be redistributed to make use of the new disks I/O throughput.</p>
+<p>The default approach to code conversion is to read all data, re-encode it, and write it back.
+This approach requires a large amount of disk I/O access and bandwidth which, due to inherent physical limitations of hard disk drives, are very scarce resources.
+The following figure (from <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#kadekodi2020pacemaker">Kadekodi et al. 2020</a>) shows the fraction of the total cluster I/O used by code conversion in a simulation using real-world cluster traces.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/heart_mono_front.png" alt="Conversion IO in simulated cluster" />
+<em>Figure 2: Trace-based simulation of a cluster using the default approach to code conversion. X-axis represents calendar date, left Y-axis represents the total fraction of the IO used by conversion, right Y-axis shows the size of the cluster in terms of the number of disks.</em></p>
+<p>Observe that the total IO used by code conversion can use up to 100% of the cluster IO during significant periods of time.
+Therefore, the default approach to code conversion can easily overwhelm a storage system, interfering with other important (foreground) tasks such as serving user requests.
+In this post, we summarize our work on <strong>convertible codes</strong>, which are erasure codes that can be converted more efficiently than the default approach.
+So far the information theory community has extensively studied various aspects of storage codes such as rate, update cost, repair bandwidth, and repair locality.
+The conversion problem opens up a new dimension to optimize for when designing storage codes.
+There are several open problems in this new design space, with a high potential for real-world impact.</p>
+<p>We start by providing some <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#background">background</a> about storage systems, erasure codes, and the way erasure codes are used in storage systems.
+Then, we introduce and formally define <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#conversion">code conversion and convertible codes</a>.
+Afterwards, we provide a <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#access-opt">summary of our results</a> and showcase some examples that show how convertible codes can reduce conversion cost.
+Finally, we conclude with some <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#conclusion">open problems</a>.</p>
+<h2 id="background">Background on storage systems</h2>
+<p>Many modern applications require storing large amounts of data; amounts which far exceed the capacity of a single disk drive.
+In such cases, data needs to be distributed across many disks, attached to many different machines.
+One immediate problem that emerges in this scenario is that, as the number of components in the system increases, the probability that at least one component fails becomes very high.
+Because distributed systems need to keep running despite of these failures, reliability is an essential part of their design.</p>
+<p>The simplest way of adding reliability to a distributed storage system is to use <em>replication</em>: each piece of data has multiple copies each stored in a different disk, so that if any disk fails, no data is permanently lost.
+However, replication significantly increases the total amount of space used by the system, which makes it very expensive to use in large-scale systems.
+For example, three-replication (which tolerates up to two failures) is used in some systems, and it uses 200% additional storage.
+Storage cost is normally measured as the ratio of the total space used to the size of the original data, and is called <em>storage overhead</em>.
+So three-replication incurs a storage overhead of 3.</p>
+<p>Given the high cost of replication, nowadays most storage systems use <em>erasure coding</em> instead, which can offer the same (or even higher) reliability guarantees while using much less storage space.
+For example, an \([5, 3]\) MDS code (explained in detail in <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#erasure-codes">Background on erasure codes</a>) can tolerate up to two failures (same as three-replication) and has a storage overhead of \(\frac{5}{3} = 1.66\), i.e., only 66.6% extra storage.</p>
+<p>Storage overhead is one of the main cost metrics for distributed storage systems.
+This is because the top costs of running a system come from the cost of buying all the necessary hardware, and operating it: i.e. providing infrastructure, power, cooling, networking, etc.
+Such is the scale of these systems, that even a single-digit percentage reduction in storage overhead is significant.</p>
+<p>There are many other costs and metrics apart from storage overhead.
+Among them, disk I/O resources come first, because it is important for the performance of the system.
+HDDs offer relatively low I/O bandwidth compared to the total amount of storage space, so this is often the bottleneck of the system’s throughput.
+Due to the mechanical overheads involved in moving the read head to the right place within a disk, the number of I/O operations (called accesses) is also an important metric.
+Similarly, the amount of network I/O operations, CPU, and memory usage are also important.</p>
+<h3 id="design">Distributed storage system design</h3>
+<p>One of the most well-known types of distributed storage systems is <abbr title="Redundant Array of Inexpensive Disks">RAID</abbr>.
+A RAID system typically consists of an array of \(n\) disks with same capacity attached to a single machine.
+Data is encoded with an \([n, k]\) MDS (maximum distance separable) code and for each codeword, each of the \(n\) codeword symbols is placed on a different disk.</p>
+<p>Modern distributed storage systems require to scale past a single machine, and thus have a different design from RAID.
+An example of such a system is <a rel="noopener" target="_blank" href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html">HDFS</a>, which also supports erasure coding.
+These systems manage a large number of nodes and disks: sometimes thousands or tens of thousands of them.
+As in RAID, data is encoded with an \([n, k]\) MDS code, and each codeword symbol is placed on a different disk, but \(n\) is much smaller than the number of disks (typically \(n \leq 50\)).
+The disks where a codeword is placed are chosen by a semi-random placement algorithm, which tries to avoid choosing disks that might fail at the same time (e.g., by choosing disks in different racks).</p>
+<h3 id="erasure-codes">Background on erasure codes</h3>
+<p>While many types of erasure codes exists, in this post we will focus specifically on <em>linear</em> erasure codes with the <em>MDS</em> property, which we explain in the following.
+An \([n, k]\) MDS (maximum-distance separable) erasure code takes \(k\) symbols of data, and encodes them into \(n\) code symbols with the property that any \(k\) out of the \(n\) code symbols can recover the original \(k\) data symbols.
+Symbols are elements from a specific finite field (denoted \(\mathbb{F}\)).
+Many practical applications use the finite field \(\mathrm{GF}(2^8)\), where each symbol is represented as a single byte.
+Let \(r \coloneqq n - k\), and let \([i] = \{1,2,\ldots,i\}\).
+Mathematically, an \([n, k]\) erasure code over \(\mathbb{F}\) is a function \(\mathcal{C}: \mathbb{F}^{k} \to \mathbb{F}^{n}\).
+Elements in the image of \(\mathcal{C}\) are called <em>codewords</em>.</p>
+<p>A linear code can be described by the mapping \(\mathbf{m} \to \mathbf{m} \mathbf{G}\), where \(\mathbf{G}\) is the \(k \times n\) <em>generator matrix</em>.
+A code is MDS iff for any codeword it is possible to recover the original data after erasing any \(r\) arbitrary symbols.
+For linear codes, this is equivalent to the property that the \(k \times k\) matrix formed by the columns corresponding to any \(k\) code symbols is invertible.
+In practice, <em>systematic</em> codes are often used, which permit reading data without decoding.
+A linear code is said to be <em>systematic</em> if its generator matrix contains a \(k \times k\) identity matrix as a submatrix; for such codes, we refer to the \(k \times r\) submatrix defined by the remaining columns as the <em>parity matrix</em> \(\mathbf{P}\).</p>
+<h2 id="conversion">The code conversion problem</h2>
+<p>The problem of changing data encoded under an initial code \(\mathcal{C}^I\) to its corresponding encoding under a final code \(\mathcal{C}^F\) is called <em>code conversion</em>.
+In this section, we describe <em>convertible codes</em>, which are capable of efficiently changing the erasure code parameters from \([n^I, k^I]\) to \([n^F, k^F]\).
+Let us start by showing an example of convertible codes in action.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/convertible_codes_example.png" alt="Code conversion" />
+<em>Figure 2: Example of code conversion from a \([7,4]\) MDS code to a \([11,8]\) MDS code.</em></p>
+<blockquote>
+<p><a name="ex-merge"></a>
+<strong>Example 1.</strong> Consider conversion from \([n^I = 7, k^I = 4]\) to \([n^F = 11, k^F = 8]\).
+In this example, both codes are systematic (i.e. the data symbols are contained in the codewords), and each box represents a symbol.
+Two codewords from the \([7,4]\) code are combined to obtain a single codeword from the \([11,8]\) code.
+The first observation we make is that since both codes are systematic, we can simply keep the data symbols where they are (i.e., unchanged) through the conversion (dashed arrows).
+Thus, in this case, we only need to define how the new parities are computed.</p>
+<p>The default approach to conversion would be to read all of the data symbols \((a_1,\ldots,a_8)\), and use those to compute the new parities \(q_1, q_2\).
+However, it is possible to reduce that cost.
+Let the field \(\mathbb{F}\) be the integers modulo 17.
+When we define the code, we want to ensure two properties: (1) the initial and final codes are MDS, and (2) the new parities can be computed efficiently.
+To ensure this, we build the code from a <em>Vandermonde matrix</em>.
+In a Vandermonde matrix, each column is determined by an <em>evaluation point</em> (an element from the field), and row \(i\) corresponds to the evaluation point raised to the power of \(i - 1\).
+We can carefully choose the evaluation points to ensure the MDS property holds (it does not suffice to just choose distinct point).
+Choosing evaluation points \((\theta_1 = 1, \theta_2 = 2, \theta_3 = 6)\) we have:
+\[
+\mathbf{P}^F =
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 \\
+\theta_1 &amp; \theta_2 &amp; \theta_3 \\
+\theta_1^2 &amp; \theta_2^2 &amp; \theta_3^2 \\
+\theta_1^3 &amp; \theta_2^3 &amp; \theta_3^3 \\
+\theta_1^4 &amp; \theta_2^4 &amp; \theta_3^4 \\
+\theta_1^5 &amp; \theta_2^5 &amp; \theta_3^5 \\
+\theta_1^6 &amp; \theta_2^6 &amp; \theta_3^6 \\
+\theta_1^7 &amp; \theta_2^7 &amp; \theta_3^7 \\
+\end{bmatrix} =
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 \\
+1 &amp; 2 &amp; 6 \\
+1 &amp; 4 &amp; 2 \\
+1 &amp; 8 &amp; 12 \\
+1 &amp; 16 &amp; 4 \\
+1 &amp; 15 &amp; 7 \\
+1 &amp; 13 &amp; 8 \\
+1 &amp; 9 &amp; 14 \\
+\end{bmatrix}.
+\]
+Let \(\mathbf{P}^I\) denote matrix defined by the first 4 rows of \(\mathbf{P}^F\).
+The parities for the initial code are computed using \(\mathbf{P}^I\), and the parities of the final code are computed using \(\mathbf{P}^F\), i.e., the \((p,p^{\prime},q)\) elements in Figure 2 are defined as:
+\[
+(p_1,p_2,p_3) = (a_1,\ldots,a_4) \mathbf{P}^I \\
+(p^{\prime}_1,p^{\prime}_2,p^{\prime}_3) = (a_5,\ldots,a_8) \mathbf{P}^I \\
+(q_1,q_2,q_3) = (a_1,\ldots,a_8) \mathbf{P}^F.
+\]
+It is straightforward (although tedious) to check that the codes defined with these matrices have the MDS property.
+During conversion, instead of reading all data we can compute simply compute the new parities from the old ones by scaling them by the appropriate powers of the chosen evaluation points:
+\[
+(a_1,\ldots,a_4)\mathbf{P}^I +
+(a_5,\ldots,a_8)\mathbf{P}^I
+\begin{bmatrix}
+\theta_1^4 &amp; 0 &amp; 0 \\
+0 &amp; \theta_2^4 &amp; 0 \\
+0 &amp; 0 &amp; \theta_3^4 \\
+\end{bmatrix} = (a_1,\ldots,a_8)\mathbf{P}^F.
+\]
+Notice that this is possible due to the Vandermonde structure of the matrices, which allows us to turn \(\mathbf{P}^I\) into the bottom half of \(\mathbf{P}^F\) by scaling each column.
+This allows us to compute the final parities by using the existing initial parities, without the need to read the data.</p>
+<p>By doing this, we can achieve code conversion by reading (and transferring) just 6 symbols in total.
+In comparison, the default approach of read-reencode-write would require reading (and transferring) 8 symbols (i.e., all the original data symbols).</p>
+</blockquote>
+<h3 id="framework">The convertible codes framework</h3>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/framework_example.png" alt="Diagram of code conversion" />
+<em>Figure 3: Abstract depiction of a conversion from an \([n^I,k^I]\) MDS code to a \([n^F,k^F]\) MDS code.</em>
+<em>Each box represents a symbol, and the boxes are grouped into codewords.</em>
+<em>The top row represents initial codewords and the bottom row represents final codewords.</em>
+<em>Some symbols are kept unchanged, and reused in the final codewords (denoted with dashed arrows).</em>
+<em>The converter (the node labeled “c”), reads data from some symbols in the initial codewords, and computes the new symbols in the final codewords (denoted with solid arrows).</em></p>
+<p>Convertible codes focus on conversions where \(\mathcal{C}^I\) is an \([n^I,k^I]\) code and \(\mathcal{C}^F\) is an \([n^F,k^F]\) code.
+In this post, we focus on the case where \(\mathcal{C}^I\) and \(\mathcal{C}^F\) are linear and MDS.
+To achieve the change in code dimension from \(k^I\) to \(k^F\) the conversion procedure needs to consider multiple codewords at a time.
+Let \(\lambda^I\) be the number of codewords of \(\mathcal{C}^I\) taken as input, and let \(\lambda^F\) be the number of codewords of \(\mathcal{C}^F\) produced as output.
+To preserve the amount of data, we must have \(\lambda^I k^I = \lambda^F k^F\).
+In particular, we define \(\lambda^I\) and \(\lambda^F\) as the smallest possible integers that satisfy the above equation, i.e.:
+\[
+\lambda^I \coloneqq \frac{\mathrm{lcm}(k^I,k^F)}{k^I}
+\text{ and }
+\lambda^F \coloneqq \frac{\mathrm{lcm}(k^I,k^F)}{k^F}.
+\]
+For example, in <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#ex-merge">Example 1</a> we have \(k^I = 4\) and \(k^F = 8\), which means that we consider a total of \(\mathrm{lcm}(k^I,k^F) = 8\) data symbols in total, which at the beginning form \(\lambda^I = 2\) codewords, and at the end form \(\lambda^F = 1\) codeword.</p>
+<p>Since multiple codewords are being converted, we also need to specify how data is distributed across different codewords.
+This is specified through an <em>initial partition</em> \(\mathcal{P}^I\) and <em>final partition</em> \(\mathcal{P}^F\) of the set \([\mathrm{lcm}(k^I,k^F)]\), which indicate the \(k^I\) data symbols encoded by each initial codeword, and \(k^F\) data symbols encoded by each final codeword.
+Let \(\mathbf{m} \in \mathbb{F}^{\mathrm{lcm}(k^I,k^F)}\) be the data to be stored, let \(P \subseteq [\mathrm{lcm}(k^I,k^F)]\) be a subset of indexes, and let \(\mathbf{m}_{P} \in \mathbb{F}^{|P|}\) be the entries of \(\mathbf{m}\) indexed by \(P\).
+Then, the set of <em>initial codewords</em> is \(\{\mathcal{C}^I(\mathbf{m}_P) \mid P \in \mathcal{P}^I\}\), and the set of <em>final codewords</em> is \(\{\mathcal{C}^F(\mathbf{m}_P) \mid P \in \mathcal{P}^F\}\).
+In the case of <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#ex-merge">Example 1</a>, the initial partition is \(\mathcal{P}^I = \{\{1,2,3,4\},\{5,6,7,8\}\}\), and the final partition is \(\mathcal{P}^F = \{\{1,2,3,4,5,6,7,8\}\}\), and thus the initial codewords are \(\{\mathcal{C}^I(a_1,\ldots,a_4), \mathcal{C}^I(a_5,\ldots,a_8)\}\) and the final codeword is \(\mathcal{C}^F(a_1,\ldots,a_8)\).</p>
+<p>The <em>conversion procedure</em> takes the initial codewords as input, and output the final codewords.
+Formally, a convertible code is defined as follows.</p>
+<blockquote>
+<p><strong>Definition (Convertible code).</strong>
+A convertible code over \(\mathbb{F}\) is defined by:</p>
+<ol>
+<li>a pair of codes \((\mathcal{C}^I, \mathcal{C}^F)\) where \(\mathcal{C}^I\) is an \([n^I, k^I]\) code over \(\mathbb{F}\) and \(\mathcal{C}^F\) is an \([n^F, k^F]\) code over \(\mathbb{F}\);</li>
+<li>a pair of partitions \(\mathcal{P}^I, \mathcal{P}^F\) of \([\mathrm{lcm}(k^I, k^F)]\) such that each subset in \(\mathcal{P}^I\) is of size \(k^I\) and each subset in \(\mathcal{P}^F\) is of size \(k^F\); and</li>
+<li>a conversion procedure that on input \({\mathcal{C}^I(\mathbf{m}_P) \mid P \in \mathcal{P}^I}\) outputs \({\mathcal{C}^F(\mathbf{m}_P) \mid P \in \mathcal{P}^F}\), for any \(\mathbf{m} \in \mathbb{F}^{\mathrm{lcm}(k^I,k^F)}\).</li>
+</ol>
+</blockquote>
+<h3 id="conversion-procedure">Conversion procedure</h3>
+<p>The objective of the conversion procedure is to convert the initial codewords into the final codewords efficiently.
+This is modeled with a <em>converter</em> which reads data from some symbols in the initial codewords, and computes new symbols in the final codewords.
+As seen in the figure above, not all symbols in the final codewords need to be new; some symbols can be kept unchanged from the initial codewords, which incurs no cost.
+Since our objective is to minimize cost, we will focus only on the so-called <em>stable</em> convertible codes, which have \(k^F\) unchanged symbols in each final codeword (which was proven in <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2022convertible">Maturana &amp; Rashmi, 2022a</a> to be the maximum possible).</p>
+<p>To decide whether a conversion procedure is efficient, we need to measure its cost.
+Since each final codeword has exactly \(r^F\) new symbols, the cost of writing the new symbols is fixed, regardless of the conversion procedure.
+Therefore, we will focus only the read costs of conversion.
+Two types of cost have been considered in the literature.</p>
+<blockquote>
+<p><strong>Definition (Access cost).</strong>
+The total number of symbols read by the converter.</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p><strong>Definition (Conversion bandwidth).</strong>
+The total size of the data read by the converter (note that the converter may read only part of a symbol).</p>
+</blockquote>
+<p></p>
+<p>In this post, we will focus only on <em>access cost</em>.</p>
+<h3 id="conversion-regimes">Conversion regimes</h3>
+<p>To facilitate the study of convertible codes, two special subcases have been identified in the literature.</p>
+<blockquote>
+<p><strong>Definition (Merge regime).</strong>
+Code conversions which merge multiple codewords into a single one, i.e., \(\lambda^I \geq 2\), \(\lambda^F = 1\), and \(k^F = \lambda^I k^F\), with arbitrary \(n^I\) and \(n^F\).</p>
+</blockquote>
+<p></p>
+<blockquote>
+<p><strong>Definition (Split regime).</strong>
+Code conversions which split a single codeword into a multiple one, i.e., \(\lambda^I = 1\), \(\lambda^F \geq 2\), and \(k^I = \lambda^F k^F\), with arbitrary \(n^I\) and \(n^F\).</p>
+</blockquote>
+<p></p>
+<p>The case where all parameters \((n^I,k^I,n^F,k^F)\) are arbitrary is referred to as the <em>general regime</em>.</p>
+<p>The benefit of studying the merge regime and the split regime separately, is that in these two subcases one need not worry about defining the partitions \(\mathcal{P}^I\) and \(\mathcal{P}^F\), which simplifies the analysis.
+This is because in these two subcases all data gets mapped to the same codeword (either in the initial or final configuration).
+Thus, all partitions are equivalent by just relabeling the symbols.</p>
+<h2 id="access-opt">Minimizing the access cost of conversion</h2>
+<p>The following table shows the known lower bounds for the access cost of conversion.
+In this section, we will describe the constructions that achieve each of the non-trivial bounds.</p>
+<p><a name="table-access-lb"></a>
+<strong>Table.</strong> <em>Summary of known lower bounds on access cost (assuming \(r^F = n^F - k^F \leq \min\{k^I, k^F\}\)).</em></p>
+<table><thead><tr><th>Regime</th><th>\(r^I &lt; r^F\)</th><th>\(r^I \geq r^F\)</th></tr></thead><tbody>
+<tr><td>Merge</td><td>\( \lambda^I k^I \) <sup class="footnote-reference">(1)</sup></td><td>\( \lambda^I r^F \) <sup class="footnote-reference">(1)</sup></td></tr>
+<tr><td>Split</td><td>\( \lambda^F k^F \) <sup class="footnote-reference">(2)</sup></td><td>\( (\lambda^I - 1) k^F + r^F \) <sup class="footnote-reference">(2)</sup></td></tr>
+<tr><td>\( k^I = k^F \)</td><td>\( k^I \)</td><td>0</td></tr>
+<tr><td>\( k^I \neq k^F\)</td><td>\(\mathrm{lcm}(k^I,k^F)\) <sup class="footnote-reference">(2)</sup></td><td>\(\lambda^I r^F + (\lambda^I \bmod \lambda^F) (k^I - \max\{k^F \bmod k^I, r^F\})\) <sup class="footnote-reference">(2)</sup></td></tr>
+</tbody></table>
+<p><em><sup class="footnote-reference">(1)</sup>: <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2022convertible">Maturana &amp; Rashmi, 2022a</a>.</em>
+<em><sup class="footnote-reference">(2)</sup>: <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2020access">Maturana et al., 2020</a>.</em></p>
+<h3 id="merge-regime">Merge regime</h3>
+<p>Recall that, in this case, \(\lambda^I\) codewords are merged into a single one.
+During conversion, all the data nodes are kept unchanged.
+To meet the bound in the table above, the converter can access \(r^F\) symbols from each initial codeword.
+As we saw in <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#ex-merge">example 1</a>, this is possible by designing the parity matrices in a way that allows the converter to compute the new parities using only the old parities.
+This can be done, for example, by using a Vandermonde matrix, although Vandermonde parity matrices are not guaranteed to produce MDS codes.
+However, <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2022convertible">Maturana &amp; Rashmi (2022a)</a> provide a method for constructing access-optimal codes that are guaranteed to be MDS over large enough field sizes.</p>
+<h3 id="split-regime">Split regime</h3>
+<p>Achieving the bound in table above is simple: during conversion, the converter reads the data symbols from all initial codewords except one, along with \(r^F\) initial parity symbols.
+Then, the read data symbols are used to compute the corresponding parity symbols, and to remove their interference from the read initial parities.</p>
+<blockquote>
+<p><strong>Example 2.</strong> <a name="ex-access-split"></a>
+Consider the conversion from \([n^I = 11, k^I = 8]\) to \([n^F = 7, k^F = 4]\) over \(\mathrm{GF}(17)\).
+Suppose we use the same \(\mathbf{P}^I\) and \(\mathbf{P}^F\) from <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#ex-merge">example 1</a> but swapped.
+During conversion, the converter reads \((a_5,\ldots,a_8)\) and the 3 initial parities \((a_1,\ldots,a_8)\mathbf{P}^I\).
+The parity symbols of the second final codeword can be computed directly from the data;
+the parity symbols of the first final codeword are computed as follows:
+\[
+(a_1,\ldots,a_8)\mathbf{P}^I -
+(a_5,\ldots,a_8)
+\begin{bmatrix}
+1 &amp; 16 &amp; 4 \\
+1 &amp; 15 &amp; 7 \\
+1 &amp; 13 &amp; 8 \\
+1 &amp; 9 &amp; 14 \\
+\end{bmatrix}
+=
+(a_1,\ldots,a_4)\mathbf{P}^F.
+\]
+Thus, in total 7 symbols are read, compared to the default approach of reading all 8 data symbols.</p>
+</blockquote>
+<h3 id="general-regime">General regime</h3>
+<p>In the general regime, partitions need to specified; <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2020access">Maturana et al., 2020</a> show the optimal way of choosing them.
+At a high level, the optimal partition keeps data from the same initial codeword together in the final codeword whenever possible; that way, parity symbols can be used more effectively.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/general_regime_example.png" alt="General regime example" />
+<em>Figure 4: Code conversion from \([6,5]\) MDS code to \([13,12]\) MDS code.</em></p>
+<blockquote>
+<p><strong>Example 3.</strong>
+Consider conversion from \([n^I=6, k^I=5]\), to \([n^F=13, k^F=12]\).
+Thus, there are a total of \(\mathrm{lcm}(5,12)=60\) data symbols, organized into \(\lambda^I=12\) initial codewords or \(\lambda^F=5\) final codewords.
+The parity matrices of the codes are designed as if the final code was \([16,15]\) (which combines 3 codewords into 1).
+The conversion procedure splits two of the initial codewords into “intermediate codewords” (which are not materialized, but only used to describe the construction).
+Then, two initial codewords are merged along with two data symbols from the intermediate codewords.
+The split and merge are executed with the same techniques we showcased for the merge and split regime, and thus only 18 symbols need to be read (marked by a dot in the figure).
+Compare this the default approach of reading all 60 data symbols.</p>
+</blockquote>
+<h2 id="conclusion">Conclusion</h2>
+<p>The code conversion problem adds a new dimension to the design of codes.
+This new dimension not only opens a variety of interesting theoretical questions, but has a huge potential for real-world impact in distributed storage systems.
+In this post, we only scratched the surface of the code conversion problem:
+other work on code conversion has focused on minimizing conversion bandwidth instead of access cost (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2022bandwidth">Maturana &amp; Rashmi, 2022</a>, <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2023bandwidth">Maturana &amp; Rashmi, 2023</a>) and on codes with better repair properties (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#xia2015tale">Xia et al., 2015</a>, <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#wu2022optimal">Wu et al. 2022</a>, <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/#maturana2023locally">Maturana &amp; Rashmi, 2023</a>)
+Even when considering these additional works, there are still many open questions in this nascent area of research.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a name="kadekodi2019cluster"></a> S. Kadekodi, K. V. Rashmi, and G. R. Ganger, “Cluster storage systems gotta have HeART: improving storage efficiency by exploiting disk-reliability heterogeneity,”
+<em>FAST 2019</em>.</li>
+<li><a name="kadekodi2020pacemaker"></a> S. Kadekodi, F. Maturana, S. J. Subramanya, J. Yang, K. V. Rashmi, and G. R. Ganger, “PACEMAKER: Avoiding HeART attacks in storage clusters with disk-adaptive redundancy,”
+<em>OSDI 2020</em>.</li>
+<li><a name="maturana2020access"></a> F. Maturana, V. S. C. Mukka, and K. V. Rashmi, “Access-optimal linear MDS convertible codes for all parameters,” <em>ISIT 2020</em>.</li>
+<li><a name="maturana2023bandwidth"></a> F. Maturana and K. V. Rashmi, “Bandwidth cost of code conversions in distributed storage: fundamental limits and optimal constructions,” <em>IEEE Transactions on Information Theory</em>, 2023.</li>
+<li><a name="maturana2022convertible"></a> F. Maturana and K. V. Rashmi, “Convertible codes: enabling efficient conversion of coded data in distributed storage,” <em>IEEE Transactions on Information Theory</em>, 2022.</li>
+<li><a name="maturana2022bandwidth"></a> F. Maturana and K. V. Rashmi, “Bandwidth cost of code conversions in the split regime,” <em>ISIT 2022</em>.</li>
+<li><a name="maturana2023locally"></a> F. Maturana and K. V. Rashmi, “Locally repairable convertible codes: erasure codes for efficient repair and conversion,” <em>ISIT 2023</em>.</li>
+<li><a name="schroeder2007disk"></a> B. Schroeder and G. A. Gibson, “Disk Failures in the Real World: What Does an MTTF of 1,000,000 Hours Mean to You?,” <em>FAST 2007</em>.</li>
+<li><a name="wu2022optimal"></a> S. Wu, Z. Shen, P. P. C. Lee, and Y. Xu, “Optimal repair-scaling trade-off in locally repairable codes: analysis and evaluation,” <em>IEEE Transactions on Parallel and Distributed Systems</em>, 2022.</li>
+<li><a name="xia2015tale"></a> M. Xia, M. Saxena, M. Blaum, and D. Pease, “A tale of two erasure codes in HDFS,” <em>FAST 2015</em>.</li>
+</ul>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;cs.cmu.edu&#x2F;~fmaturan" target=_blank>
+  Francisco Maturana
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Wenting Zheng,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Anupam Gupta,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Anup Agarwal
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/">#Systems</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/theory/">#Theory</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/data-storage/">#Data storage</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/distributed-systems/">#Distributed systems</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/coding-theory/">#Coding theory</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;quantum-physicists-method&#x2F;">‹ The Quantum Physicist&#x27;s Method of Resource Analysis</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;provably-safe-sandboxing-wasm&#x2F;">Provably-Safe Sandboxing with WebAssembly ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

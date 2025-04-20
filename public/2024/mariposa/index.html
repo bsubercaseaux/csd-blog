@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Mariposa: the Butterfly Effect in SMT-based Program Verification</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#instability-in-smt-based-program-verification" class="toc-link">Instability in SMT-based Program Verification</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#detecting-instability-with-mariposa" class="toc-link">Detecting Instability with Mariposa</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#what-mutations-to-use" class="toc-link">What Mutations to Use?</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#is-it-stable-or-not" class="toc-link">Is it Stable or Not?</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#measuring-instability-in-the-wild" class="toc-link">Measuring Instability in the Wild</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#projects-and-queries" class="toc-link">Projects and Queries</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#how-much-instability" class="toc-link">How Much Instability?</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#debugging-the-solver" class="toc-link">“Debugging” the Solver</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#debugging-the-query" class="toc-link">“Debugging” the Query</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#most-of-the-context-is-irrelevant" class="toc-link">Most of the Context is Irrelevant</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#irrelevant-context-harms-stability" class="toc-link">Irrelevant Context Harms Stability</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/#takeaways" class="toc-link">Takeaways</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;mariposa&#x2F;">Mariposa: the Butterfly Effect in SMT-based Program Verification</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-08-06</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;yizhou7.github.io&#x2F;" target=_blank>
+  Yi Zhou
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>Satisfiability Modulo Theories (SMT) solvers are powerful tools
+that answer logical and mathematical questions.
+As an example, let’s say I want to know whether there exists integers
+\(a, b, c\) such that \(3a^{2} -2ab -b^2c = 7\).
+To ask an SMT solver, I need to write an SMT query, which is in a <a rel="noopener" target="_blank" href="https://smtlib.cs.uiowa.edu/">standardized format</a> for expressing logical problems. In the SMT query below, the <code>declare-fun</code> command creates a variable (i.e., a
+function with no argument), the <code>assert</code> command states the equation
+as a constraint. More generally, an SMT query may contain
+multiple assertions, and the <code>check-sat</code> command checks if
+the query context, i.e., the <em>conjunction</em> of the
+assertions, is satisfiable.</p>
+<!-- A slight quirk is that the expressions are in prefix form,
+where each operator comes before its operand(s). -->
+<pre style="background-color:#393939;color:#dedede;"><code><span>(declare-fun a () Int)
+</span><span>(declare-fun b () Int)
+</span><span>(declare-fun c () Int)
+</span><span>(assert 
+</span><span>    (=
+</span><span>        (+ (* 3 a a) (* -2 a b) (* -1 b (* c b)))
+</span><span>        7
+</span><span>    )
+</span><span>)
+</span><span>(check-sat)
+</span></code></pre>
+<p>The possible answers from the SMT solver can be “Yes”
+(satisfiable), “No” (unsatisfiable) or “I don’t know”
+(unknown). Suppose the solver responds with “Yes”
+(satisfiable) in this case. This is good, because the
+question is not so straightforward to me at least, and the
+solver gives a definitive answer. What’s more, the solver
+provides fairly high assurance about its responses, which
+are justified by <strong>precise mathematical reasoning</strong>. For
+this example, the solver can also provide a solution, <code>a = 1, b = 2, c = -2</code>, which serves as a checkable witness to
+the “Yes” answer.</p>
+<p>However, the solver is not perfect, because even a seemingly
+benign change to a query can
+trip up the SMT solver, causing it to give up. Suppose that
+I slightly tweak the formula and ask again:</p>
+<!-- $ \exists \, e, f, g \in Z \, | \,
+3e^{2} -2ef -e^2g = 7 $
+ -->
+<pre style="background-color:#393939;color:#dedede;"><code><span>(declare-fun e () Int)
+</span><span>(declare-fun f () Int)
+</span><span>(declare-fun g () Int)
+</span><span>(assert 
+</span><span>    (=
+</span><span>        (+ (* 3 e e) (* -2 e f) (* -1 f (* g f)))
+</span><span>        7
+</span><span>    )
+</span><span>)
+</span><span>(check-sat)
+</span></code></pre>
+<p>This time, the following may happen: the solver gives up,
+saying “I don’t know” to this new query. Understandably,
+this may seem puzzling. As you might have noticed, the two
+queries are essentially the same, just with different
+variable names.
+Is it even a legitimate move for it to give up? Why would the solver give different responses?</p>
+<p>Before you get mad at the solver (this is a made-up example
+BTW), let me explain why it can unexpectedly fail with a
+seemingly innocuous query change. As mentioned earlier, the
+SMT solver sticks to precise mathematical reasoning.
+Therefore, if a best-effort try doesn’t work out, the solver
+is allowed to give up, instead of giving bogus answers.
+Moreover, the solver heuristics may not be robust against
+superficial modifications to the input, leading to
+confusing responses on similar inquiries.</p>
+<!-- How hard? Well, some questions can
+be NP-hard! In fact, the example above pertains to
+[Diophantine
+equations](https://en.wikipedia.org/wiki/Diophantine_equation),
+which are undecidable in general. Therefore, no program can
+correctly answer all such questions. The poor solver has to
+resort to heuristics, which may not be robust against
+superficial modifications to the input query. -->
+<!-- ### Instability of SMT Solving -->
+<p>What we have observed in this example is the phenomenon of
+<strong>SMT instability</strong>, where trivial changes to the input
+query may incur large performance variations (or even
+different responses) from the solver. While there are many
+applications of the SMT solver, in this blog post, I will focus
+on instability in <strong>SMT-based program verification</strong>, where
+we ask the solver to prove programs correct. More
+concretely, instability manifests as a butterfly effect:
+even tiny, superficial changes in the program may lead to
+noticeable change in proof performance and even spurious
+verification failures.</p>
+<!-- spurious proof failures, where a previously proven program
+may be (wrongfully) rejected after trivial changes to the
+source code.  -->
+<h1 id="instability-in-smt-based-program-verification">Instability in SMT-based Program Verification</h1>
+<p>Please allow me to briefly explain why program verification
+is useful, how SMT solvers can help with verification, and
+why instability comes up as a concern. If you are already
+familiar with the background topic, please feel free to skip
+this section.</p>
+<p>As programmers, we often make informal claims about our
+software. For example, I might say that a filesystem is
+crash-safe or an encryption software is secure, etc. However, as
+many of us can testify, these claims might be
+unfounded or even straight-up wrong. Sometimes, the cost of software failure can be catastrophic (e.g., consider <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Ariane_flight_V88">spacecrafts</a> or <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Therac-25">medical devices</a>).
+Fortunately, formal
+verification offers a path to move beyond informal claims and avoid such
+disasters.</p>
+<p>Formal verification uses proofs to show that the code meets
+its specification. In comparison to testing, formal
+verification offers a higher level of assurance, since it
+reasons about the program’s behavior for <em>all possible
+inputs</em>, not just the ones in the test cases. In a
+more-or-less <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Predicate_transformer_semantics">standard
+algorithm</a>,
+program properties can be encoded as logical statements,
+often called the verification conditions (VCs). Essentially, the
+task of formal verification is to prove that the VCs hold.</p>
+<p>In SMT-based program verification, the solver takes as input
+the VCs and search for proofs. As you might have gathered
+from the previous example, the SMT solver can reason about
+pretty complex logical statements. In this way, the solver
+enables a high degree of automation, allowing the developer
+to skip manual and tedious proof steps. This methodology has
+thus made verification of complex software systems a
+reality.</p>
+<p>However, SMT-based automation also introduces the problem of
+instability. Verified software, similar to regular software,
+has an iterative development process. As the developers make
+incremental changes to the code, corresponding queries also
+change constantly. Even seemingly trivial changes, such as
+renaming a variable would create a different query. As we
+have discussed, the solver may not respond consistently to
+these changes, leading to confusing verification results and
+frustrated developers.</p>
+<h1 id="detecting-instability-with-mariposa">Detecting Instability with Mariposa</h1>
+<p>Now that we have a basic understanding of instability, let’s
+try to quantify it more systematically. I will
+introduce the methodology used in <a rel="noopener" target="_blank" href="https://github.com/secure-foundations/mariposa">Mariposa</a>, a tool that we
+have built to measure and detect instability. In this blog post, I will
+stick to the key intuitions and elide the details. For a
+more thorough discussion, I encourage you to check out our
+<a rel="noopener" target="_blank" href="https://www.andrew.cmu.edu/user/bparno/papers/mariposa.pdf">paper</a>. At a high level, given an original query \( q \) and
+an SMT solver \( s \), Mariposa answers the question:</p>
+<blockquote>
+<p>Is the query-solver pair \((q, s)\) stable?</p>
+</blockquote>
+<p></p>
+<p>Intuitively, instability means that \( s
+\) experiences a mix of successes and failures when we apply seemingly irrelevant mutations to
+\( q \). Mariposa detects instability by generating a set
+of mutated queries and evaluating the performance of \( s
+\) on each mutant. In this section, I will explain what
+mutations are used, and how Mariposa decides the stability
+status of the query-solver pair.</p>
+<h2 id="what-mutations-to-use">What Mutations to Use?</h2>
+<p>In Mariposa, a mutation method needs to preserve not only
+the semantic meaning but also the syntactic structures of a
+query. More precisely, the original query \( q \) and its
+mutant \( q’ \) need to be both semantically equivalent
+and syntactically isomorphic.</p>
+<!-- it seems reasonable to expect similar performance from
+the solver on both queries. -->
+<ul>
+<li>
+<p><strong>Semantic Equivalence</strong>. \( q \) and \( q’ \) are semantically equivalent
+when there is a bijection between the set of proofs for \( q \)
+and those for \( q’ \) . In other words, a proof of \( q \) can be
+transformed into a proof of \( q’ \) , and vice versa.</p>
+</li>
+<li>
+<p><strong>Syntactic Isomorphism</strong>. \( q \) and \( q’ \)  are
+syntactically isomorphic if there exists a bijection between
+the symbols (e.g., variables) and commands (e.g.,
+<code>assert</code>). In other words, each symbol or command in \( q \)  has
+a counterpart in \( q’ \), and vice versa.</p>
+</li>
+</ul>
+<p>For our concrete experiments, we are interested in mutations
+that also correspond to common development practices.
+Specifically, we consider the following three mutation
+methods:</p>
+<ul>
+<li>
+<p><strong>Assertion Shuffling</strong>. Reordering of source-level lemmas
+or methods is a common practice when developing verified
+software. Such reordering roughly corresponds to shuffling
+the commands in the query. Since an SMT query is a
+conjunction of assertions, the assertion order does not
+impact query semantics. Further, shuffling the assertions
+guarantees syntactic isomorphism.</p>
+</li>
+<li>
+<p><strong>Symbol Renaming</strong>. It is common to rename source-level
+methods, types, or variables, which roughly corresponds to
+renaming the symbols in the SMT queries. As long as the
+symbol names are used consistently, Renaming preserves
+semantic equivalence and syntactic isomorphism.</p>
+</li>
+<li>
+<p><strong>Randomness Reseeding</strong>. SMT solvers optionally take as
+input a random seed, which is used in some of their
+non-deterministic choices. Changing the seed has no effect
+on the query’s semantics but is known to affect the solver’s
+performance. While technically not a mutation, reseeding has
+been used as a proxy for measuring instability, which is why
+we have included it here.</p>
+</li>
+</ul>
+<!-- Historically, some verification tools have
+attempted to use reseeding to measure instability: Dafny and
+F* have options to run the same query multiple times with
+different random seeds and report the number of failures
+encountered.
+ -->
+<p>As an example, suppose we have a query \( q \) with \(
+100 \) assertions. If we exhaustively apply shuffling to
+\( q \), we obtain a set of mutated queries, with \(100!
+\approx 9 \times 10^{157}\) permutations of \( q \).</p>
+<h2 id="is-it-stable-or-not">Is it Stable or Not?</h2>
+<p>Whether a query-solver pair \( (q, s) \) is stable or not
+depends on how the mutants perform. A natural measure is the
+<strong>Mutant Success Rate</strong>, i.e., the percentage of \( q\)’s
+mutants that are verified by \( s \). Intuitively, the
+success rate, denoted by \(r\), reflects performance
+consistency. A low \(r\) indicates consistently poor
+results; a high \(r\) indicates consistently good results;
+and a moderate \(r\) indicates inconsistent results, i.e.,
+instability.</p>
+<p>Mariposa thus introduces four stability categories based on \(r\): <strong>unsolvable</strong>, <strong>unstable</strong>, <strong>stable</strong>, and <strong>inconclusive</strong>.<br />
+The scheme includes two additional parameters:
+\(r_{solvable}\) and \(r_{stable}\), corresponding to
+the lower and upper range for unstable queries. In our
+concrete experiments, we set \(r_{solvable} = 5\% \) and
+\(r_{stable} = 95\%\).</p>
+<img src="./mariposa_categories.png" alt="intuition of Mariposa Categories" style="width:80%">
+<p>The <strong>inconclusive</strong> category is needed as a result of
+statistical tests. Specifically, it is often infeasible to
+enumerate all the mutants of a query and obtain the true
+success rate. (Think about the \(100!\) mutants or more!)
+Therefore, Mariposa uses random sampling to <strong>estimate</strong> the
+success rate. When the estimated success rate based on the
+sampled mutants is close to the boundaries, the statistical
+test may not result in enough confidence to place \( (q, s)
+\) in any of the previous three categories, yielding an
+inconclusive result.</p>
+<!-- , which correspond
+respectively to the lower and upper bounds of the success
+rate range for unstable queries. -->
+<!-- The scheme
+includes two additional parameters: \\(r_{solvable}\\)  and
+r stable , which correspond respectively to the lower and
+upper bounds of the success rate range for unstable queries. -->
+<!-- * **Unsolvable**: \\(r < r_{solvable}  \\) 
+* **Unstable**: \\(  r_{solvable} \leq  r \leq  r_{stable} \\)
+* **Stable**: \\( r_{stable} < r \\)
+* **Inconclusive**. This category is needed due to a
+technicality that is less important for our discussion
+here. In short, because Mariposa uses random sampling to
+estimate the success rate, sometimes statistical tests do
+not result in enough confidence to place \\( (q, s) \\) in
+any of the previous three categories. -->
+<h1 id="measuring-instability-in-the-wild">Measuring Instability in the Wild</h1>
+<p>So far we have discussed Mariposa’s methodology to detect
+and quantify instability. How much instability is there in
+practice? Let me share some experimental results from
+existing program verification projects.</p>
+<h2 id="projects-and-queries">Projects and Queries</h2>
+<p>The table below lists the projects we experimented.
+Generally speaking: (1) These are all verified system
+software such as storage systems, boot loaders, and
+hypervisors. (2) They all involve non-trivial engineering
+effort, creating a considerable number of SMT queries. (3)
+They are all published at top venues, with source code and
+verification artifacts available online.</p>
+<table><thead><tr><th style="text-align: left">Project Name</th><th style="text-align: right">Source Line Count</th><th style="text-align: right">Query Count</th><th style="text-align: center">Artifact Solver</th></tr></thead><tbody>
+<tr><td style="text-align: left">Komodo\(_D \) <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/3132747.3132782">(SOSP’17)</a></td><td style="text-align: right">26K</td><td style="text-align: right">2,054</td><td style="text-align: center">Z3 4.5.0</td></tr>
+<tr><td style="text-align: left">Komodo\(_S \) <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/3341301.3359641">(SOSP’19)</a></td><td style="text-align: right">4K</td><td style="text-align: right">773</td><td style="text-align: center">Z3 4.2.2</td></tr>
+<tr><td style="text-align: left">VeriBetrKV\(_D \) <a rel="noopener" target="_blank" href="https://www.usenix.org/conference/osdi20/presentation/hance">(OSDI’20)</a></td><td style="text-align: right">44K</td><td style="text-align: right">5,325</td><td style="text-align: center">Z3 4.6.0</td></tr>
+<tr><td style="text-align: left">VeriBetrKV\(_L \) <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/10.1145/3527313">(OOPSLA’22)</a></td><td style="text-align: right">49K</td><td style="text-align: right">5,600</td><td style="text-align: center">Z3 4.8.5</td></tr>
+<tr><td style="text-align: left">Dice\(_F^⋆\) <a rel="noopener" target="_blank" href="https://www.usenix.org/conference/usenixsecurity21/presentation/tao">(USENIX’21)</a></td><td style="text-align: right">25K</td><td style="text-align: right">1,536</td><td style="text-align: center">Z3 4.8.5</td></tr>
+<tr><td style="text-align: left">vWasm\(_F \) <a rel="noopener" target="_blank" href="https://www.usenix.org/conference/usenixsecurity22/presentation/bosamiya">(USENIX’22)</a></td><td style="text-align: right">15K</td><td style="text-align: right">1,755</td><td style="text-align: center">Z3 4.8.5</td></tr>
+</tbody></table>
+<!-- | Project Name  | Source Line Count   | Query Count |
+|:------------- | -----------:| -----------:|
+| Komodo\\(_D \\)     | 26K        |  2,054 |
+| Komodo\\(_S \\)     | 4K         |  773   |
+| VeriBetrKV\\(_D \\) | 44K        |  5,325 |
+| VeriBetrKV\\(_L \\) | 49K        |  5,600 |
+| Dice\\(_F^⋆\\)      | 25K        |  1,536 |
+| vWasm\\(_F \\)     | 15K         |  1,755 | -->
+<h2 id="how-much-instability">How Much Instability?</h2>
+<p>For our experiments, we focus on the Z3 SMT solver, with
+which the projects were developed. We are interested in both
+the current and historical status of SMT stability.
+Therefore, in addition to the latest Z3 solver (version
+4.12.1, as of the work), we include seven legacy versions of
+Z3, with the earliest released in
+2015. In particular, for each project we include its
+artifact solver, which is the version used in the project’s
+artifact.</p>
+<p>We run each project-solver pair through Mariposa. For each
+original query in a project, Mariposa outputs a stability
+category. Therefore, each project-solver pair is associated with
+a breakdown of different stability categories, plotted as
+stacked bars in In Figure 1. Focusing on Z3 4.12.1 (the right-most
+group), the unstable proportion is the highest in
+Komodo\(_D \) (\( 5.0\% \)), and \(2.6\%\) across all queries. This
+might not seem like a significant number, but think of the
+a regular software project’s continuous integration (CI)   where \(\sim 2\%\) of the test cases may fail
+randomly: it would be a nightmare! Nevertheless, developers
+have to bear with such burden in SMT-based verification.</p>
+<!-- In all project-solver pairs, the majority of queries are
+stable. However, a non-trivial amount of instability
+persists as well.   -->
+<img src="./stability_status.png" alt="historical stability status of Mariposa projects" style="width:100%">
+<figcaption>Figure 1: Overall Stability Status. From bottom to top, each stacked bar shows the proportions of unsolvable (lightly shaded), unstable
+(deeply shaded), and inconclusive (uncolored) queries. The remaining portion of the queries (stacking each bar to 100%), not shown, are
+stable. The solver version used for each project’s artifact is marked with a star (⋆). </figcaption>
+<br>
+<p>Now that we know instability is not a rare occurrence, the
+next question is: what gives? Well, first off, instability
+is a property that is jointly determined by the solver and
+the query. Therefore, the causes can roughly be categorized
+as solver-related and query-related. Of course, I cannot
+possibly be exhaustive here, so let me discuss the
+significant ones we have found for each side.</p>
+<!-- Before we delve into the details, here is a disclaimer: I
+can only cover significant causes   -->
+<h1 id="debugging-the-solver">“Debugging” the Solver</h1>
+<!-- As we zoom out to the full picture, the projects exhibit
+different historical trends. The unstable proportion of
+vWasm\\(_F\\) and Komodo\\(_S\\) remain consistently small
+across the solver versions.  On the other hand, some
+projects seem "overfitted" to their artifact solver, in that
+they become less stable with solver upgrades. Specifically,
+Komodo\\(_D \\), VeriBetrKV\\(_D \\), and VeriBetrKV\\(_L
+\\) show more instability in newer Z3 versions, with a
+**noticeable gap** between Z3 4.8.5 and Z3 4.8.8.  -->
+<p>As you might have noticed already, in Figure 1, there is a
+“gap” between Z3 4.8.5 and 4.8.8, where several projects
+suffer from noticeably more instability in the newer
+solver. In other words, certain queries used to be stable,
+but somehow become unstable with the solver upgrade. Since
+the query sets did not change, solver change is responsible for the regression.</p>
+<p>We perform further experiments to narrow down the Z3 git
+commits that may have been the problem. In the six
+experiment projects, \(285\) queries are stable under Z3
+4.8.5 but unstable under Z3 4.8.8. For each query in this
+set, we run <a rel="noopener" target="_blank" href="https://www.git-scm.com/docs/git-bisect">git bisect</a> (which calls Mariposa) to find the
+commit to blame, i.e., where the query first becomes
+unstable.</p>
+<p>There is a total of \(1,453\) commits between the two versions,
+among which we identify two most impactful commits. Out of
+the \(285\) regressed queries, \(115 (40\%)\) are blamed on commit <code>5177cc4</code>.
+Another \(77 (27\%) \)of the queries are blamed on <code>1e770af</code>. The
+remaining queries are dispersed across the other commits.</p>
+<p>The two commits are small and localized: <code>5177cc4</code> has \( 2
+\) changed files with \( 8 \) additions and \( 2 \)
+deletions; <code>1e770af</code> has only \( 1 \) changed file with
+\( 18 \) additions and \( 3 \) deletions. Both commits
+are related to the order of disjunctions in a query’s
+<a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Conjunctive_normal_form">conjunctive normal form</a>.
+<code>1e770af</code>, the earlier of the two, sorts the disjunctions,
+while <code>5177cc4</code> adds a new term ordering, updating the
+sorted disjunction order. Similar to
+conjunction order, disjunction order does not affect the
+semantics, but interacts with other solver heuristics. Therefore,
+the change of disjunction order can be thought of as “internal mutations”
+to the query, exposing more instability.</p>
+<!-- The results suggest that the solver's internal heuristics
+can have a significant impact on stability. 
+ -->
+<h1 id="debugging-the-query">“Debugging” the Query</h1>
+<p>The discussion so far is condensed from our work on
+Mariposa. However, we have yet to cover the query side of
+the problem. To that end, let me share some results in our
+follow-up work on query context. As it turns out, the
+queries we have studied often contain a large amount of
+irrelevant information (assertions). However, the solver may
+not need all of the context to find a proof. In fact, the
+presence of irrelevant information can cause “confusion” to
+the solver, leading to instability.</p>
+<!-- , which can be a major source of
+instability -->
+<h2 id="most-of-the-context-is-irrelevant">Most of the Context is Irrelevant</h2>
+<p>Our experiments in this section analyze each query’s
+<a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Unsatisfiable_core"><strong>core</strong></a>. Recall that an SMT query is a
+conjunction of assertions. Upon verification success, the
+solver can report a core, which is the subset
+of the original assertions constructing the proof.
+Therefore, this “slimmed-down” version of the query is an
+oracle of <strong>relevant assertions</strong>, and what is excluded from
+it can be considered irrelevant.</p>
+<p>After acquiring a core, we compare its context to the
+original query. Using the assertion count as a proxy for the
+“size” of the context, we examine the <strong>Relevance Ratio</strong>: \(
+\frac{\# \text{core\ assertions}}{\# \text{original\ assertions}} \times 100\% \). Since a core is a
+subset of the original query, the lower this ratio is, the
+less context remains, and the more irrelevant context the
+original query has.</p>
+<img src="./relevance_ratio.png" alt="small cache" style="width:50%">
+<figcaption>Figure 2:  Query Relevance Ratios. More to the left means more irrelevant contexts. Typically, the vast majority of an original query context is irrelevant. </figcaption>
+<p>Figure 2 shows the CDFs of the relevance ratios for
+different projects. For example, on the left side lies the
+line for Dice\(_F^⋆\). The median relevance ratio is \(
+0.06\% \), meaning that for a typical query in the
+project, only \( 0.06\% \) of the context is relevant.
+Please note that I have excluded Komodo\(_S\) from the
+experiment, as its queries each contains only a single
+assertion due to special encoding rules. Nevertheless, among
+the remaining projects, typically \( 96.23\% – 99.94\%
+\) of the context is irrelevant.</p>
+<!-- In
+vWasm\\(_F \\), the median is \\( 3.77 \\% \\), which is
+almost an of order of magnitude higher than the other
+projects. This can be attributed to the manual context
+tuning vWasm\\(_F \\) developers, who explicitly documented
+the tedious effort.  -->
+<h2 id="irrelevant-context-harms-stability">Irrelevant Context Harms Stability</h2>
+<p>Considering the significant amount of irrelevant context, we
+further analyze how that impacts stability, by comparing the
+original queries and their core counterparts. Given an
+original query \(q\) and its core \(q_c\), we introduce
+the following metrics among the possible stability status
+transitions.</p>
+<ul>
+<li><strong>Core Preservation</strong>: given that \( q \) is stable, the probability that \( q_c \) remains stable.</li>
+<li><strong>Core Mitigation</strong>: given that  \( q \)  is unstable, the
+probability that  \( q_c \) becomes stable.</li>
+</ul>
+<p>We use the Mariposa tool with Z3 version 4.12.5 in this
+experiment. Below we have listed the number of original
+queries and the preservation and mitigation scores. As an
+example, in the original Komodo\(_D\) queries, \(1,914\)
+are stable and \(93\) are unstable. In its core
+counterpart, \(99.4\%\) of the stable queries remain
+stable, while \(90.3\%\) of the unstable ones become
+stable. The vWasm\(_F\) project is the only case where the
+core has no mitigation effect. However, its original
+unstable query count is very low to begin with.</p>
+<!-- As we noted previously,
+vWasm\\(_F\\) also starts off with more relevant context
+originally. Therefore, the stability of vWasm\\(_F\\) can be
+explained by the manual tuning done by the developers. -->
+<table><thead><tr><th style="text-align: left">Project Name</th><th style="text-align: right">Stable Count</th><th style="text-align: right">Core Preservation Count</th><th style="text-align: right">Unstable Count</th><th style="text-align: right">Core Mitigation Count</th></tr></thead><tbody>
+<tr><td style="text-align: left">Komodo\(_D \)</td><td style="text-align: right">1,914</td><td style="text-align: right">1,902 (99.4%)</td><td style="text-align: right">93</td><td style="text-align: right">84 (90.3%)</td></tr>
+<tr><td style="text-align: left">VeriBetrKV\(_D \)</td><td style="text-align: right">4,983</td><td style="text-align: right">4,958 (99.5%)</td><td style="text-align: right">172</td><td style="text-align: right">111 (64.5%)</td></tr>
+<tr><td style="text-align: left">VeriBetrKV\(_L \)</td><td style="text-align: right">4,999</td><td style="text-align: right">4,979 (99.6%)</td><td style="text-align: right">256</td><td style="text-align: right">214 (83.6%)</td></tr>
+<tr><td style="text-align: left">Dice\(_F^⋆\)</td><td style="text-align: right">1,483</td><td style="text-align: right">1,477 (99.6%)</td><td style="text-align: right">20</td><td style="text-align: right">18 (90.0%)</td></tr>
+<tr><td style="text-align: left">vWasm\(_F \)</td><td style="text-align: right">1,731</td><td style="text-align: right">1,726 (99.7%)</td><td style="text-align: right">4</td><td style="text-align: right">0 (0.0%)</td></tr>
+<tr><td style="text-align: left">Overall</td><td style="text-align: right">15,110</td><td style="text-align: right">15,042 (99.5%)</td><td style="text-align: right">545</td><td style="text-align: right">427 (78.3%)</td></tr>
+</tbody></table>
+<p>Generally, the core is highly likely to preserve what is
+stable. Moreover, across all projects, \(78.3\%\) of the
+unstable instances can be mitigated by using the core. In
+other words, irrelevant context can be thought of as <strong>a
+major factor to instability</strong> on the query side! While this
+is far from an end-to-end solution, the result suggests a
+promising direction to mitigate instability by pruning
+irrelevant assertions, which we are exploring in our ongoing
+work.</p>
+<h1 id="takeaways">Takeaways</h1>
+<p>I will conclude with some TLDRs in case someone has skipped ahead
+or wants a quick recap.</p>
+<ul>
+<li>The SMT solvers is immensely useful for program verification,
+but it introduces the problem of instability, where
+trivial changes to the input query may incur spurious
+verification failures.</li>
+<li>Mariposa is a tool (and a methodology) to detect and
+quantify instability.</li>
+<li>Instability is a real concern in existing SMT-based
+program verification projects. \(2.6\%\) of the queries
+in our study are unstable using Z3 4.12.1.</li>
+<li>Tiny changes in the solver heuristics can cause noticeable
+regression in stability. Just \( 2 \) tiny commits to Z3
+are responsible for \( 67.3\% \) of the regression in
+our study.</li>
+<li>Irrelevant context in the queries is a major source of
+instability. Typically, \( 96.23\% – 99.94\% \) of the
+context is irrelevant, while being responsible for \(
+78.3\%\) of the instability observed.</li>
+</ul>
+<p>Last but not least, I would like to reiterate that
+instability is a joint problem of the solver heuristic and
+the query property, which will take a joint effort to
+address. I hope that the work we have done can help to
+improve the stability of SMT-based verification in
+future research and practice.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;yizhou7.github.io&#x2F;" target=_blank>
+  Yi Zhou
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.ece.cmu.edu&#x2F;directory&#x2F;bios&#x2F;fanti-giulia.html" target=_blank>
+  Giulia Fanti,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;sat-group.github.io&#x2F;ruben&#x2F;" target=_blank>
+  Ruben Martins,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~longp&#x2F;" target=_blank>
+  Long Pham
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/programming-languages/">#Programming Languages</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/smt-solver/">#SMT solver</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/program-verification/">#program verification</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;oblivious-maps&#x2F;">‹ Oblivious Maps for Trusted Execution Environments</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;mini-code-props&#x2F;">miniCodeProps: a Benchmark for Proving Code Properties ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

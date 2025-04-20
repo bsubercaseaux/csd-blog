@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - YOSO Randomness Generation with Worst-Case Corruptions</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/#our-setting-yoso-with-worst-case-corruptions" class="toc-link">Our Setting: YOSO with Worst-Case Corruptions</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/#strawman-solution" class="toc-link">Strawman Solution</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/#our-solution" class="toc-link">Our Solution</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/#designing-a-yoso-friendly-vss" class="toc-link">Designing a YOSO-friendly VSS</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/#optimizing-the-number-of-receivers" class="toc-link">Optimizing the Number of Receivers</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/yoso-randomness-generation/#conclusions-and-future-directions" class="toc-link">Conclusions and Future Directions</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;yoso-randomness-generation&#x2F;">YOSO Randomness Generation with Worst-Case Corruptions</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-09-02</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.andrew.cmu.edu&#x2F;user&#x2F;elisawem&#x2F;" target=_blank>
+  Elisaweta Masserova
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>Randomness is a fundamental component of numerous real-world protocols. It is used everywhere, from ensuring fairness in the green card lottery to its application in clinical trials, financial audits, and various blockchain technologies.</p>
+<p>For these protocols, randomness must satisfy several key properties. First, it should not be possible to predict the randomness before it was generated, i.e., the randomness ought to be <em>unpredictable</em>. Second, no one should be able to bias this randomness, i.e., the randomness should to be <em>unbiasable</em>. Finally, many applications profit from randomness which can be seen by everyone, i.e., the randomness should to be <em>public</em>.</p>
+<p><em>Centralized</em> randomness beacons, which emit unpredictable and unbiased random bits at regular intervals, have been thoroughly researched, from Rabin’s <a rel="noopener" target="_blank" href="https://pdf.sciencedirectassets.com/272574/1-s2.0-S0022000000X01018/1-s2.0-0022000083900429/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEBoaCXVzLWVhc3QtMSJHMEUCIQDBbNIBf1MnTJYtNPq%2F7fSsDCH%2BuHZAQef5lXUJOfX4ygIgMBwldi4Yn7jfxON7Qr4yACJ1C6MlArqT5MMSxRbSL58quwUIw%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAFGgwwNTkwMDM1NDY4NjUiDPbW1rIpBFyIrZDlzyqPBeRJnTYdrN6c09t63lRms54RGIBdyeST5mhtgBe8KiK7G%2FcCLZCC9DTynHLoFx5jhROdyg8xz3AWK%2BKSSce4OFBuFREbqahMjirl3s4j7J%2BTc%2FiRb7RqMJhC4c83mV8OZeSbQjYZqtoURA1BtkqNzBGVbUrcO0lAAgvtau9tXTZHVMBbHDKcU6hXbj9u4a%2BSH4QAPqAfoh0iUnshC%2FfKcY5wW7WRPrU%2Fxr%2Bm6ZqiC%2F9nAvancmRWyC92dnon65ydBPWdiy0r%2F2vqW8rQQceR5DcvnnLYidlcyF%2BCxr0F87jVsKA2AZll2VCncyHYKGu5CsvfudPd4WSwdjehXEKWjU6WRCmmYYJsXNp8pxqTLAu%2FiA%2BfbMyv3xHYzzx%2FkNFJglB6WAtj%2BlJ85Y%2Fu8bGatMcqE2obcXvJgz2QqHyWTRKavMXsJHjGAYRtNRM8ixYZRC3Wp76OjmJs%2B7SLV6JAHOh%2FxIktjjhdvHDyrQkT19nDxazVzvpP0AcF83%2BPCl%2FTpDCdkYuFBqJthJm32f520FhvC2OfWbwhYSLL4GM5lTKm2nLENlUhauqFMkxwdIuL9wsk%2BdTfvmKMq%2Fahtbj6rluDUsptK5IqWn3jAIdAKIzPe8ZL0pX2%2BfubCiBV1EqzybWhTmywhr1UyMEErrTpekCW%2B0X1pA54P1XvFO5IfHPXRKLnZm%2F0Ku36KlW85FavD50LHptIv1SjKLXAKYxaBYn7ZO%2FTGHeigD7uIgeVXU8VX1knVeFJT0n70PZBqKOMU%2Ba3WXKBY1Vav6YZCRhFTqLdr44p%2F1bm879tX4P9IH5%2BMw3D4qZ2Ww4s20slg9uwSvXd2Bxw5Mf0dQYqb4iTZ6r%2F4LHhgYwShmfuvI1%2F87YwhfzrswY6sQHrnVPsmCnmSppnhnq4PXQrmT7Ia7BXjffrQCdildsV0I09Uywzn8bfUuTFR0gzIQwVA9qw1y8w8FLxdyi7%2BMWMujmTDPF42%2BWtb3YI1HfiU2u8oKNc78ec6tVcYu0EnfaoERKrOzy9GecgIq546hF3jStxcD5gZe2moW2bryXHDofTZ2aN%2BCFEVILAeX5cm7MA2dIM%2BEWNR9D%2BtyZPWEkZpU9Q5cYlBoD5bau1MGBYCbw%3D&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20240625T175834Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=299&amp;X-Amz-Credential=ASIAQ3PHCVTYUMYYFRUO%2F20240625%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=7724efb10a632b757888d5168c9403fb38e3a4c4a9265ece76281db3fcf8545c&amp;hash=9ddce6dd51f43747ca024f5a8ee55dc09115fe158532574e763bbdae34e6f627&amp;host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&amp;pii=0022000083900429&amp;tid=spdf-93181351-6c38-4331-9950-9f736625d9bb&amp;sid=574356a139bca84708293ee1093d888cedf4gxrqa&amp;type=client&amp;tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&amp;ua=13135f5e595902590101&amp;rr=8996d8af18430f36&amp;cc=us">pioneering work</a>
+in 1983 to the <a rel="noopener" target="_blank" href="https://csrc.nist.gov/pubs/ir/8213/ipd">NIST beacon</a>. However, centralized approaches can be undesirable due to their single points of failure. An alternative is to design a <em>distributed</em> algorithm where mutually distrusting parties collaborate to create a randomness beacon service.</p>
+<p>Our work focuses precisely on this alternative. We design distributed randomness generation algorithms which produce public, unpredictable, and unbiased random bits.</p>
+<h1 id="our-setting-yoso-with-worst-case-corruptions">Our Setting: YOSO with Worst-Case Corruptions</h1>
+<p>To obtain such a randomness generation algorithm, we are working in a model known as <a rel="noopener" target="_blank" href="https://eprint.iacr.org/2021/210.pdf"><em>YOSO</em> – <em>You</em> <em>Only</em> <em>Speak</em> <em>Once</em></a>, and specifically we consider \(\text{YOSO}^\mathsf{WCC}\) – a version of YOSO with <em>worst case corruptions</em>. This model is tailored to the randomness generation setting and has been proposed by <a rel="noopener" target="_blank" href="https://eprint.iacr.org/2022/237.pdf">Nielsen, Ribeiro and Obremski</a> at CRYPTO 2022.</p>
+<p>The motivation behind this model is the following. Say we wish to have a long-running service which generates random bits. As this process runs over a long period of time, parties can join and leave the system at any point in time, subject to the constraint that at any point in time one party is online.</p>
+<p>In more detail, we consider \(n\) parties which are executed one after the other. We assume that each party has its own internal source of randomness. We consider a computationally bounded adversary which is allowed to corrupt any \(t\) out of \(n\)
+parties before the protocol starts. Upon its execution, \(P_i\) can publicly broadcast a value \(x_i\) and send private messages \(s_{i,j}\) to each “future” party \(P_j\), i.e., any \(P_j\) such that \(j &gt; i\).
+Depending on when the adversary learns messages addressed to the corrupt parties, Nielsen, Ribeiro and Obremski distinguish between two different variations of \(\text{YOSO}^\mathsf{WCC}\). In the following, we will work in the so-called <em>execution-leaks</em> \(\text{YOSO}^\mathsf{WCC}\)model, where we assume that the adversary can see a value sent to a corrupt recipient upon the <strong>execution</strong> of this recipient.</p>
+<p>The goal is to use the publicly broadcast values to extract a public, unpredictable, and unbiased random bit \(r\). See the picture below for a visual representation of this model.</p>
+<img src="./model.png" alt="YOSO execution-leaks model" width="400"/>
+<h1 id="strawman-solution">Strawman Solution</h1>
+<p>How can we obtain an unpredictable and unbiased random bit in the setting above? The first naive idea is to use a well-known <em>commit-and-reveal</em> paradigm. Briefly, this notion utilizes a <em>commitment scheme</em>, which is a cryptographic building block that allows a party to <em>commit</em> to a value, and later provide an <em>opening</em> information which in particular reveals the committed value. Security properties of such schemes ensure that until the commitment is opened, the committed value is <em>hidden</em>. At the same time, it is hard to open the commitment to two different values, i.e., the commitment provides <em>binding</em>. Think of it as putting a message in a box, locking the box and handing it to the receiver, and later giving this receiver the box key.</p>
+<p>In our strawman solution we use \(t+1\) parties (<em>dealers</em> in the following), each of which is contributing randomness in a way that the randomness is hidden from the others at first. Another \(2t+1\) parties (<em>receivers</em>) will be helping to reveal the contributions of the first parties at the right time. Specifically, we let each dealer commit to a random value \(r_i\) and send its opening to every receiver. After all dealers have finished the execution, each receiver simply reveals the opening information it got from each dealer. See the picture below for an example where  \(t=2\).
+<img src="./strawman.png" alt="Strawman solution" width="400"/></p>
+<p>We call a dealer <strong>valid</strong> if the majority of the receivers, i.e., \(t+1\) of them, revealed a value that is consistent with a commitment. Let \(V\) denote the index set of valid dealers. We set the output randomness as the xor of all \(r_i\) that were submitted by valid dealers: \[ r = \bigoplus_{i \in V} r_i \]</p>
+<p>In the example above, say that all parties are honest and \(r_1 = 1\), \(r_2 = 0\), and \(r_3 = 1\). As all dealers are honest, every dealer sends correct openings to each receiver, and as each receiver is honest too,
+every opening information is published and every dealer is deemed valid. Thus, after the receivers reveal the openings the output is set to be \(r=r_1 \oplus r_2 \oplus r_3 = 0\).</p>
+<p>One could think that this is secure, as \(t+1\) honest receivers will always output the correct value for each receiver, hence honest dealers’ values are always counted in the outcome. Further, since there is at least one honest dealer among the \(t+1\), the resulting xor is computed using at least one unbiased random value. This value was further hidden before we started with the reconstruction. Surely, this is enough to achieve security?</p>
+<p>Unfortunately, this intuition is not entirely correct. For simplicity, say we focus on generating a single random bit, i.e, every dealer will commit to either a zero or one. While it is true that all honest dealers’ values are taken into account, a coalition of a dealer and a receiver, say \(D_1\) and \(R_5\), can conduct the following attack: A malicious dealer \(D_1\) commits to bit one, just as in the honest example above, but sends the correct opening only to exactly \(t\) receivers (not including the colluding receiver), for example \(R_1\) and \(R_2\). Thus, \(t\) honest receivers (\(R_1\) and \(R_2\) in our example) will open the correct value, while another \(t\) honest receivers (\(R_3\) and \(R_4\)) won’t open anything for this dealer. Thus, the contribution of only honest receivers is <em>just</em> not enough to deem the malicious dealer valid (recall that \(t+1\) valid opening are required). Further, note that every receiver knows the contribution of all honest parties. This means that the colluding receiver knows the outcome of the coin and can decide whether to open the correct value for the colluding dealer or not, thus flipping the xor outcome if needed! In our example, \(R_5\) knows \(r_1, r_2,\) and \(r_3\). Upon its execution, it could chose to reveal the correct opening for \(D_1\), thus making the outcome to be \(r=r_1 \oplus r_2 \oplus r_3 = 0\), just as in the honest example. However, if \(D_1\) and \(R_5\) prefer the outcome to be \(1\), \(R_5\) simply withholds the opening for \(D_1\). Now, \(D_1\) is not considered valid anymore and the outcome becomes  \(r=r_2 \oplus r_3 = 1\).</p>
+<p>The attack described above is known as a <strong>conditional abort</strong> attack. Note that simply changing the threshold in the valid dealer definition does not help: A malicious dealer can always send private values to the honest parties in a way that the values revealed by these parties are <em>just</em> not enough to include the value in the final result. This way, the colluding receiver always has the option to decide whether the contribution of the malicious dealer should be accounted for.</p>
+<h1 id="our-solution">Our Solution</h1>
+<p>To address the issue above, in our solution we ensure that the generated random bit is <strong>fixed</strong> prior to the reveal phase. To achieve this, we rely on a well-known cryptographic primitive, a \((t, n)\)-<em>verifiable secret sharing</em> (VSS) protocol. Using such a protocol, a dealer can share its secret among \(n\) parties in a way that any \(t + 1\) parties can reconstruct the secret, but any \(t\) (potentially corrupted) parties possess no information about the secret. VSS further provides the so-called <em>strong commitment</em> property, which states that the shares of the honest parties define a secret (which could be \(\bot\)).</p>
+<p>Now, similar to the strawman solution above, we can let \(t + 1\) dealers each contribute their secret randomness. However, instead of simply committing to the randomness and sending the opening information to every recipient, we use VSS to share each secret. By the strong commitment property we know that the secret of each dealer is defined by the shares of the honest share receivers.</p>
+<h2 id="designing-a-yoso-friendly-vss">Designing a YOSO-friendly VSS</h2>
+<p>As a first step towards the solution outlined above, we design a \(\text{YOSO}^\mathsf{WCC}\)-friendly VSS scheme. We build our protocol around the well-known <a rel="noopener" target="_blank" href="https://link.springer.com/chapter/10.1007/3-540-46766-1_9">Pedersen VSS</a>. The standard non-YOSO version of this VSS requires four rounds, described below. Here, \(s\) is the secret that is being shared, and \(g\) and \(h\) are generators of a group where computing discrete logarithms is hard (in particular, we assume that \(\log_gh\) is not known to any party). Assuming that \(t\) parties can be corrupt, the number of receivers \(R_i\) needs to be at least \(2t+1\).</p>
+<blockquote>
+<ol>
+<li>The dealer \(D\) chooses two degree-\(t\) polynomials
+$$f_1(x)=a_0 + a_1x + \cdots + a_tx^t,$$
+$$f_2(x)=b_0 + b_1x + \cdots + b_tx^t$$
+such that \(b_0=s\). Then, \(D\) broadcasts commitments $$(c_0, c_1, \cdots, c_t) = (g^{a_0}h^{b_0}, g^{a_1}h^{b_1} \cdots , g^{a_t}h^{b_t}),$$ and sends \(r_i=f_1(i)\) and \(s_i=f_2(i)\) to each \(P_i\), \(i \in [n]\).</li>
+<li>Each party \(R_i\) checks whether \(g^{r_i}h^{s_i} = \prod_{k = 0}^{t} c_k^{i^k}\). If not, \(R_i\) broadcasts \(\textsf{Complain}\).</li>
+<li>\(D\) broadcasts all shares from parties who complained. If any share that \(D\) broadcasts does not satisfy the above relation, \(D\) is deemed corrupt and the execution halts. Otherwise, each \(P_i\) who complained replaces its old share with the new
+\((r_i,s_i)\).</li>
+<li>Each \(R_i\) outputs \(r_i, s_i\). The value \(s=f_2(0)\) is the reconstructed secret.</li>
+</ol>
+</blockquote>
+<p></p>
+<p>In the construction above, the dealer and each share recipient \(R_i\) speak twice – the dealer is required to come back in the third round to resolve the complaints, and each \(R_i\) might complain in the second round, and is then required to output its share in the fourth round. This violates the YOSO setting, where each party participates only once. We adapt this scheme to \(\text{YOSO}^\mathsf{WCC}\) in two steps: First, we split the dealer execution into two steps, i.e., we use two different parties \(D^1\) and \(D^2\) for the dealer. We  let \(D^1\) execute the first round of the protocol above and send its state privately to \(D^2\). \(D^2\) can then execute the third round of the protocol. Similarly, we split the execution for each share recipient \(R_i\) into two steps, one of which is executed by party \(R^1_i\), and another by party \(R^2_i\). We let \(R^1_i\) execute the second round of the protocol above and send its state to its counterpart \(R^2_i\). Then, \(R^2_i\) can execute the fourth round of the protocol above as the original party \(R_i\).</p>
+<p>Note that this construction does not entirely correspond to the traditional definition of VSS, as we now need both \(D^1\) and \(D^2\) to behave honestly in order to guarantee security of the value shared by \(D^1\). However, this version of VSS is nevertheless sufficient for our purposes, because we are interested only in preserving the secrecy of <strong>one</strong> out of \(t+1\) VSS executions.</p>
+<p>A final issue remains: Currently, we assume that \(g,h\) are publicly known values, and the construction above is secure assuming that \(\log_gh\) is not known to any party. How can we remove this assumption? Is it possible to let each dealer simply supply its own pair of \(g\) and \(h\)? Unfortunately not: If a malicious dealer knows \(\log_gh\) and colludes with a party \(R_i\), then \(R_i\) could cheat by choosing one out of many valid openings, thus changing the reconstructed secret value. To fix this, we substitute computationally Pedersen commitments by <em>unconditionally binding</em> <a rel="noopener" target="_blank" href="https://ieeexplore.ieee.org/document/1057074">ElGamal commitments</a>. In more detail, we now compute the commitment \((c_0, c_1, \cdots, c_t)\) as follows:
+$$ (c_0, c_1, \cdots, c_t)=\left((g^{a_0}, h^{a_0}\cdot g^{b_0}),  (g^{a_1}, h^{a_1}\cdot g^{b_1}), \cdots , (g^{a_t}, h^{a_t}\cdot g^{b_t})\right).$$</p>
+<p>This way, even though a dealer knows \(\log_gh\), the prior attack is impossible, as there simply <strong>do not exits</strong> two different openings that correspond to the same commitment.</p>
+<!--
+## Pipelining
+When implemented naively, the construction outlined above requires \\(6t+4\\) parties: \\(t+1\\) dealers of type \\(D^1\\), each of which uses the same set of \\(2t+1\\) receivers of type \\(R^1_i\\), then \\(t+1\\) dealers of type \\(D^2\\), and finally \\(2t+1\\) receivers of type \\(R^2_i\\).
+However, we can reduce the number of required parties by pipelining the execution. More concretely, instead of letting the \\(t+1\\) dealers share secrets towards a fixed set of \\(2t+1\\) receivers, the recipient set for the \\(i\\)-th dealer is set to be the \\(2t+1\\) parties that immediately succeed that particular dealer. Moreover, we observe that the conflicts regarding the \\(i\\)-th dealer can also be immediately resolved after the corresponding set of \\(2t+1\\) receiver roles have been executed. Thus, in our execution the first party executes the role
+of the dealer of the first VSS, the second party executes the role of the dealer of the second VSS **and** the role of the first receiver for the first VSS, the third party executes the role of the dealer of the third VSS, the role of the second receiver in the first VSS, and the role of the first receiver in the second VSS, and so on. See picture below for a visual representation of this process.
+
+<img src="./pipelined.png" alt="Pipelined execution" width="400"/>
+
+
+This way we can reduce the number of required parties to \\(5t+4\\), i.e., this linearization of roles allows us to decrease the total number of roles by \\(t\\) in the sharing phase of the dealers. -->
+<h2 id="optimizing-the-number-of-receivers">Optimizing the Number of Receivers</h2>
+<p>When implemented naively, the construction outlined above requires \(6t+4\) parties: \(t+1\) dealers of type \(D^1\), each of which uses the same set of \(2t+1\) receivers of type \(R^1_i\), then \(t+1\) dealers of type \(D^2\), and finally \(2t+1\) receivers of type \(R^2_i\).
+As an optimization, we observe that in our execution-leaks model \(t+1\) receivers of type \(R^2_i\) are sufficient. Consider the following change to our VSS construction above. Let each receiver \(R^1_i\) send its shares to <strong>all</strong> parties \(R^2_j\), instead of only sending it to its counterpart \(R^2_i\) as before. During the reconstruction, we then let each \(R^2_j\) publish all received shares. As in the execution-leaks scenario we assume that the channels to the future parties do not reveal any information until the corresponding recipient is executed (which in our case is <strong>after</strong> all dealers’ contributions are fixed), sending information to all parties \(R^2_j\) does not impact security.</p>
+<p>Together with a few additional optimizations such as pipelining (see our <a rel="noopener" target="_blank" href="https://eprint.iacr.org/2024/1268">paper</a> for details), our protocol allows to achieve the following result:</p>
+<blockquote>
+<p>Assuming ElGamal commitments, there exists a computationally secure randomness generation protocol with \(4t+4\) parties in the execution-leaks model, where \(t\) is the number of corruptions.</p>
+</blockquote>
+<p></p>
+<h2 id="conclusions-and-future-directions">Conclusions and Future Directions</h2>
+<p>Our work achieves efficient distributed randomness generation in the worst-case YOSO model without any setup or heuristic assumptions.There are several exciting avenues for future research. First, there is still room to improve the
+role-complexity of our \(\text{YOSO}^\mathsf{WCC}\) randomness generation protocols in the standard model (the same is true for the known information-theoretic protocols from the work by Nielsen, Ribeiro and Obremski). Next, it would be interesting to improve the communication complexity of our protocols. Finally, proving the lower bound for the communication complexity is another exciting problem.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.andrew.cmu.edu&#x2F;user&#x2F;elisawem&#x2F;" target=_blank>
+  Elisaweta Masserova
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;sites.google.com&#x2F;view&#x2F;aayushjain&#x2F;home" target=_blank>
+  Aayush Jain,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;wzheng.github.io&#x2F;" target=_blank>
+  Wenting Zheng,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;wuwuz.github.io&#x2F;" target=_blank>
+  Mingxun Zhou
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/security/">#Security</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/theory/">#Theory</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/randomness/">#randomness</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/yoso/">#yoso</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;modeling-bbr&#x2F;">‹ Modeling BBRv1&#x27;s Interactions with Loss-Bassed Congestion Control</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;nodemedic-fine&#x2F;">NodeMedic-FINE: Automatic Detection and Exploit Synthesis for Node.js Vulnerabilities ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

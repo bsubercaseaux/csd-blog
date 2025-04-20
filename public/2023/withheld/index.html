@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Classification with Strategically Withheld Data</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/#what-can-go-wrong" class="toc-link">What Can Go Wrong?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/#how-can-we-fix-it" class="toc-link">(How) Can We Fix It?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/#a-principled-approach-via-mechanism-design" class="toc-link">A Principled Approach via Mechanism Design</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/#incentive-compatibility-and-the-revelation-principle" class="toc-link">Incentive Compatibility and the Revelation Principle</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/#incentive-compatible-logistic-regression" class="toc-link">Incentive-Compatible Logistic Regression</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/#experimental-results" class="toc-link">Experimental Results</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;withheld&#x2F;">Classification with Strategically Withheld Data</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2023-02-21</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.andrew.cmu.edu&#x2F;user&#x2F;hanruiz1&#x2F;" target=_blank>
+  Hanrui Zhang
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p><em>This blog post is based on a <a rel="noopener" target="_blank" href="https://arxiv.org/pdf/2012.10203.pdf">research paper</a> with the same title, authored by Anilesh Krishnaswamy, Haoming Li, David Rein, Hanrui Zhang, and Vincent Conitzer, published at AAAI 2021.</em></p>
+<p><em>TL;DR: We investigate a classification problem where each data point being classified is controlled by an agent who has its own goals or incentives, and may strategically withhold certain features in order to game the classifer and get a more desirable label.  We use (an oversimplied version of) college admissions as a running example to illustrate how traditional methods may fail in such settings, as well as how insights from the economic field of mechanism design may help.  We then demonstrate a principled method — Incentive-Compatible Logistic Regression — for classification problems with strategically withheld features, which achieves remarkable empirical performance on credit approval data.</em></p>
+<p>Applicants to most colleges in the US are required to submit their scores for at least one of the SAT and the ACT.
+Applicants usually take one of these two tests — <a rel="noopener" target="_blank" href="https://www.princetonreview.com/college/sat-act">whichever works to their advantage</a>.
+However, given the growing competitiveness of college admissions, many applicants now take both tests and then strategically decide whether to <a rel="noopener" target="_blank" href="https://blog.collegevine.com/should-you-submit-your-sat-act-scores/">drop one of the scores</a> (if they think it will hurt their application) or report both.
+The key issue here is that it is impossible to distinguish between an applicant who takes both tests but reports only one, and an applicant who takes only one test — for example, because the applicant simply took the one required by their school, the dates for the other test did not work with their schedule, or for other reasons that are not strategic in nature.
+Such ambiguity makes it harder for colleges to accurately evaluate applicants, especially since colleges now increasingly <a rel="noopener" target="_blank" href="https://www.fastcompany.com/90342596/schools-are-quietly-turning-to-ai-to-help-pick-who-gets-in-what-could-go-wrong">rely on machine learning techniques to help make admissions decisions</a>.</p>
+<h2 id="what-can-go-wrong">What Can Go Wrong?</h2>
+<p>Consider the following simplified scenario: each applicant may naturally (i.e., before they strategically drop one of the scores) have an SAT score, an ACT score, or both.
+We also assume these scores are normalized, so they become real numbers between 0 and 1.
+Suppose the true competitiveness of an applicant is the average of the scores they naturally have — that is, if an applicant naturally has only one score, then that score is their true competitiveness; if an applicant naturally has both scores, then their true competitiveness is the average of the two scores.
+We will use this setup as our running example from now on.
+We will not try to “solve” this example problem (later we will see that in some cases, there is no satisfactory solution to the problem), but rather, we will use the example to illustrate the limitations of some classical methods, as well as to motivate the more principled method that we propose.</p>
+<p>Now a college wishes to assess each applicant’s competitiveness based on the scores, and admit all applicants whose competitiveness is at least 0.5 (or some threshold chosen by the college).
+Assuming all applicants report all scores they naturally have, it is easy to make admissions decisions: the college simply computes each applicant’s average score, and admits that applicant if the average is at least 0.5.
+In other words, the college implements a simple <strong>classifier</strong>, which assigns any applicant <strong>label “admitted”</strong> if the average value of their <strong><em>natural</em> features</strong> is at least 0.5.</p>
+<p>However, the simple classifier has its problems: after it is used for admissions for a couple of years, applicants may eventually figure out how it works (for example, by talking to past applicants and researching their test scores and application results).
+Once applicants know how the decisions are made, they can easily game the system by strategically withholding information.
+Consider, for example, an applicant with an SAT score of 0.6 and an ACT score of 0.2.
+The applicant would normally be rejected since their true competitiveness is 0.4, which is smaller than the classifier’s threshold, 0.5.
+However, knowing how the classifier works, the applicant can withhold the ACT score and report the SAT score only to the college.
+Then the classifier would mistakenly believe that the applicant’s competitiveness is 0.6, and admit the applicant.
+As a result, the classifier is not accurate anymore when applicants act strategically and try to game it.</p>
+<h2 id="how-can-we-fix-it">(How) Can We Fix It?</h2>
+<p>Taking into consideration the fact that applicants will eventually figure out how decisions are made, and in response to that, withhold scores strategically to maximize their chances, is it still possible for the college to admit exactly those applicants that the college wants to admit?
+The answer is — perhaps not so surprisingly — it <em>depends on the <strong>distribution</strong> of applicants</em>, including how often each score is missing, as well as how the two scores correlate.
+To illustrate this dependence, below we discuss two extreme cases.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/./examples.png" alt="two extreme cases" /></p>
+<p>In one extreme case (illustrated in the left of the figure), every applicant naturally has both scores and the college knows that.
+Then, the college’s problem is again simple: the college admits an applicant if and only if that applicant reports both scores, and the average of the two scores is at least 0.5.
+This ensures that no applicant would want to withhold a score, because that would lead to automatic rejection.
+Moreover, no applicant would be mistakenly rejected because they cannot report both scores, since everyone naturally has both scores.</p>
+<p>In another extreme case (illustrated in the right of the figure), there are only two types of applicants: a type-1 applicant naturally has an SAT score of 0.6 and does not have an ACT score; a type-2 applicant naturally has an SAT score of 0.6 and an ACT score of 0.2.
+Ideally, the college would like to admit all type-1 applicants (because their competitiveness is 0.6), and reject all type-2 applicants (because their competitiveness is 0.4).
+However, this is impossible once applicants respond strategically to the college’s classifier.
+For example, if the college admits all type-1 applicants whose SAT score is 0.6 and ACT score is missing, then a type-2 applicant would pretend to be a type-1 applicant by withholding their ACT score, and get admitted too.
+On the other hand, to prevent type-2 applicants getting in by pretending to be type-1 applicants, the college would have to reject all type-1 applicants too, eventually admitting no one.</p>
+<h2 id="a-principled-approach-via-mechanism-design">A Principled Approach via Mechanism Design</h2>
+<p>The above discussion highlights one fact: when applicants respond strategically, the optimal classifier must depend on the distribution of applicants, even if the college’s criteria for admissions stays the same, and there is no restrictions whatsoever on how many applicants can be admitted.
+This is reminiscent of problems in <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Mechanism_design">mechanism design</a>.
+In a mechanism design problem, a <strong>principal</strong> designs and commits to a decision rule, or a <strong>mechanism</strong> — in the admissions problem discussed above, the principal is the college, and the decision rule is the classifier used for admissions.
+Self-interested <strong>agents</strong> (e.g., applicants) then respond to this rule by reporting (possibly nontruthfully) their private information (e.g., their test scores) to the principal.
+The mechanism then chooses an <strong>outcome</strong> (e.g., admissions decisions) based on the reported information.
+Taking the agents’ strategic behavior into consideration, the principal aims to design a mechanism to maximize their own <strong>utility</strong> (e.g., accuracy of admissions decisions), which generally depends on both the outcome and the agents’ private information.
+In fact, in our running example, the college’s problem can be cast directly as a mechanism design problem.
+Below we will see how tools from mechanism design can help in solving the college’s classification problem.</p>
+<h3 id="incentive-compatibility-and-the-revelation-principle">Incentive Compatibility and the Revelation Principle</h3>
+<p>A key notion in mechanism design is <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Incentive_compatibility">incentive compatibility</a>: a mechanism is incentive-compatible if it is always in the agents’ best interest to truthfully report their private information.
+Applied to our running example, incentive compatibility means that applicants would never want to withhold a test score that they naturally have.
+One reason that incentive compatibility is so important in mechanism design is that it is often <em>without loss of generality</em>: if there is no restriction on the ways in which an agent can (mis)report their private information, then for any (possibly not incentive-compatible) mechanism, there always exists an “incentive-compatible version” of that mechanism which achieves the same effects.
+This is famously known as the <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Revelation_principle">revelation principle</a>.
+The reason that the revelation principle holds is simple: the principal can adapt any mechanism into an incentive-compatible one by “misreporting for” the agents, in the exact way that the agents would misreport in response to the original mechanism.
+We show that a variant of the revelation principle applies to the college’s classification problem (and more generally, to all classification problems with strategically withheld features).
+This greatly simplifies the problem, because without loss of generality, we only need to consider classifiers under which applicants have no incentive to withhold any score.
+This effectively removes the strategic aspect and leaves a clean classification problem.</p>
+<h3 id="incentive-compatible-logistic-regression">Incentive-Compatible Logistic Regression</h3>
+<p>Given the revelation principle, we propose a principled method, <strong>incentive-compatible logistic regression</strong>, for classification problems with strategically withheld data.
+The idea is simple: we run the classical gradient-based algorithm for logistic regression, <em>but with the search space restricted to classifiers that are incentive-compatible</em>.
+The college can then use the resulting model to classify applicants in an incentive-compatible way.
+We will see below how this can be done by adding a projection step to the region of incentive-compatible classifiers, after each gradient step.</p>
+<p>Recall that in logistic regression, the goal is to learn a set of coefficients \({\beta_i}\), one for each feature \(i\), as well as an intercept \(\beta_0\), such that for each data point \((x, y)\), the predicted label \(\hat{y}\) given by
+\[
+\hat{y} = \mathbb{I}\left[\sigma\left(\beta_0 + \sum_i x_i \cdot \beta_i\right) \ge 0.5\right]
+\]
+fits the true label \(y\) as well as possible.
+Here, \(\sigma\) is the logistic function, defined as
+\[
+\sigma(t) = 1 / (1 + e^{-t}).
+\]
+Mapping these notions back to our running example, each data point \((x, y)\) corresponds to an applicant, where each feature \(x_i\) is one of the two scores, and the true label \(y\) is \(1\) (corresponding to “admitted”) if the applicant’s true competitiveness is at least the college’s desired threshold, and \(0\) (corresponding to “rejected”) otherwise.
+The classifier computes a predicted label \(\hat{y}\) for each data point, which is the admissions decision for that specific applicant.
+Naturally, the college wants \(\hat{y}\) to fit \(y\) as well as possible.</p>
+<p>It turns out there is a simple condition for the classifier of the above form to be incentive-compatible.
+Without loss of generality, suppose each feature \(x_i\) is always nonnegative.
+this is naturally true in our running example, since each feature is a score between \(0\) and \(1\); in general, we can shift the features if they are not nonnegative.
+Moreover, if a feature is missing in a data point, then we simply treat that feature as \(0\).
+Then a classifier induced by \({\beta_i}\) is incentive-compatible if and only if each \(\beta_i\) is nonnegative.
+This is because if some \(\beta_i &lt; 0\), then a data point with feature \(x_i &gt; 0\) will be able to increase their score, \(\sigma\left(\beta_0 + \sum_i x_i \cdot \beta_i\right)\), by withholding feature \(x_i\).
+Depending on the values of other features, this will sometimes change the predicted label of that data point from \(0\) (i.e., rejected) to \(1\) (i.e., admitted).
+In other words, such a classifier cannot be incentive-compatible.
+On the other hand, if each \(\beta_i\) is nonnegative, then for any data point, withholding a feature \(x_i\) can never increase the score, so there is no incentive to withhold any feature.</p>
+<p>Given the above characterization, we can simply adapt the gradient-based algorithm for (unconstrained) logistic regression to find a good incentive-compatible classifier.
+We initialize the classifier arbitrarily, and repeat the following steps for each data point \((x, y)\) until convergence:</p>
+<ul>
+<li>
+<p><strong>The gradient step</strong>: Let
+\[
+\beta_0 \gets \beta_0 - \eta_t \cdot \left(\sigma\left(\beta_0 + \sum_i x_i \cdot \beta_i\right) - y\right).
+\]
+For each feature \(i\), let
+\[
+\beta_i \gets \beta_i - \eta_t \cdot \left(\sigma\left(\beta_0 + \sum_i x_i \cdot \beta_i\right) - y\right) \cdot x_i.
+\]
+Here, \(\eta_t\) is the learning rate in step \(t\).
+This rate normally decreases in \(t\), e.g., \(\eta_t = 1 / \sqrt{t}\).</p>
+</li>
+<li>
+<p><strong>The projection step</strong>: For each feature \(i\), let
+\[
+\beta_i \gets \max\{0, \beta_i\}.
+\]</p>
+</li>
+</ul>
+<p>This can be viewed as an instantiation of the projected gradient descent algorithm: the gradient step is exactly the same as in (unconstrained) logistic regression, and the projection step ensures that the incentive-compatibility constraint is satisfied.</p>
+<p>Coming back to our running example, incentive-compatible logistic regression will assign a nonnegative weight to each test score and admit an applicant if the weighted sum of the two scores exceeds some threshold.  Note that this does not “solve” the college’s problem in all cases: for example, between the two extreme cases discussed above, incentive-compatible logistic regression would work very well in the first case, but in the second case its performance would not be practically meaningful, simply because the second case is intrinsically hard and no classifier can achieve a reasonable accuracy there.</p>
+<h2 id="experimental-results">Experimental Results</h2>
+<p>We empirically evaluate incentive-compatible logistic regression on 4 real-world credit approval datasets from the <a rel="noopener" target="_blank" href="http://archive.ics.uci.edu/ml/index.php">UCI ML Repository</a>, based on historical data collected in Australia, Germany, Poland, and Taiwan.
+Each data point in each dataset corresponds to a single credit application, with tens of features (3 datasets provide 15-23 features, and the other provides 64), including annual income, employment status, current balance in savings account, etc.
+Each data point has a binary label, which is either “approve” (i.e., 1) or “reject” (i.e., 0).
+We preprocess the datasets by randomly dropping some features for each data point, thus simulating naturally missing features.
+We consider two ways of reporting in our evaluation:</p>
+<ul>
+<li>
+<p><strong>Truthful reporting</strong>: Each data point always reveals all features it naturally has to the classifier.
+This is the assumption made by the baseline methods, which we compare against in our evaluation.</p>
+</li>
+<li>
+<p><strong>Strategic reporting</strong>: In reponse to the classifier, each data point optimally withholds a subset of features to maximize the chance of getting approved (i.e., label 1).
+For incentive-compatible logistic regression, strategic reporting is equivalent to truthful reporting.
+However, as we will see, the baseline methods perform significantly worse with strategic reporting (which is natural, since they were not designed to be robust against strategic manipulation).</p>
+</li>
+</ul>
+<p>As for the baseline methods, we compare against <strong>logistic regression</strong> (without incentive-compatibility), <strong>neural networks</strong>, and <strong>random forests</strong>.
+These are the most popular and accurate methods in credit approval applications.
+For more details of the experiments, please see Section 6 of <a rel="noopener" target="_blank" href="https://arxiv.org/pdf/2012.10203.pdf">our paper</a>.</p>
+<p>The accuracy of each classifier tested on each dataset can be found in the table below.
+Note that there are two numbers in each cell: the left one corresponds to the accuracy under truthful reporting, and the right one corresponds to the accuracy under strategic reporting.</p>
+<table><thead><tr><th>Classifier</th><th>Australia</th><th>Germany</th><th>Poland</th><th>Taiwan</th></tr></thead><tbody>
+<tr><td>Incentive-compatible logistic regression</td><td><strong>0.800</strong> / <strong>0.800</strong></td><td>0.651 / <strong>0.651</strong></td><td>0.698 / <strong>0.698</strong></td><td>0.646 / <strong>0.646</strong></td></tr>
+<tr><td>Logistic regression (baseline)</td><td><strong>0.800</strong> / 0.763</td><td><strong>0.652</strong> / 0.580</td><td>0.714 / 0.660</td><td>0.670 / 0.618</td></tr>
+<tr><td>Artificial neural networks (baseline)</td><td><strong>0.800</strong> / 0.747</td><td><strong>0.652</strong> / 0.580</td><td><strong>0.719</strong> / 0.636</td><td><strong>0.688</strong> / 0.543</td></tr>
+<tr><td>Random forest (baseline)</td><td>0.797 / 0.541</td><td>0.633 / 0.516</td><td>0.709 / 0.522</td><td>0.684 / 0.588</td></tr>
+</tbody></table>
+<p>Here we make two observations:</p>
+<ul>
+<li>Under strategic reporting, incentive-compatible logistic regression is consistently much more accurate than all 3 baseline methods.
+This highlights the importance of robustness against strategic manipulation by design.</li>
+<li>The accuracy of incentive-compatible logistic regression under strategic reporting is often comparable to that of the baseline methods under truthful reporting.
+In other words, although strategic manipulation poses challenges in the design of a good classifier, from an information-theoretic perspective, the classification problem does not become much harder.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>We study the problem of classification when each data point can strategically withhold some of its features to obtain a more favorable outcome.
+We propose a principled classification method, incentive-compatible logistic regreggsion, which is robust to strategic manipulation.
+The new method is tested on real-world datasets, showing that it outperforms out-of-the-box methods that do not account for strategic behavior.
+More generally, we draw connections between strategic classification and mechanism design, which may inspire future work in other strategic classification settings.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.andrew.cmu.edu&#x2F;user&#x2F;hanruiz1&#x2F;" target=_blank>
+  Hanrui Zhang
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;feifang.info&#x2F;" target=_blank>
+  Fei Fang,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;sjecmen.github.io&#x2F;" target=_blank>
+  Steven Jecmen,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~nihars&#x2F;" target=_blank>
+  Nihar Shah
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/artificial-intelligence/">#Artificial Intelligence</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/mechanism-design/">#mechanism design</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/strategic-classification/">#strategic classification</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;collaborative-data-design&#x2F;">‹ Designing Data Structures for Collaborative Apps</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;intermediate-robustness&#x2F;">Robustness between the worst and average case ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

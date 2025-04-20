@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>CMU CSD PhD Blog - Programming Languages</title>
+      <link>https://www.cs.cmu.edu/~csd-phd-blog</link>
+      <description></description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://www.cs.cmu.edu/~csd-phd-blog/areas/programming-languages/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Tue, 26 Nov 2024 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Encoding Cardinality Constraints in Automated Reasoning</title>
+          <pubDate>Tue, 26 Nov 2024 00:00:00 +0000</pubDate>
+          <author>Joseph Reeves</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/cardinality-constraints/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/cardinality-constraints/</guid>
+          <description><![CDATA[
+
+
+Automated reasoning (AR) is a branch of artificial intelligence that applies various reasoning techniques to solve problems from mathematics and logic.
+AR engines use clever optimizations and heuristics to solve typically intractable (e.g., NP-hard) problems.
+Before a problem … ]]></description>
+      </item>
+      <item>
+          <title>miniCodeProps: a Benchmark for Proving Code Properties</title>
+          <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
+          <author>Evan Lohn</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/mini-code-props/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/mini-code-props/</guid>
+          <description><![CDATA[It is nearly inevitable that bugs will appear in a codebase during software development. To catch these bugs before they lead to real-world consequences,
+the formal verification community has developed a wide variety of tools for ensuring code correctness. These tools fall
+into t… ]]></description>
+      </item>
+      <item>
+          <title>Mariposa: the Butterfly Effect in SMT-based Program Verification</title>
+          <pubDate>Tue, 06 Aug 2024 00:00:00 +0000</pubDate>
+          <author>Yi Zhou</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/mariposa/</guid>
+          <description><![CDATA[Satisfiability Modulo Theories (SMT) solvers are powerful tools
+that answer logical and mathematical questions.
+As an example, let’s say I want to know whether there exists integers
+\(a, b, c\) such that \(3a^{2} -2ab -b^2c = 7\).
+To ask an SMT solver, I need to write an SMT quer… ]]></description>
+      </item>
+      <item>
+          <title>Integrating Static and Data-Driven Resource Analyses for Programs</title>
+          <pubDate>Sat, 16 Mar 2024 00:00:00 +0000</pubDate>
+          <author>Long Pham</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/hybrid-resource-analysis/</guid>
+          <description><![CDATA[Resource analysis of programs aims to infer their worst-case cost bounds. It has
+a number of practical use cases. For example, when executing a client’s program
+in cloud computing, a cloud-service provider (e.g., Amazon Web Services or
+Microsoft Azure) would like to to avoid both… ]]></description>
+      </item>
+      <item>
+          <title>Verus: A tool for verified systems code in Rust</title>
+          <pubDate>Thu, 03 Aug 2023 00:00:00 +0000</pubDate>
+          <author>Travis Hance</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/</guid>
+          <description><![CDATA[Part of the challenge (and fun) of low-level systems code is in the optimizations they employ:
+developers might use manual memory management, they might use bit-packing and bit-twiddling optimizations,
+or they might use multi-threading to speed up their code.
+When dealing with su… ]]></description>
+      </item>
+      <item>
+          <title>The Quantum Physicist&#x27;s Method of Resource Analysis</title>
+          <pubDate>Tue, 06 Jun 2023 00:00:00 +0000</pubDate>
+          <author>David M Kahn</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/quantum-physicists-method/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/quantum-physicists-method/</guid>
+          <description><![CDATA[The physicist’s method is a powerful framework for cost analysis that
+many a computer scientist will learn at some point in their undergraduate career.
+However, its high-level description leaves some practical gaps, especially concerning
+how to actually bookkeep its finer details… ]]></description>
+      </item>
+      <item>
+          <title>Designing Data Structures for Collaborative Apps</title>
+          <pubDate>Fri, 17 Feb 2023 00:00:00 +0000</pubDate>
+          <author>Matthew Weidner</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/</guid>
+          <description><![CDATA[
+
+An extended version of this post appears on my personal site.
+
+
+Suppose you’re building a collaborative app, along the lines of Google Docs/Sheets/Slides, Figma, Notion, etc., but without a central server. One challenge you’ll face is the actual collaboration: when one user cha… ]]></description>
+      </item>
+    </channel>
+</rss>

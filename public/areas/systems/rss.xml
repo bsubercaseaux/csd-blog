@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>CMU CSD PhD Blog - Systems</title>
+      <link>https://www.cs.cmu.edu/~csd-phd-blog</link>
+      <description></description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Thu, 19 Dec 2024 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Atlas: Hierarchical Partitioning for Quantum Circuit Simulation on GPUs</title>
+          <pubDate>Thu, 19 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Mingkuan Xu</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/atlas/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/atlas/</guid>
+          <description><![CDATA[
+
+The workload of state-vector quantum circuit simulation is massively parallel. Most quantum gates multiply one small matrix to many vectors, and the workload is balanced.
+Challenge: the state vector is too large to be stored on one GPU, and the communication cost is very high. … ]]></description>
+      </item>
+      <item>
+          <title>The Key to Effective UDF Optimization: Before Inlining, First Perform Outlining</title>
+          <pubDate>Thu, 12 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Sam Arch</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/udf-outlining/</guid>
+          <description><![CDATA[
+SQL is the de facto query language used to interact with databases. Since SQL is declarative, users express the intended result of their query rather than the concrete procedural steps to produce the answer. Database management systems (DBMSs) find fast execution strategies for … ]]></description>
+      </item>
+      <item>
+          <title>Contiguitas: The Pursuit of Physical Memory Contiguity in Datacenters</title>
+          <pubDate>Fri, 06 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Kaiyang Zhao</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/contiguitas/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/contiguitas/</guid>
+          <description><![CDATA[
+
+Applications access their data in the memory using virtual addresses, which tell the hardware where to fetch or store a particular piece of data.
+Virtual addresses are mapped to physical addresses referencing the actual memory provided by the hardware (i.e. main memory) in the … ]]></description>
+      </item>
+      <item>
+          <title>Optimizing and Characterizing High-Throughput Low-Latency LLM Inference in MLCEngine</title>
+          <pubDate>Wed, 27 Nov 2024 00:00:00 +0000</pubDate>
+          <author>Ruihang Lai</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/low-latency-llm-serving/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/low-latency-llm-serving/</guid>
+          <description><![CDATA[In June, our research group released MLCEngine,
+a universal LLM deployment engine powered by machine learning compilation.
+MLCEngine is a single engine to enable LLM deployment across both cloud and edge devices, with full support for OpenAI API.
+Performance has been one of the k… ]]></description>
+      </item>
+      <item>
+          <title>Modeling BBRv1&#x27;s Interactions with Loss-Bassed Congestion Control</title>
+          <pubDate>Mon, 26 Aug 2024 00:00:00 +0000</pubDate>
+          <author>Ranysha Ware</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/modeling-bbr/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/modeling-bbr/</guid>
+          <description><![CDATA[
+In 2006, Senator Ted Stevens infamously described the Internet as a “series of tubes’‘, where “filled tubes’’ delayed his email. While Senator Stevens was ridiculed at the time for his simplistic understanding of the Internet, his characterization was not entirely wrong:
+
+“It’s … ]]></description>
+      </item>
+      <item>
+          <title>Oblivious Maps for Trusted Execution Environments</title>
+          <pubDate>Mon, 05 Aug 2024 00:00:00 +0000</pubDate>
+          <author>Afonso Tinoco</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/oblivious-maps/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/oblivious-maps/</guid>
+          <description><![CDATA[
+Imagine using a popular messaging app that includes a contact discovery feature to find which of your phone contacts are already using the service and to get information on how to communicate with them. While convenient, this process raises significant privacy concerns: how can … ]]></description>
+      </item>
+      <item>
+          <title>Efficient Anonymous Blocklisting</title>
+          <pubDate>Wed, 31 Jul 2024 00:00:00 +0000</pubDate>
+          <author>Orestis Chardouvelis</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/anonymous-blocklisting/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/anonymous-blocklisting/</guid>
+          <description><![CDATA[
+
+Truly Anonymous Service Providers can offer users confirmed privacy, but also allow inappropriate behavior 😳
+Anonymous Blocklisting permits blocking ill-behaved users without denanonymizing them. Specifically, the service provider blocks individual posts, and the benign users u… ]]></description>
+      </item>
+      <item>
+          <title>Precise Data Center Traffic Engineering with Constrained Hardware Resources</title>
+          <pubDate>Fri, 10 May 2024 00:00:00 +0000</pubDate>
+          <author>Shawn Chen</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/precise-traffic-engineering/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/precise-traffic-engineering/</guid>
+          <description><![CDATA[Data center networks are similar to large cities:
+they are at massive scale, and there exist many available roads/paths between a pair of source and destination.
+To move data from one place to another, we transfer data in chunks of bytes known as packets (roughly analogous to veh… ]]></description>
+      </item>
+      <item>
+          <title>Understanding Setup Times</title>
+          <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
+          <author>Jalani Williams</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/understanding-setup/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/understanding-setup/</guid>
+          <description><![CDATA[
+
+Nobody likes waiting in line.
+But some of the most frustrating experiences that I’ve ever had waiting are when I get in a super long line, I peek around to the front of the line, and I see that the server isn’t even ready to serve –they’re still setting up!
+It’s terrible, and i… ]]></description>
+      </item>
+      <item>
+          <title>Boot: accelerating training data generation for self-driving database management systems</title>
+          <pubDate>Wed, 24 Apr 2024 00:00:00 +0000</pubDate>
+          <author>Wan Shen Lim</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/boot/</guid>
+          <description><![CDATA[
+Background:
+
+Optimizing a database management system (DBMS) is difficult; the best configuration
+depends on time-varying factors like its environment and workload.
+Researchers have developed machine learning (ML) models that outperform humans at these tasks.
+However, the cost (e… ]]></description>
+      </item>
+      <item>
+          <title>Baleen: ML admission &amp; prefetching for flash caches</title>
+          <pubDate>Fri, 12 Jan 2024 00:00:00 +0000</pubDate>
+          <author>Daniel Lin-Kit Wong</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/baleen-ml-flash-caching/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/baleen-ml-flash-caching/</guid>
+          <description><![CDATA[
+
+Large-scale storage is still dominated by hard disks (HDDs) as they are cost-effective. However, HDDs are limited to ~100 IOs per second. Thus, modern storage systems in datacenters widely rely on flash caches to absorb backend load and reduce the number of HDDs required to sat… ]]></description>
+      </item>
+      <item>
+          <title>Mimir: Finding cost-efficient storage configurations in the public cloud</title>
+          <pubDate>Fri, 15 Dec 2023 00:00:00 +0000</pubDate>
+          <author>Hojin Park</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/mimir/</guid>
+          <description><![CDATA[In today’s landscape of diverse public cloud providers like AWS, Microsoft Azure, and Google Cloud Platform, organizations are increasingly turning to cloud computing with pay-as-you-go pricing models. Many businesses are adopting public cloud services to simplify data center man… ]]></description>
+      </item>
+      <item>
+          <title>FIFO is Better than LRU: the Power of Lazy Promotion and Quick Demotion</title>
+          <pubDate>Wed, 20 Sep 2023 00:00:00 +0000</pubDate>
+          <author>Juncheng Yang</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/fifo-lru/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/fifo-lru/</guid>
+          <description><![CDATA[
+TL;DR:
+Historically FIFO-based algorithms are thought to be less efficient (having higher miss ratios) than LRU-based algorithms.
+In this blog, we introduce two techniques, lazy promotion, which promotes objects only at eviction time, and quick demotion, which evicts most new ob… ]]></description>
+      </item>
+      <item>
+          <title>Verus: A tool for verified systems code in Rust</title>
+          <pubDate>Thu, 03 Aug 2023 00:00:00 +0000</pubDate>
+          <author>Travis Hance</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/</guid>
+          <description><![CDATA[Part of the challenge (and fun) of low-level systems code is in the optimizations they employ:
+developers might use manual memory management, they might use bit-packing and bit-twiddling optimizations,
+or they might use multi-threading to speed up their code.
+When dealing with su… ]]></description>
+      </item>
+      <item>
+          <title>Code Conversion in Distributed Storage Systems</title>
+          <pubDate>Wed, 19 Jul 2023 00:00:00 +0000</pubDate>
+          <author>Francisco Maturana</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/convertible-codes/</guid>
+          <description><![CDATA[
+
+Figure 1: diagram showing the code conversion process in a distributed storage system.
+
+Today’s society is data-driven, and many of the applications that society relies on require storing ever-increasing amounts of data.
+To this end, distributed storage systems have become the … ]]></description>
+      </item>
+      <item>
+          <title>Designing Data Structures for Collaborative Apps</title>
+          <pubDate>Fri, 17 Feb 2023 00:00:00 +0000</pubDate>
+          <author>Matthew Weidner</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/collaborative-data-design/</guid>
+          <description><![CDATA[
+
+An extended version of this post appears on my personal site.
+
+
+Suppose you’re building a collaborative app, along the lines of Google Docs/Sheets/Slides, Figma, Notion, etc., but without a central server. One challenge you’ll face is the actual collaboration: when one user cha… ]]></description>
+      </item>
+      <item>
+          <title>Kangaroo: Caching billions of tiny objects on flash</title>
+          <pubDate>Mon, 02 May 2022 00:00:00 +0000</pubDate>
+          <author>Sara McAllister</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2022/kangaroo/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2022/kangaroo/</guid>
+          <description><![CDATA[Many social-media and Internet-of-Things services have large numbers of tiny objects, each a few hundred bytes or less.
+For example, edges in Facebook’s social graph, which are needed to connect friends, posts, and images among other content, average under 100 bytes.
+Twitter twee… ]]></description>
+      </item>
+    </channel>
+</rss>

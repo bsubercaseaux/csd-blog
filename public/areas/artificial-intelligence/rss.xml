@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>CMU CSD PhD Blog - Artificial Intelligence</title>
+      <link>https://www.cs.cmu.edu/~csd-phd-blog</link>
+      <description></description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://www.cs.cmu.edu/~csd-phd-blog/areas/artificial-intelligence/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Mon, 24 Mar 2025 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Computer Assisted Mathematics: A Case Study in Discrete Geometry</title>
+          <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
+          <author>Bernardo Subercaseaux</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/</guid>
+          <description><![CDATA[
+In the last couple of years a pressing question has started to permeate the mathematical community: how will mathematicians’ jobs coexist harmoniously with AI as it gets progressively better at mathematics? “A.I. Is Coming for Mathematics, Too” was the title chosen by the NY Tim… ]]></description>
+      </item>
+      <item>
+          <title>Usefulness of LLMs as an Author Checklist Assistant for Scientific Papers: NeurIPS&#x27;24 Experiment</title>
+          <pubDate>Tue, 21 Jan 2025 00:00:00 +0000</pubDate>
+          <author>Alexander Goldberg</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2025/llm-checklist-assistant/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2025/llm-checklist-assistant/</guid>
+          <description><![CDATA[Large language models (LLMs) represent a promising but controversial assistant in the process of preparing and reviewing scientific papers. They may serve as useful analytical tools to scrutinize manuscripts and identify possible weaknesses or inaccuracies that need addressing. H… ]]></description>
+      </item>
+      <item>
+          <title>Optimizing and Characterizing High-Throughput Low-Latency LLM Inference in MLCEngine</title>
+          <pubDate>Wed, 27 Nov 2024 00:00:00 +0000</pubDate>
+          <author>Ruihang Lai</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/low-latency-llm-serving/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/low-latency-llm-serving/</guid>
+          <description><![CDATA[In June, our research group released MLCEngine,
+a universal LLM deployment engine powered by machine learning compilation.
+MLCEngine is a single engine to enable LLM deployment across both cloud and edge devices, with full support for OpenAI API.
+Performance has been one of the k… ]]></description>
+      </item>
+      <item>
+          <title>Encoding Cardinality Constraints in Automated Reasoning</title>
+          <pubDate>Tue, 26 Nov 2024 00:00:00 +0000</pubDate>
+          <author>Joseph Reeves</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/cardinality-constraints/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/cardinality-constraints/</guid>
+          <description><![CDATA[
+
+
+Automated reasoning (AR) is a branch of artificial intelligence that applies various reasoning techniques to solve problems from mathematics and logic.
+AR engines use clever optimizations and heuristics to solve typically intractable (e.g., NP-hard) problems.
+Before a problem … ]]></description>
+      </item>
+      <item>
+          <title>miniCodeProps: a Benchmark for Proving Code Properties</title>
+          <pubDate>Fri, 23 Aug 2024 00:00:00 +0000</pubDate>
+          <author>Evan Lohn</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/mini-code-props/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/mini-code-props/</guid>
+          <description><![CDATA[It is nearly inevitable that bugs will appear in a codebase during software development. To catch these bugs before they lead to real-world consequences,
+the formal verification community has developed a wide variety of tools for ensuring code correctness. These tools fall
+into t… ]]></description>
+      </item>
+      <item>
+          <title>Measuring and Exploiting Network Usable Information</title>
+          <pubDate>Fri, 21 Jun 2024 00:00:00 +0000</pubDate>
+          <author>Meng-Chieh Lee</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/network-usable-information/</guid>
+          <description><![CDATA[In large cloud service providers such as AWS, the customer provides an attributed graph and would like to perform tasks such as recommendations (i.e., link prediction in a graph) using message-passing methods within restricted budgets.
+An attributed graph consists of both the gra… ]]></description>
+      </item>
+      <item>
+          <title>T2FPV: Dataset and Method for Correcting First-Person View Errors in Pedestrian Trajectory Prediction</title>
+          <pubDate>Sun, 05 May 2024 00:00:00 +0000</pubDate>
+          <author>Benjamin Stoler</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/</guid>
+          <description><![CDATA[As AI technology advances, more and more autonomous robots are being tasked with
+navigating among people in shared environments. Such applications span academia
+and industry, including sidewalk delivery robots, robotic museum
+guides, and automated room service in hotels.  In orde… ]]></description>
+      </item>
+      <item>
+          <title>Transfer Learning within a Heterogeneous Graph</title>
+          <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
+          <author>Minji Yoon</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/ktn/</guid>
+          <description><![CDATA[
+Ecosystems in industry are commonly composed of various data types in terms of data modalities or feature distributions. Heterogeneous graphs (HGs) present these multimodal data systems in a unified view by defining multiple types of nodes and edges — for instance, e-commerce ne… ]]></description>
+      </item>
+      <item>
+          <title>Robustness between the worst and average case</title>
+          <pubDate>Fri, 21 Apr 2023 00:00:00 +0000</pubDate>
+          <author>Leslie Rice</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/intermediate-robustness/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/intermediate-robustness/</guid>
+          <description><![CDATA[As machine learning systems become increasingly implemented in safety-critical applications, such as autonomous driving and healthcare, we need to ensure these systems are reliable and trustworthy. For example, we might wish to determine whether a car’s camera-based autopilot sys… ]]></description>
+      </item>
+      <item>
+          <title>Classification with Strategically Withheld Data</title>
+          <pubDate>Tue, 21 Feb 2023 00:00:00 +0000</pubDate>
+          <author>Hanrui Zhang</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2023/withheld/</guid>
+          <description><![CDATA[This blog post is based on a research paper with the same title, authored by Anilesh Krishnaswamy, Haoming Li, David Rein, Hanrui Zhang, and Vincent Conitzer, published at AAAI 2021.
+TL;DR: We investigate a classification problem where each data point being classified is controll… ]]></description>
+      </item>
+      <item>
+          <title>Cases2Beds: A Case Study in Actionable Intelligence Highlights</title>
+          <pubDate>Thu, 06 Jan 2022 00:00:00 +0000</pubDate>
+          <author>Ananya Joshi</author>
+          <link>https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/</link>
+          <guid>https://www.cs.cmu.edu/~csd-phd-blog/2022/casestobeds/</guid>
+          <description><![CDATA[This blog post is adapted from the Delphi blog, originally published on March 10th, 2021. Again, thank you to the Allegheny County Health Department, the DELPHI Group, Chris Scott, and Roni Rosenfeld.
+One of the Delphi Group’s goals is to create informative tools for healthcare o… ]]></description>
+      </item>
+    </channel>
+</rss>

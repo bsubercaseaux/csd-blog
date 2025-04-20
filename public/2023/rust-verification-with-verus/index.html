@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Verus: A tool for verified systems code in Rust</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#verification-mutable-memory-and-rust" class="toc-link">Verification, mutable memory, and Rust</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#intro-to-verus" class="toc-link">Intro to Verus</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#specifications-and-program-correctness" class="toc-link">Specifications and program correctness</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#challenge-handling-mutable-memory" class="toc-link">Challenge: handling mutable memory</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#rust-to-the-rescue" class="toc-link">Rust to the rescue</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#are-reference-types-all-we-need" class="toc-link">Are reference types all we need?</a>
+                    
+                    <ul>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#unsafe-code-in-verus-or-condititionally-safe-code" class="toc-link">Unsafe code in Verus, or: “condititionally safe code”</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#handling-unsafe-ownership" class="toc-link">Handling unsafe ownership</a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#further-reading" class="toc-link">Further reading</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#related-work" class="toc-link">Related work</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;rust-verification-with-verus&#x2F;">Verus: A tool for verified systems code in Rust</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2023-08-03</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.andrew.cmu.edu&#x2F;user&#x2F;thance&#x2F;" target=_blank>
+  Travis Hance
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>Part of the challenge (and fun) of low-level systems code is in the optimizations they employ:
+developers might use manual memory management, they might use bit-packing and bit-twiddling optimizations,
+or they might use multi-threading to speed up their code.
+When dealing with such things for critical software, though, it can be difficult to ensure their correctness.
+This is why my research group is interested in the formal verification of systems software:
+ensuring through computer-checked mathematical proofs that software does what it is supposed to,
+and ideally not compromising on these optimizations.</p>
+<p>For this purpose, we have been developing <a rel="noopener" target="_blank" href="https://github.com/verus-lang/verus">Verus</a>,
+a verification tool for <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/stable/book/">the Rust programming language</a>.
+Rust is increasingly popular as a systems programming language today,
+but we didn’t (just) choose it because of its popularity.
+Rather, it turns out that the properties that make it attractive as a systems programming language—most notably,
+that it allows manual memory management while simultaneously guaranteeing memory-safety—<em>also</em> make it excellent
+in the setting of formal verification: in some ways straightforward,
+and in some ways surprising. In this blog post, I’ll explain what these ways are.</p>
+<h1 id="verification-mutable-memory-and-rust">Verification, mutable memory, and Rust</h1>
+<p>First, we’re interested in proving code to be “correct”. What does that mean exactly?
+Let’s get our feet wet in verification with some simple examples and then talk about a challenge that Rust helps us solve.</p>
+<h2 id="intro-to-verus">Intro to Verus</h2>
+<p>The key idea behind Verus is to check additional properties of programs that Rust doesn’t check on its own.
+For example, consider the following valid Rust program, operating over an 8-bit integer.</p>
+<pre data-lang="rust" style="background-color:#393939;color:#dedede;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#fffb9d;">fn </span><span style="color:#fffd87;">double</span><span>(i: </span><span style="color:#fffb9d;">u8</span><span>) -&gt; </span><span style="color:#fffb9d;">u8 </span><span>{
+</span><span>    </span><span style="color:#fed6af;">return</span><span> i </span><span style="color:#ececec;">* </span><span style="font-weight:bold;color:#87d6d5;">2</span><span>;
+</span><span>}
+</span></code></pre>
+<p>Though it’s a valid program, it (potentially) has a problem: if the argument <code>i</code> is more than 127, then the multiplication will overflow the 8-bit integer.
+If you run Verus on it (which you can <a rel="noopener" target="_blank" href="https://play.verus-lang.org/?version=stable&amp;mode=basic&amp;edition=2021&amp;code=use+vstd%3A%3Aprelude%3A%3A*%3B%0A%0Averus%21+%7B%0A%0A++++fn+double%28i%3A+u8%29+-%3E+u8+%7B%0A++++++++return+i+*+2%3B%0A++++%7D%0A++++%0A%7D%0A%0Afn+main%28%29+%7B%7D%0A%0A">try yourself at the Verus playground</a>),
+Verus reports this error:</p>
+<pre style="background-color:#393939;color:#dedede;"><code><span>error: possible arithmetic underflow/overflow
+</span><span> --&gt; /playground/src/main.rs:6:16
+</span><span>  |
+</span><span>6 |         return i * 2;
+</span><span>  |                ^^^^^
+</span></code></pre>
+<p>To remedy this, the programmer can declare their <em>intent</em>: namely, that the <code>double</code> function should never be called with any argument greater than 127.</p>
+<pre data-lang="rust" style="background-color:#393939;color:#dedede;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#fffb9d;">fn </span><span style="color:#fffd87;">double</span><span>(i: </span><span style="color:#fffb9d;">u8</span><span>) -&gt; </span><span style="color:#fffb9d;">u8
+</span><span>    requires i &lt;= 127
+</span><span>{
+</span><span>    return i </span><span style="color:#ececec;">&#x2a; </span><span style="font-weight:bold;color:#87d6d5;">2</span><span>;
+</span><span>}
+</span></code></pre>
+<p>The <code>requires</code> clause is not a standard Rust feature, but a feature of Verus: in general, Verus source code comprises both Rust code and extra directives for Verus, such as this
+<code>requires</code> clause, also known as a <em>precondition</em>. In any case, Verus now accepts the program (<a rel="noopener" target="_blank" href="https://play.verus-lang.org/?version=stable&amp;mode=basic&amp;edition=2021&amp;code=use+vstd%3A%3Aprelude%3A%3A*%3B%0A%0Averus%21+%7B%0A%0A++++fn+double%28i%3A+u8%29+-%3E+u8%0A++++++++requires+i+%3C%3D+127%0A++++%7B%0A++++++++return+i+*+2%3B%0A++++%7D%0A++++%0A%7D%0A%0Afn+main%28%29+%7B%7D%0A%0A">playground link</a>) because with the new assumption, Verus can determine that this arithmetic operation never overflows.</p>
+<p>Furthermore, any time the developer calls <code>double</code> from elsewhere in the program, Verus will check that the call satisfies the precondition.
+Keep in mind, also, that this is a check done statically, checked for all possible executions of the program, not a runtime check.</p>
+<h2 id="specifications-and-program-correctness">Specifications and program correctness</h2>
+<p>With Verus, we are actually interested in correctness criteria that go beyond simple arithmetic bounds checks.
+Usually, we are interested in proving that a program’s behavior meets some <em>specification</em>, as in this function that computes the maximum of two integers:</p>
+<pre data-lang="rust" style="background-color:#393939;color:#dedede;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#fffb9d;">fn </span><span style="color:#fffd87;">max</span><span>(a: </span><span style="color:#fffb9d;">u64</span><span>, b: </span><span style="color:#fffb9d;">u64</span><span>) -&gt; (result: </span><span style="color:#fffb9d;">u64</span><span>)
+</span><span>    ensures
+</span><span>        result </span><span style="color:#ececec;">==</span><span> a </span><span style="color:#ececec;">||</span><span> result </span><span style="color:#ececec;">==</span><span> b,
+</span><span>        result </span><span style="color:#ececec;">&gt;=</span><span> a,
+</span><span>        result </span><span style="color:#ececec;">&gt;=</span><span> b,
+</span><span>{
+</span><span>    </span><span style="color:#fed6af;">if</span><span> a </span><span style="color:#ececec;">&gt;</span><span> b {
+</span><span>        </span><span style="color:#fed6af;">return</span><span> a;
+</span><span>    } </span><span style="color:#fed6af;">else </span><span>{
+</span><span>        </span><span style="color:#fed6af;">return</span><span> b;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Again, let’s highlight the Verus-specific parts:
+first, we have the <code>ensures</code> clause (also known as a <em>postcondition</em>) serving as the function’s specification, along with the name <code>result</code> on the return type,
+which is referenced from said postcondition.
+Once again, the body of the <code>max</code> function is the Rust code we are verifying.</p>
+<p>The <code>ensures</code> clause denotes a predicate that should hold true at the end of the call to <code>max</code>.
+This determines what it means for an implementation of <code>max</code> to be “correct”: it is correct if every execution of its code
+returns a result that meets its specification.</p>
+<p>So, how does Verus actually check that this property holds?
+To do this, Verus (and similar tools) encode the correctness of <code>max</code> as logical formulae called <em>verification conditions</em>:</p>
+<p>\[ a &gt; b \implies result = a \implies (result = a \lor result = b) \land (result \ge a) \land (result \ge b) \]</p>
+<p>\[ \lnot(a &gt; b) \implies result = b \implies (result = a \lor result = b) \land (result \ge a) \land (result \ge b) \]</p>
+<p>These conditions are simplified a bit for presentation, but they are close enough for intuition.
+The first of these would be read as, “if \( a &lt; b \) (i.e., the first branch is taken), and if \( result \) is set to the return value \( a \), then the conditions of
+the ensures clause hold”. The second condition is similar, but for the <code>else</code> side of the branch.</p>
+<p>If we prove the verification conditions are correct, this implies the correctness of the program according to its specification.
+To do so, Verus uses an automated theorem prover—in this case, <a rel="noopener" target="_blank" href="https://github.com/Z3Prover/z3">Z3</a>—to prove the verifification conditions hold for all
+values of <em>a</em>, <em>b</em>, and <em>result</em>. This example is simple enough that Z3 can validate the conditions quickly, though for more complicated examples, the developer may need to write additional proofs
+to help it out. If Z3 is unable to prove the theorem, either because it is wrong, or because it needs additional help to prove, then Verus outputs an error message like the one from
+the previous section.</p>
+<p>Specification-checking is extremely useful for situations where an implementation is optimized and handles low-level details, but we would like to provide a higher-level, mathematically precise specification.
+For example:</p>
+<ul>
+<li>A program uses the bitwise operation <code>(x &amp; (x - 1)) == 0</code> to determine if <code>x</code> is a power-of-2, but uses a more mathematically precise specification, \( \exists b.~ 2^b = x \).</li>
+<li>A data-structure implements a hash table or a red-black tree, but has a specification stating that its operations are equivalent to those of a mathematical set.</li>
+<li>A replicated data structure with a sophisticated synchronization algorithm uses a specification that it acts indistinguishably from a single copy of the data structure.</li>
+</ul>
+<h2 id="challenge-handling-mutable-memory">Challenge: handling mutable memory</h2>
+<p>One such “low-level detail” we often have to reason about is <em>mutable heap state</em>.
+To see why this is challenging without Rust’s help, let us set aside Rust for a moment,
+and imagine we designed a programming language with general pointer types, like in C.
+Consider a simple function that takes two pointers and updates one of them:</p>
+<pre data-lang="c" style="background-color:#393939;color:#dedede;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#a0cfa1;">//</span><span style="color:#87ae86;"> Imagined C-like verification language
+</span><span style="color:#fffb9d;">void </span><span style="color:#fffd87;">compute_boolean_not</span><span>(</span><span style="color:#fffb9d;">bool</span><span style="color:#ececec;">* </span><span>x, </span><span style="color:#fffb9d;">bool</span><span style="color:#ececec;">* </span><span>x_not)
+</span><span>    ensures (</span><span style="color:#ececec;">*</span><span>x_not) </span><span style="color:#ececec;">== !</span><span>(</span><span style="color:#ececec;">*</span><span>x)
+</span><span>{
+</span><span>    </span><span style="color:#fffb9d;">bool</span><span> tmp </span><span style="color:#ececec;">= *</span><span>x;
+</span><span>    </span><span style="color:#ececec;">*</span><span>x_not </span><span style="color:#ececec;">= !</span><span>tmp;
+</span><span>}
+</span></code></pre>
+<p>This program looks straightforward at first, but it actually has a problem: what if <code>x</code> and <code>x_not</code> point to the same memory?
+Then <code>*x</code> would be updated when we update <code>*x_not</code>. Therefore, a tool would never be able to prove this code matches its specification—it simply isn’t true.</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/compute_boolean_not_graphical.png" alt="Visual representation of the above example" /></p>
+<p align="center"><i><b>Left:</b> what the developer imagines happening. <b>Right:</b> what might actually happen.</i></p>
+<p>One solution is to specify that the pointers do not <em>alias</em> with each other, i.e., that they don’t point to the same memory location:</p>
+<pre data-lang="c" style="background-color:#393939;color:#dedede;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#a0cfa1;">//</span><span style="color:#87ae86;"> Imagined C-like verification language
+</span><span style="color:#fffb9d;">void </span><span style="color:#fffd87;">compute_boolean_not</span><span>(</span><span style="color:#fffb9d;">bool</span><span style="color:#ececec;">* </span><span>x, </span><span style="color:#fffb9d;">bool</span><span style="color:#ececec;">* </span><span>x_not)
+</span><span>    requires x </span><span style="color:#ececec;">!=</span><span> x_not        </span><span style="color:#a0cfa1;">//</span><span style="color:#87ae86;"> This line has been added
+</span><span>    ensures (</span><span style="color:#ececec;">*</span><span>x_not) </span><span style="color:#ececec;">== !</span><span>(</span><span style="color:#ececec;">*</span><span>x)
+</span><span>{
+</span><span>    </span><span style="color:#fffb9d;">bool</span><span> tmp </span><span style="color:#ececec;">= *</span><span>x;
+</span><span>    </span><span style="color:#ececec;">*</span><span>x_not </span><span style="color:#ececec;">= !</span><span>tmp;
+</span><span>}
+</span></code></pre>
+<p>Recall the <code>requires</code> clause here indicates an assumption the function can make at the beginning of its execution.
+By making this assumption, Verus can now check that the specification holds, although now every call to <code>compute_boolean_not</code>
+will need to uphold this contract.</p>
+<p>Unfortunately, adding these “non-aliasing conditions” gets unwieldy fast, as data structures increase both in breadth and depth.
+This was our experience when we wrote the first version of <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#further-reading">VeriBetrKV</a>, a key-value store developed in <a rel="noopener" target="_blank" href="https://dafny.org/">Dafny</a>, which has a similar aliasing situation to our C-like language.
+Not only were the conditions difficult to write manually, but getting them wrong often led to error messages that were difficult to diagnose.</p>
+<h2 id="rust-to-the-rescue">Rust to the rescue</h2>
+<p>In Rust, it isn’t common to use general-purpose pointer types. Instead, Rust uses more restricted <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html"><em>reference</em> types</a>. In Rust, the types <code>&amp;T</code> and <code>&amp;mut T</code>
+each denote a reference to a value of type <code>T</code>.
+In the case of <code>&amp;mut T</code>, which is specifically a <em>mutable</em> reference, the user is able
+to modify the value behind the pointer.
+Thus, in Rust/Verus, our boolean-negation example would look like this, with the <code>x_not</code> parameter marked as a mutable reference.</p>
+<pre data-lang="rust" style="background-color:#393939;color:#dedede;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#fffb9d;">fn </span><span style="color:#fffd87;">compute_boolean_not</span><span>(x: </span><span style="color:#ececec;">&amp;</span><span style="color:#fffb9d;">bool</span><span>, x_not: </span><span style="color:#ececec;">&amp;</span><span style="color:#fffb9d;">mut bool</span><span>)
+</span><span>    ensures (</span><span style="color:#ececec;">*</span><span>x_not) </span><span style="color:#ececec;">== !</span><span>(</span><span style="color:#ececec;">*</span><span>x)
+</span><span>{
+</span><span>    </span><span style="color:#fffb9d;">let</span><span> tmp: </span><span style="color:#fffb9d;">bool </span><span style="color:#ececec;">= *</span><span>x;
+</span><span>    </span><span style="color:#ececec;">*</span><span>x_not </span><span style="color:#ececec;">= !</span><span>tmp;
+</span><span>}
+</span></code></pre>
+<p>At the machine code level, these references are just like pointers, but the Rust type system enforces additional properties: namely, a <code>&amp;mut</code> reference to a piece of data can never coexist
+with another reference to that data. Rust enforces this property because it is crucial to Rust’s guarantees about memory safety.</p>
+<p>However, this property is also a huge boon for software verification. Because the non-aliasing property is checked by Rust’s type system,
+the developer no longer has to write the non-aliasing conditions
+manually. Furthermore, Rust’s type system is fast and often presents high-quality error messages when the property is violated.</p>
+<p>One can think of this as if these non-aliasing conditions are
+inserted automatically, so the developer doesn’t have to worry about it, but in fact, the situation is even better: the verification tool can simplify the verification conditions to not include any
+notion of pointer addresses in the first place! In fact, some of my colleagues have <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#further-reading">published a paper</a> quantifying the gains from this kind of simplification.</p>
+<h1 id="are-reference-types-all-we-need">Are reference types all we need?</h1>
+<p>The fact that Rust works as a language at all is evidence that reference types are sufficient
+<em>most</em> of the time. Unfortunately, most of the time isn’t good enough. The non-aliasing
+reference problem gets in the way for implementing any of the following:</p>
+<ul>
+<li>Doubly-linked lists</li>
+<li>Reference-counted pointers (e.g., Rust’s <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/std/rc/struct.Rc.html"><code>Rc</code></a>, similar to C++’s <code>shared_ptr</code>)</li>
+<li>Any manner of concurrent algorithm: locks, message-passing queues, memory allocators, systems with domain-specific logic for avoiding data races</li>
+</ul>
+<p>The reason these examples give difficulty is because Rust’s type system enforces that any object have a unique “owner” (unless those owners are immutable references).
+However, these examples seemingly need to violate the restriction:</p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/dlist.png" alt="Visual representation of a doubly-linked list. Each node has two incoming pointers from its neighbors, and two outgoing pointers to its neighbors." /></p>
+<p align="center"><i>In a doubly-linked list, each node has two neighbors which point to it. Thus, these nodes do not have unique owners.</i></p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/rc.png" alt="Visual representation of reference-counted smart pointer, Rc. The shared object has multiple reference objects pointing to it." /></p>
+<p align="center"><i>When working with reference-counted smart pointers, each object may have multiple reference objects. These objects need to coordinate via the reference count to drop the given object at the appropriate time. This counter does not have a unique owner.</i></p>
+<p><img src="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/queue.png" alt="Visual representation of message-passing queue. The producer thread and the consumer thread each have a pointer to a shared queue buffer." /></p>
+<p align="center"><i>In a message passing queue, the producer thread and the consumer thread have to share a queue buffer to store in-flight messages. This buffer does not have a unique owner.</i></p>
+<p>So how can we tackle these kinds of problems?</p>
+<p>For such things, Rust programmers need to use Rust’s notorious <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/stable/book/ch19-01-unsafe-rust.html">“unsafe code”</a> which opts in to various Rust features that
+the type system is unable to validate are used safely. As such, the burden goes from the
+type-checker to the programer to ensure they are used correctly.
+Applications like the above are generally considered low-level, and they are often
+relegated to time-tested libraries. It’s these kinds of low-level systems, though,
+that we are especially interested in verifying! So what do we do?</p>
+<h2 id="unsafe-code-in-verus-or-condititionally-safe-code">Unsafe code in Verus, or: “condititionally safe code”</h2>
+<p>With Verus, we can recover the ability to implement such things while having a computer-checked guarantee of memory safety.
+A Rust feature being  “unsafe” really just means that the developer has to uphold a certain contract to use it safely, which Rust cannot check.
+It is for this reason that I like to call unsafe code <em>conditionally safe</em>—i.e., it is safe subject to meeting
+certain conditions. Rust cannot check these conditions, but Verus <em>can</em>.</p>
+<p>Here is a simple example: Rust’s common vector indexing operation performs a bounds-check to ensure there is no memory corruption from an out-of-bounds access.
+Therefore, this function is <em>unconditionally</em> “safe” to call, no matter what index the caller provides: even if the caller provides something out-of-bounds, the program might panic and exit, but it will never corrupt memory.
+However, there is a lesser-used <a rel="noopener" target="_blank" href="https://doc.rust-lang.org/std/vec/struct.Vec.html#method.get_unchecked"><code>get_unchecked</code></a> operation which performs <em>no</em> such bounds check.
+Thus, <code>get_unchecked</code> is only safe to call if the index is
+<em>already known to be in-bounds</em>, thus making it unsafe (conditionally safe).
+This condition can be codified as a Verus <code>requires</code> clause:</p>
+<pre data-lang="rust" style="background-color:#393939;color:#dedede;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#fffb9d;">unsafe fn </span><span style="color:#fffd87;">get_unchecked</span><span>&lt;T&gt;(vec: </span><span style="color:#ececec;">&amp;</span><span style="color:#fffb9d;">Vec</span><span>&lt;T&gt;, idx: </span><span style="color:#fffb9d;">usize</span><span>) -&gt; </span><span style="color:#ececec;">&amp;</span><span>T
+</span><span>    requires idx &lt; vec</span><span style="text-decoration:underline;font-weight:bold;font-style:italic;color:#ffccee;">.</span><span>len()
+</span><span>    </span><span style="color:#ececec;">...
+</span></code></pre>
+<p>Now, Verus will check that the index is in-bounds whenever <code>get_unchecked</code> is called.
+Thus, we can regain assurance in code that uses this function, provided that Verus is able to validate the code.</p>
+<h2 id="handling-unsafe-ownership">Handling unsafe ownership</h2>
+<p>Bounds-checking makes for an easy example, but when we consider programs like the ones
+diagrammed above, the situation gets a little more complicated.
+Recall that what characterizes these systems is that the objects may be pointed to
+from multiple owners, which have to coordinate their access somehow.</p>
+<p>As a result, the “conditions” of the conditionally safe operations become
+substantially more involved. For example, accessing data through a pointer is only safe if there is no
+<em>data race</em>, i.e., another thread trying to access it at the same time. Such a condition seems inherently “non-local” as it involved talking about all threads at once,
+and therefore is much harder to check than that of a simple index being in bounds.</p>
+<p>However, we have already discussed that Rust’s type system allows us to ensure the unique ownership of data, which then rules out illegal operations such as data races.
+Therefore, the kind of “condition” we need to check is already the exact kind of condition that Rust’s type system is designed to ensure.
+The problem here is just that these particular data structures do not use the specific types that are designed to ensure this. So how can we apply Rust’s philosophy anyway?</p>
+<p>Since the data structures we want to verify use objects that don’t obey Rust’s unique ownership, our trick is to add <em>new</em> objects that <em>do</em>.
+However, we don’t want to bog down the program with extra data—that would defeat the point of writing optimized code—so these new objects are merely “conceptual proof objects.”
+In verification languages, such objects are often called <em>ghost</em> objects, not because they are spooky, but because they have no influence on the “physical world.” The real data structures in the compiled binary
+would be the ones diagramed above, but Verus treats the program as if the ghost objects were really there when generating its verification conditions.</p>
+<p>For example, for a program that uses pointers, Verus programs can use a ghost object that represents “the right to read or write memory from the given location.”
+Just like for ordinary (“real”) data, Rust’s type system ensures that ownership this object is unique. Verus in turn ensures that such an object is
+present when the program accesses the data behind the pointer. Combining both results, we can be confident that such an access really is data-race-free.
+Even while multiple owners might point to the same piece of data, in the sense of physically having a pointer to it, only one owner at a time can have the <em>right</em> to manipulate that data.</p>
+<p>To verify a doubly-linked list, then, we would arrange nodes with pointers in the usual way, but in addition to the “real” nodes, we would have an additional collection of ghost objects
+that represent the right to access those nodes. By writing additional Verus annotations, we can explain, mathematically, how these ghost objects relate to the structure of the linked list,
+and as a result we can use the ghost objects to traverse the list.
+For more details, you can see <a href="https://www.cs.cmu.edu/~csd-phd-blog/2023/rust-verification-with-verus/#further-reading">our paper</a>, where we present the doubly-linked list in detail.</p>
+<h1 id="further-reading">Further reading</h1>
+<p>There is currently one paper on Verus available, which introduces Verus and works out
+the doubly-linked list example in detail, among others. (If you compare to this blog post,
+you may notice Verus’ syntax has evolved a bit since this paper was written.)</p>
+<p><a rel="noopener" target="_blank" href="https://arxiv.org/abs/2303.05491">Andrea Lattuada, Travis Hance, Chanhee Cho, Matthias Brun, Isitha Subasinghe, Yi Zhou, Jon Howell, Bryan Parno, and Chris Hawblitzel. <em>Verus: Verifying Rust Programs Using Linear Ghost Types.</em> (OOPSLA 2023)</a></p>
+<p>Before Verus, we explored this space of verification techniques through a language
+we developed called <em>Linear Dafny</em>, an extension of the verification langauge <a rel="noopener" target="_blank" href="https://dafny.org/">Dafny</a>. Verus incorporates a lot of our
+learnings from Linear Dafny, which there are several papers on.
+We first introduced Linear Dafny in this paper on VeriBetrKV, a verified key-value store:</p>
+<p><a rel="noopener" target="_blank" href="https://www.usenix.org/system/files/osdi20-hance.pdf">Travis Hance, Andrea Lattuada, Chris Hawblitzel, Jon Howell, Rob Johnson, and Bryan Parno. <em>Storage Systems are Distributed Systems (So Verify Them That Way!).</em> (OSDI 2020)</a></p>
+<p>Some of my colleagues quantified the utility of Linear Dafny’s type system via direct comparison:</p>
+<p><a rel="noopener" target="_blank" href="https://homes.cs.washington.edu/~jlli/papers/oopsla2022.pdf">Jialin Li, Andrea Lattuada, Yi Zhou, Jonathan Cameron, Jon Howell, Bryan Parno, and Chris Hawblitzel. <em>Linear Types for Large-Scale Systems Verification.</em> (OOPSLA 2022)</a></p>
+<p>Finally, we explored the combination of ghost objects and ownership types to verify
+some sophisticated concurrent systems in a Linear Dafny framework called IronSync:</p>
+<p><a rel="noopener" target="_blank" href="https://www.usenix.org/system/files/osdi23-hance.pdf">Travis Hance, Yi Zhou, Andrea Lattuada, Reto Achermann, Alex Conway, Ryan Stutsman, Gerd Zellweger, Chris Hawblitzel, Jon Howell, and Bryan Parno. <em>Sharding the State Machine: Automated Modular Reasoning for Complex Concurrent Systems.</em> (OSDI 2023)</a></p>
+<h1 id="related-work">Related work</h1>
+<p>Verus is far from the only Rust verification tool around.
+<a rel="noopener" target="_blank" href="https://plv.mpi-sws.org/rustbelt/popl18/">RustBelt</a> is a framework for verifying unsafe code within a precise mathematical formalism of a model of the Rust langauge.
+It is notable because it can prove general memory-safety theorems about Rust’s type system, even in the presence of libraries that use unsafe code.
+However, it does not take <em>advantage</em> of Rust’s type system for the sake of verification, and it doesn’t target developers writing actual Rust code.</p>
+<p>Other tools which, like Verus, target developers include <a rel="noopener" target="_blank" href="https://www.pm.inf.ethz.ch/research/prusti.html">Prusti</a>,
+<a rel="noopener" target="_blank" href="https://github.com/model-checking/kani">Kani</a>,
+<a rel="noopener" target="_blank" href="https://arxiv.org/abs/2206.07185">Aeneas</a>,
+and <a rel="noopener" target="_blank" href="https://github.com/xldenis/creusot">Creusot</a>.
+Of these, the one most similar to Verus is likely Creusot, which takes advantage of the Rust type system in a similar way to generate simple verification conditions.
+Creusot is also notable for its “prophecy encoding” of mutable references, which is more general than Verus’ current mutable reference support.
+What distinguishes Verus, by contrast, is its support for these ghost objects and especially their use in concurrency.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Rust’s type system, and similar type systems that enforce unique ownership over data,
+are enormously helpful in designing a verification language for low-level code.
+Just as Rust guarantees memory safety, thus taking the burden off the developer in the common case,
+Verus takes advantage of the same to remove the burden of complex aliasing conditions for verification developers.
+More surprisingly, though, we can apply Rust’s type system even for code that initially seems very un-Rust-like, which is common in highly-optimized systems code.
+Specifically,
+by utilizing ghost objects
+we recover the ability to use Rust’s ownership system
+(together with Verus to check conditionally safe code)
+to check code where the type system would not help in ordinary Rust.</p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.andrew.cmu.edu&#x2F;user&#x2F;thance&#x2F;" target=_blank>
+  Travis Hance
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Jonathan Aldrich,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Ruben Martins,
+</a>
+
+            
+            
+
+
+
+  
+
+
+  
+    
+    
+  
+
+<a href="#" >
+  Isaac Grosof
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/programming-languages/">#Programming Languages</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/systems/">#Systems</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/rust/">#rust</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/formal-methods/">#formal-methods</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/verification/">#verification</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;provably-safe-sandboxing-wasm&#x2F;">‹ Provably-Safe Sandboxing with WebAssembly</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2023&#x2F;fifo-lru&#x2F;">FIFO is Better than LRU: the Power of Lazy Promotion and Quick Demotion ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

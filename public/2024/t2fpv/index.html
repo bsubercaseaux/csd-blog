@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - T2FPV: Dataset and Method for Correcting First-Person View Errors in Pedestrian Trajectory Prediction</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#background" class="toc-link">Background</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#our-approach-trajectories-to-first-person-view-t2fpv" class="toc-link">Our Approach: Trajectories to First Person View (T2FPV)</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#constructing-an-fpv-dataset" class="toc-link">Constructing an FPV Dataset</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#improving-robustness-to-perception-errors-cofe" class="toc-link">Improving Robustness to Perception Errors: CoFE</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#experiments-and-results" class="toc-link">Experiments and Results</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#future-work" class="toc-link">Future Work</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#conclusion" class="toc-link">Conclusion</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2024/t2fpv/#references" class="toc-link">References</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;t2fpv&#x2F;">T2FPV: Dataset and Method for Correcting First-Person View Errors in Pedestrian Trajectory Prediction</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2024-05-05</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;benstoler.com" target=_blank>
+  Benjamin Stoler
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+    
+
+    <div class="post-content">
+      <p>As AI technology advances, more and more autonomous robots are being tasked with
+navigating among people in shared environments. Such applications span academia
+and industry, including sidewalk delivery robots, robotic museum
+guides, and automated room service in hotels.  In order to have robust,
+socially-compliant navigation policies, these robots must be adept at predicting
+pedestrian motion in busy environments.  In these environments,
+the most natural setting for humans and robots is an egocentric, first-person
+view (FPV), where a camera is placed on the robot itself as it moves around, as
+highlighted in the figure below:</p>
+<figure style="text-align:center;">
+<img src=./sidewalk_robot.png  width="400" alt="Coco Delivery sidewalk robot" title="Coco Delivery sidewalk robot">
+<figcaption style="margin-top:10px">A Coco Delivery robot, having to navigate among humans.</figcaption>
+</figure>
+<p>However, the vast majority of prior work in pedestrian trajectory prediction
+instead relies on third-person sensing, where cameras are mounted
+on infrastructure (such as rooftops) or on a stationary drone hovering
+above the scene in order to record naturalistic behavior of humans.
+These birds-eye view (BEV) recordings are then processed into datasets
+comprising of ground truth examples for how humans navigate among each other, and
+used to train downstream trajectory prediction models.
+So, <strong>why has this been the standard approach</strong>, and <strong>why is it problematic</strong>?</p>
+<h2 id="background">Background</h2>
+<p>Pedestrian motion prediction is important as it is used to inform a robot’s
+planning module as to other peoples’ intents and likely paths. This is used not
+just to avoid collisions, but also to ensure social compliance—that is, moving
+in a way so as to not cause disruption, discomfort, or general inconvenience to
+humans in the scene.</p>
+<p>While heuristic models, such as social forces, have long been utilized, the
+advancement of deep learning techniques has dominated the recent
+state-of-the-art (SOTA) [8, 9].  In these approaches, a machine learning model is
+trained on a dataset of recorded human behavior as a form of static
+learning-from-demonstration.  These datasets are considered trajectory datasets,
+containing at minimum the coordinates over time (or trajectory) of all people
+(or “agents”) in a given scene.  High quality dataset curation is thus paramount
+for high quality model performance.</p>
+<p>A majority of existing datasets for this problem utilize a top-down perspective,
+such as the the ETH/UCY [1] collection of pedestrian datasets, shown below. One
+reason for this approach is the ease of annotation.  In a BEV perspective,
+peoples’ trajectories can be easily tracked in ground-plane coordinates over
+time.  This is in stark contrast to FPV, where 3D segmentation and detection
+algorithms are required to annotate observed pedestrians. Furthermore, using BEV
+eliminates much of the occlusion problem, where people may be impossible to
+annotate when behind other people, buildings, or objects.  This occlusion can
+lead to tracking errors, like misassociation or losing somebody’s trajectory
+altogether, which can require data imputation to fill the missing values.
+Together, these errors and noise from FPV sensing are denoted as “FPV errors”.</p>
+<figure style="text-align:center;">
+<img src=./hotel_bev.png  width="400" alt="Hotel example from ETH/UCY" title="Hotel example from ETH/UCY">
+<figcaption style="margin-top:10px">ETH/UCY dataset example in Hotel setting.</figcaption>
+</figure>
+<p>Another problem that the BEV perspective addresses is ensuring naturalistic
+human behavior.  To collect data in FPV, either robots or humans themselves have
+to wear cameras when navigating among others.  This can lead to several undesired
+psychological effects, such as the Hawthorne effect, where people’s behavior can
+change when they know they’re being observed, as well as the novelty effect,
+where humans behave differently when first exposed to new technology [10].
+Thus, while FPV datasets for pedestrian trajectory prediction exist, they
+contain both FPV errors as well as no guarantees of naturalistic behavior in the
+first place.</p>
+<p>However, BEV data has a very serious flaw: in nearly all deployed
+situations, a robot does <strong>not</strong> have access to top-down, perfect information of
+others in the scene. Training a prediction policy which <strong>relies</strong> on having
+this information, rather than having to deal with FPV errors, causes prediction
+models to be unrealistically effective, leading to a false sense of confidence
+in their abilities.</p>
+<h2 id="our-approach-trajectories-to-first-person-view-t2fpv">Our Approach: Trajectories to First Person View (T2FPV)</h2>
+<p>To address the above limitations, we propose “Trajectories to First Person View”
+(T2FPV), a method for constructing an FPV version of data from a trajectory-only
+dataset.  This process entails starting with a BEV-recorded dataset and then
+performing a high-fidelity simulation from each person’s FPV perspective. We use
+this approach to generate, annotate, and release a version of the popular
+ETH/UCY dataset in this new perspective.  Then, we conduct SOTA detection and
+tracking therein to get realistic partial perception from each person’s view. In
+this setting, we observe the effects of FPV errors, and develop a module to
+address them by refining the initial imputation of missing data in an end-to-end
+manner with trajectory prediction.  This “Correction of FPV Errors” (CoFE)
+module decreases prediction displacement errors by more than 10% on average when
+compared to all tested imputation and prediction approach combinations.</p>
+<h2 id="constructing-an-fpv-dataset">Constructing an FPV Dataset</h2>
+<p>We begin by leveraging the SEANavBench [2] simulation environment, consisting of
+the five high-fidelity pre-modeled locations, or “folds”, within the ETH/UCY
+dataset.  We then replay the recorded data by attaching a simulated camera to
+each pedestrian, requiring a few simplifying assumptions: pedestrians are all
+roughly the same height, using randomly selected human models, and also their
+gazes are aligned with the direction that they are moving in. We render videos for
+each person and output ground truth (GT) annotations at each frame, consisting of the
+list of which other people are visible at any given time.</p>
+<p>Next, we conduct SOTA detection and tracking on these rendered videos, in order
+to emulate realistic perception which a deployed social navigation robot uses.
+We employ an off-the-shelf object detector, DD3D [3], as well as a very
+effective probabilistic tracker [4]. We modify DD3D to improve performance on
+our specific task, such as altering the tracker’s matching metric and modifying
+the feature map thresholds therein. As is common for ETH/UCY evaluation, we
+train one model for each of the five folds as a test set, using the other four
+folds as training and validation in a leave-one-out manner.  Overall, we find
+that this approach performs reasonably well on standard metrics including
+Average Precision and Average Multi-Object Tracking Accuracy.</p>
+<p>Finally, we put together these outputs into an FPV dataset. We start with the
+standard scene segmentation steps on ETH/UCY, where scenes are considered in a
+fixed-length, sliding window manner over the original data, and only scenes with
+at least two agents present at the same time are kept. These scenes consist of
+20 timesteps at 2.5 frames per second, where the first eight are kept as
+“history” and the next 12 are considered the “future” to be predicted. We
+utilize the Hungarian matching algorithm [11] to associate together the GT set of
+visible agents (from our simulation annotations directly) with the observed set
+of people from detection and tracking. Where a given BEV scene has <em>N</em> people
+moving around at the same time, we thus create <em>N</em> FPV variations of this scene,
+from each agent’s perspective. Importantly, <strong>these scenes contain FPV errors!</strong></p>
+<p>This entire process is highlighted in the figure below, showing how a single top-down scene
+produces many first-person scenes. The heading titles such as “Sec IV-A” refer to sections in
+our reference paper, for further reading [5].</p>
+<figure style="text-align:center;">
+<img src=./overview.png  width="800" alt="T2FPV process overview" title="T2FPV process overview">
+<figcaption style="margin-top:10px">T2FPV process overview; real-world top down trajectories are transformed to a first-person version in simulation, with limited (i.e., more realistic) perception.</figcaption>
+</figure>
+<h2 id="improving-robustness-to-perception-errors-cofe">Improving Robustness to Perception Errors: CoFE</h2>
+<p>As discussed above, one key type of FPV error is that of missing observations in
+the history portion of a trajectory due to detection and tracking errors.
+This requires the imputation of missing data points for most trajectory prediction
+methods. Although many prior works leverage simple imputation approaches like
+linear interpolation and exponential smoothing, there are more sophisticated,
+SOTA deep learning imputation techniques such as NAOMI [6]. However, these
+approaches still rely on unrealistic assumptions, for human motion
+prediction: 1) data points are missing in a random manner; and 2) data points
+observed around missing values can be trusted. The first assumption does not hold
+because data is missing pathologically due to errors in the perception system,
+whereas the second fails because surrounding data points also incur positional
+estimation errors from perception.</p>
+<p>Therefore, we propose to incorporate a new module to sit in between the
+imputation and prediction steps of the pipeline, consisting of a neural network
+trained end-to-end (E2E) with the downstream prediction model. This “Correction
+of FPV Errors”, or CoFE, module is similar to previous recurrent neural network
+(RNN) prediction approaches. The model first takes in an initial guess at
+imputation from an upstream method (e.g. NAOMI). Then, it proceeds in an
+encoder-decoder manner, where an encoder RNN builds a hidden state
+representation of this input sequence. A decoder RNN then sequentially outputs
+<strong>refinements</strong> of the trajectory, before passing it on to the trajectory
+prediction phase. To encourage this module to perform such refinements, a
+simple mean-square error (MSE) loss objective is utilized, between the refined
+history track (i.e., the output of the decoder) and the ground truth associated
+history. The refined trajectory is used <strong>instead of</strong> the trajectory produced
+directly from the detection and tracking modules, to train both the CoFE module
+as well as the trajectory prediction model itself in an E2E fashion, along with
+the original loss objective of the prediction model.</p>
+<p>The full architecture is visualized in the figure below, with a deeper
+discussion of each component explained in our paper.</p>
+<figure style="text-align:center;">
+<img src=./cofe.png  width="800" alt="CoFE module architecture" title="CoFE module architecture">
+<figcaption style="margin-top:10px">CoFE module architecture.</figcaption>
+</figure>
+<h2 id="experiments-and-results">Experiments and Results</h2>
+<p>We implemented several representative approaches for the ETH/UCY trajectory
+prediction task, standing out along key techniques in human motion prediction:
+variational prediction (VRNN [7]), social awareness (A-VRNN [8]), and goal
+conditioning (SGNet [9]). For data imputation, we also incorporate three
+relevant approaches, including the commonly-used linear interpolation,
+exponential smoothing, and the aforementioned NAOMI deep learning method.</p>
+<p>We utilized the standard leave-one-out evaluation methodology for ETH/UCY, where
+one model is trained for each of the five folds and each imputation and
+prediction approach combination. We trained one version of the prediction
+approach with our CoFE module and objective, and one version without it.
+Finally, we used the standard metrics in the trajectory prediction task of
+Average and Final Displacement Errors (ADE and FDE). These measure the L2-distance
+between the predicted future path and ground truth for the entire predicted
+portion and just the last time step, respectively. The table below summarizes
+our results, where the final column refers to the average of ADE / FDE
+respectively over the five folds. As shown, all combinations of approaches
+performed better with our CoFE module than without, by an average of more than
+10%.</p>
+<figure style="text-align:center;">
+<img src=./results.png  width="400" alt="Experiment results" title="Experiment results">
+</figure>
+<p>To gain further insight into the behavior of CoFE, we conducted an ablation
+study and various qualitative analyses. In the ablation, we find that the E2E
+training is essential for the improved performance, as is the effect of only
+refining the missing, imputed data points rather than surrounding observed
+points as well. We include an example of the qualitative analysis below:</p>
+<figure style="text-align:center;">
+<img src=./qualitative.png  width="1000" alt="Qualitative example" title="Qualitative example">
+<figcaption style="margin-top:10px">Qualitative example of CoFE effectiveness in improving predictions.</figcaption>
+</figure>
+<p>In this example, NAOMI by itself trusts surrounding points in the data too much,
+performing a simple extrapolation. When paired with CoFE, the approach is more
+effective at capturing underlying patterns in the data, correcting the FPV
+errors and resulting in better prediction.</p>
+<h2 id="future-work">Future Work</h2>
+<p>While our T2FPV approach and CoFE module is effective, we note here some
+potential avenues of future improvements. Although the simulation platform we
+used, SEANavBench, is a high-fidelity environment, further effort in improving
+its realism would be useful. Realism could be enhanced not just by increasing
+the 3D-modeling asset and animation qualities, but also by further improving
+alignment between the reproduced scenery and the original locations.
+Additionally, for associating detection and tracking trajectories with their
+corresponding GT tracks, we relied on Hungarian matching on our tracking output
+directly, which incurred a number of identity association errors.
+Incorporating recent works on affinity-based techniques for re-tracking
+algorithms could be a promising way to help with this problem and even further
+reduce FPV errors. One further thread of research is to apply these
+techniques to related domains where FPV sensing is required, such as autonomous
+driving. While this related field has its own challenges, considering imputation
+and prediction together to account for sensing errors could be a promising
+direction therein.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In existing work, pedestrian trajectory prediction has mainly been studied in an
+unrealistic BEV perspective. In this work, we introduce a more realistic
+first-person view trajectory prediction problem where agents need to make
+predictions based on partial, imprecise information. We present T2FPV, a method
+for generating high-fidelity FPV datasets for pedestrian navigation by
+leveraging existing real-world trajectory datasets, and use it to create and
+release an FPV version of ETH/UCY. We also propose and evaluate CoFE, a module
+that successfully refines imputation of missing data in an end-to-end manner
+with trajectory prediction algorithms to reduce FPV errors. Therefore, we argue
+that incorporating more realism throughout the perception pipeline is an
+important direction to move toward in enabling robots to navigate in the real
+world. For more information, please see our paper [5].</p>
+<h2 id="references">References</h2>
+<p>[1] Pellegrini, Stefano, et al. “You’ll never walk alone: Modeling social behavior for multi-target tracking.” 2009 IEEE 12th international conference on computer vision. IEEE, 2009. <a rel="noopener" target="_blank" href="https://ieeexplore.ieee.org/document/5459260">https://ieeexplore.ieee.org/document/5459260</a></p>
+<p>[2] Tsoi, Nathan, et al. “An approach to deploy interactive robotic simulators on the web for hri experiments: Results in social robot navigation.” 2021 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). IEEE, 2021. <a rel="noopener" target="_blank" href="https://arxiv.org/abs/2012.12336">https://arxiv.org/abs/2012.12336</a></p>
+<p>[3] Park, Dennis, et al. “Is pseudo-lidar needed for monocular 3d object detection?.” Proceedings of the IEEE/CVF International Conference on Computer Vision. 2021. <a rel="noopener" target="_blank" href="https://arxiv.org/abs/2108.06417">https://arxiv.org/abs/2108.06417</a></p>
+<p>[4] Chiu, Hsu-kuang, et al. “Probabilistic 3d multi-object tracking for autonomous driving.” arXiv preprint arXiv:2001.05673 (2020). <a rel="noopener" target="_blank" href="https://arxiv.org/abs/2001.05673">https://arxiv.org/abs/2001.05673</a></p>
+<p>[5] Stoler, Benjamin, et al. “T2FPV: Dataset and Method for Correcting First-Person View Errors in Pedestrian Trajectory Prediction.” 2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS). IEEE, 2023. <a rel="noopener" target="_blank" href="https://arxiv.org/abs/2209.11294">https://arxiv.org/abs/2209.11294</a></p>
+<p>[6] Liu, Yukai, et al. “Naomi: Non-autoregressive multiresolution sequence imputation.” Advances in neural information processing systems 32 (2019). <a rel="noopener" target="_blank" href="https://arxiv.org/abs/1901.10946">https://arxiv.org/abs/1901.10946</a></p>
+<p>[7] Chung, Junyoung, et al. “A recurrent latent variable model for sequential data.” Advances in neural information processing systems 28 (2015). <a rel="noopener" target="_blank" href="https://arxiv.org/abs/1506.02216">https://arxiv.org/abs/1506.02216</a></p>
+<p>[8] Bertugli, Alessia, et al. “AC-VRNN: Attentive Conditional-VRNN for multi-future trajectory prediction.” Computer Vision and Image Understanding 210 (2021): 103245. <a rel="noopener" target="_blank" href="https://arxiv.org/abs/2005.08307">https://arxiv.org/abs/2005.08307</a></p>
+<p>[9] Wang, Chuhua, et al. “Stepwise goal-driven networks for trajectory prediction.” IEEE Robotics and Automation Letters 7.2 (2022): 2716-2723. <a rel="noopener" target="_blank" href="https://arxiv.org/abs/2103.14107">https://arxiv.org/abs/2103.14107</a></p>
+<p>[10] Irfan, Bahar, et al. “Social psychology and human-robot interaction: An uneasy marriage.” Companion of the 2018 ACM/IEEE international conference on human-robot interaction. 2018. <a rel="noopener" target="_blank" href="https://dl.acm.org/doi/abs/10.1145/3173386.3173389">https://dl.acm.org/doi/abs/10.1145/3173386.3173389</a></p>
+<p>[11] Kuhn, Harold W. “The Hungarian method for the assignment problem.” Naval research logistics quarterly 2.1‐2 (1955): 83-97. <a rel="noopener" target="_blank" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/nav.3800020109">https://onlinelibrary.wiley.com/doi/abs/10.1002/nav.3800020109</a></p>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;benstoler.com" target=_blank>
+  Benjamin Stoler
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~reids&#x2F;" target=_blank>
+  Reid Simmons,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~motoole2&#x2F;" target=_blank>
+  Matthew O&#x27;Toole,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;sjecmen.github.io&#x2F;" target=_blank>
+  Steven Jecmen
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/artificial-intelligence/">#Artificial Intelligence</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/computer-vision/">#computer-vision</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/social-navigation/">#social-navigation</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/trajectory-prediction/">#trajectory-prediction</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/simulation/">#simulation</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/robotics/">#robotics</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;boot&#x2F;">‹ Boot: accelerating training data generation for self-driving database management systems</a>
+                
+                
+                <a class="next" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2024&#x2F;understanding-setup&#x2F;">Understanding Setup Times ›</a>
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <!-- Enable responsiveness on mobile devices-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    
+      
+    
+
+      <title>CMU CSD PhD Blog - Computer Assisted Mathematics: A Case Study in Discrete Geometry</title>
+
+      
+          
+          <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.cs.cmu.edu/~csd-phd-blog/rss.xml">
+          
+      
+
+      
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+
+
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+          <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/mathtex-script-type.min.js" integrity="sha384-OGHJvxKrLNowXjZcg7A8ziPZctl4h7FncefPoKSuxgVXFxeM87GCKFJvOaTeBB9q" crossorigin="anonymous"></script>
+          
+              <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+              onload="renderMathInElement(document.body);"></script>
+              
+          
+      
+
+      
+          <link rel="stylesheet" href="https://www.cs.cmu.edu/~csd-phd-blog/site.css">
+          
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+          
+      
+
+      
+      
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="mobile-navbar" class="mobile-navbar">
+              <div class="mobile-header-logo">
+                <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog" class="logo">CSD PhD Blog</a>
+              </div>
+              <div class="mobile-navbar-icon icon-out">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+
+            <nav id="mobile-menu" class="mobile-menu slideout-menu slideout-menu-left">
+              <ul class="mobile-menu-list">
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                            Home
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                            Areas
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                            Tags
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                            RSS
+                        </a>
+                    </li>
+                
+                    <li class="mobile-menu-item">
+                        <a href="https:&#x2F;&#x2F;csd.cmu.edu">
+                            CSD
+                        </a>
+                    </li>
+                
+              </ul>
+            </nav>
+
+            <header id="header">
+                <div class="logo">
+                    <img src="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog/csd.svg" alt="CSD Logo">
+                    <div class="logo-text">
+                        <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog">CSD PhD Blog</a>
+                    </div>
+                </div>
+                <nav class="menu">
+                    <ul>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;">
+                                        Home
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;areas">
+                                        Areas
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;tags">
+                                        Tags
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;rss.xml">
+                                        RSS
+                                    </a>
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a href="https:&#x2F;&#x2F;csd.cmu.edu" target="_blank">CSD</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </nav>
+            </header>
+
+            <main>
+                <div class="content" id="mobile-panel">
+                    
+
+
+<div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">Contents</h2>
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+            <ul>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#the-elephant-in-the-room-ai-mathematics" class="toc-link">The elephant in the room: AI &amp; Mathematics</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#the-happy-ending-was-just-the-beginning" class="toc-link">The Happy Ending was just the beginning</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#the-problem-minimizing-convex-pentagons" class="toc-link">The problem: minimizing convex pentagons</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#a-boolean-representation-of-the-problem" class="toc-link">A boolean representation of the problem</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#local-search" class="toc-link">Local search</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#constructions" class="toc-link">Constructions</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#verification" class="toc-link">Verification</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#let-s-make-it-16" class="toc-link">Let’s make it 16.</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#conclusions" class="toc-link">Conclusions</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#bibliography" class="toc-link">Bibliography</a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<article class="post">
+    
+    <header class="post__header">
+        <h1 class="post__title">
+            <a href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2025&#x2F;sat-for-math&#x2F;">Computer Assisted Mathematics: A Case Study in Discrete Geometry</a>
+        </h1>
+        <div class="post__meta">
+            <span class="post__time">2025-03-24</span> |
+            <span class="post__author">
+              
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;bsubercaseaux.github.io&#x2F;" target=_blank>
+  Bernardo Subercaseaux
+</a>
+
+            </span>
+            
+        </div>
+    </header>
+    
+      
+    
+      
+    
+    
+
+    <div class="post-content">
+      <h2 id="the-elephant-in-the-room-ai-mathematics">The elephant in the room: AI &amp; Mathematics</h2>
+<p>In the last couple of years a pressing question has started to permeate the mathematical community: <em><em>how will mathematicians’ jobs coexist harmoniously with AI as it gets progressively better at mathematics?</em></em> <a rel="noopener" target="_blank" href="https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html">“A.I. Is Coming for Mathematics, Too”</a> was the title chosen by the NY Times in their dedicated article of 2024, <a rel="noopener" target="_blank" href="https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html">“AI Will Become Mathematicians’ Co-Pilot”</a> said the Scientific American, and the American Mathematical Society published <a rel="noopener" target="_blank" href="https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html">“Questions Artificial Intelligence Raises for the Mathematics Profession”</a>.</p>
+<p>This time it does not seem to be a matter of sensationalistic journalism; some of the most respected mathematicians in the world are joining the conversation, with voices of concern, excitement, and a wide spectrum of positions in between. Perhaps the most aligned with the spirit of this research is Jordan Ellenberg, number theorist who co-authored FunSearch with DeepMind and stated (see <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#EllenbergQuote">Castekvecchi, 2023</a>):</p>
+<blockquote>
+<p>What’s most exciting to me is modeling new modes of human–machine collaboration,
+I don’t look to use these as a replacement for human mathematicians, but as a force multiplier.</p>
+</blockquote>
+<p>The goal of this post is to show through a concrete case study how SAT solvers, a relatively old AI technology, can also allow for human-machine collaboration in mathematics. Interestingly, the problem we study takes place in two-dimensional geometry, an a priori continuous domain, which makes the participation of SAT solvers somewhat surprising. While this is not the first usage of SAT in discrete geometry, its main novelty (besides the technical results) is in documenting how SAT solvers and other automated reasoning tools can assist mathematical research by revealing patterns and elliciting conjectures. At the end of the post I discuss verification—as opposed to recent language-based forms of AI, standard automated reasoning tools such as (Max)SAT solvers can provide proofs for their answers, which can be crucial for mathematics.</p>
+<h2 id="the-happy-ending-was-just-the-beginning">The Happy Ending was just the beginning</h2>
+<p>In 1933, Esther Klein presented the following problem to George Szekeres and Paul Erdős:</p>
+<blockquote>
+<p><strong>Problem 1.</strong> If five points lie on a plane so that no three points form a straight line, prove that four of the points will form a convex quadrilateral.</p>
+</blockquote>
+<p>Klein’s solution is simple and elegant; almost entirely exposed in <strong>Figure 1</strong>. Note first that there are only three possible cases for the size of the convex hull of five points without collinearities. In case <strong>(a)</strong>, where the convex hull includes all five points, any four of them make a convex quadrilateral. In case <strong>(b)</strong>, where the convex hull has only four points, those four are the sought-after quadrilateral. In case <strong>(c)</strong>, where the convex hull is a triangle, we consider the line \(L\) passing through the two points inside the triangle, which we call \(p_1\) and \(p_2\), and then observe that the pigeonhole principle implies that one side of \(L\) must contain two of the three points in the convex hull, which we call \(p_3\) and \(p_4\); we are done, since the points \(p_1, p_2, p_3, p_4\) must form a convex quadrilateral.</p>
+<!-- ![Illustration of Klein's proof](./klein_cases.png) -->
+<img src="./klein_cases.png" width="500" alt="Illustration of Klein's proof for the existence of a convex quadrilateral among 5 popints in general position." style="display: block; margin: 0 auto">
+<p>Klein’s problem kickstarted geometric Ramsey theory, and it was soon afterwards extended by Szekeres and Erdős into the following theorem:</p>
+<blockquote>
+<p><strong>Erdős-Szekeres Theorem.</strong> For any positive integer \(k\), there is an integer \(g(k)\) such that any collection of \(g(k)\) points contains either 3 collinear points or a convex \(k\)-gon.</p>
+</blockquote>
+<p>As a second consequence of the problem, George Szekeres and Esther Klein married, which led Erdős to jokingly name Klein’s problem as the <em><em>Happy Ending problem</em></em>.</p>
+<p>Not only has Klein’s problem had a long-lasting impact in discrete geometry, her solution already contains an important insight: properties of finite point sets such as convexity do not rely on the specific coordinates of the points, but rather on their relative position and orientations, which are enough to determine the structure of e.g., convex hulls. This insight, as will become clear later in this post, is what opens the door to logical computation in a domain which may a priori seem continuous.</p>
+<h2 id="the-problem-minimizing-convex-pentagons">The problem: minimizing convex pentagons</h2>
+<p>Klein’s proof shows \(g(4) \leq 5\), and it is then easy to see that indeed \(g(4) = 5\). It is not too hard to see that \(g(5) = 9\) (see <strong>Figure 2</strong>), but it took until 2006 for \(g(6) = 17\) to be proven computationally by <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#szekeresPeters">Lindsay Peters and George Szekeres</a>. <sup class="footnote-reference"><a href="#szekeres">1</a></sup> No other values of \(g(k)\) are known, although  Erdős and Szekeres conjectured \(g(k) = 2^{k-2} + 1\) for all \(k \geq 3\).</p>
+<img src="./g_5_8_9.png" width="500" alt="8 points without convex pentagons" style="display: block; margin: 0 auto">
+<p>In 1973, a more quantitative variant was posed by <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#erdosGuy">Erdős and Guy</a>:</p>
+<blockquote>
+<p>More generally, one can ask for the least number of convex \(k\)-gons determined by \(n\) points in the plane [without three on a line].</p>
+</blockquote>
+<p>Indeed, let us denote by \(\mu_k(n)\) the minimum number of convex \(k\)-gons on a placement of \(n\) points in the plane without any three on a common line. While \(\mu_4(n)\) has been heavily studied, its close cousin \(\mu_5(n)\) has received significantly less attention, and our goal was to remedy this situation. The following table summarizes our progress in computing \(\mu_5(n)\), previously known up to \(n = 11\), and now solved up to \(n = 16\).</p>
+<table><thead><tr><th># of points (\(n\))</th><th>≤8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr></thead><tbody>
+<tr><td>Previously [2]</td><td>0</td><td>1</td><td>2</td><td>7</td><td>[12, 13]</td><td>[20, 34]</td><td>[40, 62]</td><td>[60, 113]</td><td>—</td></tr>
+<tr><td>Our work</td><td>0</td><td>1</td><td>2</td><td>7</td><td>12</td><td>27</td><td>42</td><td>77</td><td>112</td></tr>
+</tbody></table>
+<h2 id="a-boolean-representation-of-the-problem">A boolean representation of the problem</h2>
+<p>As suggested by Klein’s proof for \(g(4)\), it is possible to reason about properties like convexity based on combinatorial relationships between points instead of their concrete coordinates. Our goal in this section is to see how these relationships between points, and their impact on properties like convexity, can be encoded in propositional logic. The most successful combinatorial abstraction in geometric Ramsey theory is that of <em>triple orientations</em>,<sup class="footnote-reference"><a href="#aka">2</a></sup> which intuitively consists of considering which oriented triples of points define a curve that turns counterclockwise, and which ones turn clockwise. Concretely, given points \(p, q, r\), their <em>triple-orientation</em> is defined as</p>
+<p>\[
+\sigma(p, q, r) =  \text{sign} \det \begin{pmatrix} p_x &amp; q_x &amp; r_x \\ p_y &amp; q_y &amp; r_y \\ 1 &amp; 1 &amp; 1 \end{pmatrix} = \begin{cases} -1 &amp; \text{if } p, q, r \text{ are oriented clockwise,} \\
+0 &amp; \text{if } p, q, r \text{ are collinear}, \\
+1 &amp; \text{if } p, q, r \text{ are oriented counterclockwise}.
+\end{cases}
+\]</p>
+<p>Since the problem disallows collinear points, we can ignore the case \(\sigma(p, q, r) = 0 \), and thus note that each set of points \((p_1, \ldots, p_n)\) induces a valuation of propositional variables \(o_{i, j, k}\) through \(o_{i, j, k} \iff \sigma(p_i, p_j, p_k) = 1 \). We will use these <em>orientation</em> variables, for \(1 \leq i &lt; j &lt; k \leq n\), to encode the convex-pentagon minimization condition, assuming without loss of generality that the points are labeled from left to right. The following figure illustrates how convexity is captured by triple orientations, and is invariant to the “details” of the coordinates (i.e., invariant under rotations, reflections, and infinitesimal perturbations)</p>
+<img src="./orientations.png" width="500" alt="Illustration of the triple-orientations describing convexity." style="display: block; margin: 0 auto">
+<p>More precisely, to encode whether a given \(5\)-tuple of points is convex or not with our orientation variables we can use an idea of <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#szekeresPeters">Szekeres and Peters, 2006</a>, who identified a nice separation of the cases leading to convex pentagons just in terms of the triple orientations.</p>
+<img src="./szekeres_cases.png" width="600" alt="Cases for a convex pentagon, from Szekres and Peters."  style="display: block; margin: 0 auto">
+<p>Every possible convex pentagon falls into exactly one of these cases, and each of these cases can be described succinctly as follows:</p>
+<ul>
+<li><strong>Case I</strong>:
+\(\sigma(a,b,c) =- \sigma(b,c,d) = -\sigma(c,d,e),\)</li>
+<li><strong>Case II</strong>:
+\( \sigma(a, b, c) =-\sigma(b, c, e) = \sigma(a,d,e),\)</li>
+<li><strong>Case III</strong>: \( \sigma(a,b,d) = -\sigma(b, d, e) = \sigma(a, c, e),\)</li>
+<li><strong>Case IV</strong>:  \( \sigma(a, b, e) = -\sigma(a, c, d) = -\sigma(c, d, e).\)</li>
+</ul>
+<p>We can thus easily encode these cases through the boolean orientation variables. For example, the fact that a tuple \((a,b,c,d,e)\) does not fall into the first case can be expressed by the formula</p>
+<p>\[
+F^I_{a,b,c,d,e} := (o_{a,b,c} \rightarrow (o_{b,c,d} \vee o_{c,d,e})) \wedge (\neg {o_{a,b,c}} \rightarrow (\neg o_{b,c,d} \vee \neg o_{c,d,e})),
+\]
+and similarly, we can construct formulas \(F^{II}_{a,b,c,d,e}, F^{III}_{a,b,c,d,e}, F^{IV}_{a,b,c,d,e} \) for the remaining cases.</p>
+<p>Then, it is easy to write each of these formulas in <em>conjunctive normal form</em> (CNF), the format supported by most solvers. The conjunction of all these, over all 5-tuples of points indexed by \([n]\), results in a formula \(\Phi_n\) such that each convex pentagon on a set of \(n\) points in general position would induce exactly one falsified clause in \(\Phi_n\). Moreover, some additional symmetry-breaking constraints can be added to the \(\Phi_n\) in order to reduce the search space and make the local search more efficient, but we will not discuss them here in order to simplify our exposition. A detailed description, including formally verified proofs of correctness, can be found in  <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#Verification">Subercaseaux et al., 2024</a>.</p>
+<!-- \\[
+F^{I}_{a,b,c,d,e} := (o_{a,b,c} \rightarrow (o_{b,c,d} \vee o_{c,d,e}) ) \wedge (\overline{o_{a,b,c}} \rightarrow (\overline{o_{b,c,d}} \vee \overline{o_{c,d,e}}))
+\\] -->
+<!-- 
+Now, to minimize the number of convex pentagons instead of fully forbidding them, we can introduce a relaxation variable \\(r_{a,b,c,d,e}\\) for each 5-tuple of points, and then replace each clause \\(C_{a,b,c,d,e}\\) forbidding a convex pentagon by
+
+\\(
+C_{a,b,c,d,e} \lor r_{a,b,c,d,e}
+\\) -->
+<h2 id="local-search">Local search</h2>
+<p>At this point, we can use a local search SAT solver (e.g., <em>Tassat</em> (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#Tassat">Chowdhury, Codel, Heule, 2023</a>)) to try to minimize the number of falsified clauses in the formula \(\Phi_n\), and thus, indirectly, the number of convex pentagons among \(n\) points. We need however to declare two caveats:</p>
+<ul>
+<li>Local search solvers can get stuck at local minima, so the number of falsified clauses they obtain is only an upper bound of the true answer.</li>
+<li>Unfortunately, the upper bound on the number of falsified clauses does not provide an upper bound on the minimum number of convex pentagons, since assignments to the orientation variables might not be <em>realizable</em> by any set of actual points in the plane. In fact, the <em>realizability problem</em> of deciding whether an assignment to the orientation variables matches the orientations of some set of points in the plane is \(\exists \mathbb{R} \)-complete, so much harder than SAT itself.</li>
+</ul>
+<p>Despite these worst-case warnings, by running local search we obtained the following results:</p>
+<div style="display: flex; gap: 20px;">
+<div style="flex: 50%;">
+<table><thead><tr><th>\(n\)</th><th>Min. false cls</th><th>time [s]</th></tr></thead><tbody>
+<tr><td>9</td><td>1</td><td>0.00</td></tr>
+<tr><td>10</td><td>2</td><td>0.00</td></tr>
+<tr><td>11</td><td>7</td><td>0.00</td></tr>
+<tr><td>12</td><td>12</td><td>0.00</td></tr>
+<tr><td>13</td><td>27</td><td>0.01</td></tr>
+<tr><td>14</td><td>42</td><td>0.01</td></tr>
+<tr><td>15</td><td>77</td><td>0.01</td></tr>
+<tr><td>16</td><td>112</td><td>0.02</td></tr>
+<tr><td>17</td><td>182</td><td>0.02</td></tr>
+<tr><td>18</td><td>252</td><td>2.03</td></tr>
+<tr><td>19</td><td>378</td><td>0.94</td></tr>
+</tbody></table>
+</div>
+<div style="flex: 50%;">
+<table><thead><tr><th>\(n\)</th><th>Min. false cls</th><th>time [s]</th></tr></thead><tbody>
+<tr><td>20</td><td>504</td><td>174.11</td></tr>
+<tr><td>21</td><td>714</td><td>3.34</td></tr>
+<tr><td>22</td><td>924</td><td>43.92</td></tr>
+<tr><td>23</td><td>1254</td><td>11.64</td></tr>
+<tr><td>24</td><td>1584</td><td>472.33</td></tr>
+<tr><td>25</td><td>2079</td><td>63.48</td></tr>
+<tr><td>26</td><td>2574</td><td>5268.1</td></tr>
+<tr><td>27</td><td>3289</td><td>1555.5</td></tr>
+<tr><td>28</td><td>4004</td><td>1791.9</td></tr>
+<tr><td>29</td><td>5005</td><td>467.36</td></tr>
+<tr><td>30</td><td>6007</td><td>18244</td></tr>
+</tbody></table>
+</div>
+</div>
+<p>Can you notice any patterns?
+For a first observation, let’s see the sequence of differences between consecutive values:
+\( 1, 5, 5, 15, 15, 25, 25, 70, 70,
+126, 126, …\) These is hardly a coincidence, as we will show later. But more importantly, can we see a function that describes this sequence? <em>Wolfram Mathematica</em> certainly can! If we interpolate the first ten even values by a degree 5-polynomial (a natural guess since these are a fraction of the 5-tuples of points), the answer is immediate: \( 2\binom{N/2}{5}\). This formula matches all the even terms except the last one, which is off by one. Considering the runtime and the fact that it’s also the first time the consecutive differences differ (\(6007 - 5005 \neq 5005 -4004\)), the simplest interpretation is that local search caps out around \(n = 30\), but the answer most likely is indeed \(6006\).<br />
+Playing with the odd values quickly suggests the following conjecture for all values of \(n\):</p>
+<p>\[
+\mu_5(n) = \binom{\lfloor{n/2}\rfloor}{5} + \binom{\lceil{n/2}\rceil}{5}.
+\]</p>
+<p>Note that this conjecture directly implies the observation about consecutive differences:
+\[
+\mu_5(2n) - \mu_5(2n-1) = 2\binom{n}{5} - \left(\binom{n}{5} + \binom{n-1}{5}\right) = \binom{n}{5} - \binom{n-1}{5},
+\]
+and similarly
+\[
+\mu_5(2n-1) - \mu_5(2n-2) = \left(\binom{n}{5} + \binom{n-1}{5}\right) - 2\binom{n-1}{5} = \binom{n-2}{5} - \binom{n-2}{4}.
+\]</p>
+<h2 id="constructions">Constructions</h2>
+<p>As we mentioned, however, we have no a-priori guarantee that the local search solutions are actually realizable by points in the plane. In fact, the fraction of orientation assignments that can be realized goes to zero as \(n\) grows, at a rate of \(2^{-n}\) (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#knuthAxiomsHulls">Knuth, 1992</a>).</p>
+<p>Once again, not discouraged by the worse-case analysis, implementing a realizability program yields insightful results. <sup class="footnote-reference"><a href="#realizer">3</a></sup>  Indeed, by realizing different assignments for \( n = 12\), we obtained two classes of realizations:</p>
+<img src="./realizations.png" width="600" alt="Realizations for local-search assignments over 12 points."  style="display: block; margin: 0 auto">
+<p>Naturally, we gave John Mackey, the mathematician in the group, the task of proposing general constrictions of these forms.
+We called the left one a <em>pinwheel construction</em>, and the right one a <em>parabolic construction</em>.</p>
+<img src="./constructions.png" width="600" alt="Illustrations of the upper bound constructions"  style="display: block; margin: 0 auto">
+<p>Interestingly, they both give the conjectured answer in general, thus making it a proper upper bound.</p>
+<blockquote>
+<p><strong>Theorem 1</strong>: For every \(n \geq 9\), we have \(\mu_5(n) \leq \binom{\lfloor{n/2}\rfloor}{5} + \binom{\lceil{n/2}\rceil}{5}\).</p>
+</blockquote>
+<p>Seeing this in the pinwheel construction requires a bit of work, but in the parabolic construction it is rather easy to see. It suffices to show, as the following figure illustrates, that the subsets of 5 points that are convex are precisely those that are contained in a single parabola.</p>
+<img src="./parabollic.png" width="600" alt="Detail of the parabolic construction."  style="display: block; margin: 0 auto">
+<p>Naturally, even the parabolic construction requires some care in the design of the parabolas. A concrete construction that works is:
+\[
+p^\top_i = \left(i, 2  + \frac{i^2}{n^2}\right), \forall i \in  \left[\left\lfloor\frac{n}{2}\right\rfloor \right] \quad \text{and} \quad
+p^\bot_i = \left(i, -2  - \frac{i^2}{n^2}\right), \forall i \in \left[\left\lceil\frac{n}{2}\right\rceil \right].\
+\]</p>
+<h2 id="verification">Verification</h2>
+<p>Since local search solvers cannot prove lower bounds, we used a  MaxSAT formulation to certify the values \(\mu_5(n)\) for \(n \leq 15\). Concretely, the solver that performed best was <em>MaxCDCL</em> (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#MaxCDCL">Li et al., 2021</a>), and we used a <em>Cube and Conquer</em> (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#CubeAndConquer">Heule, Kullman, Biere, 2018</a>) approach to parallelize the computation. Then, the <em>VeritasPBLib</em> (<a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#Veritas">Gocht et al., 2022</a>) framework allowed us to obtain a reproducible certificate. The details are purposefully omitted here, but the important part is that SAT and MaxSAT solvers can emit checkable proofs of their results, and moreover, some of the proof-checkers have been formally verified in theorem provers such as Coq, Lean, or CakeML. See e.g., <a href="https://www.cs.cmu.edu/~csd-phd-blog/2025/sat-for-math/#CakeLPR">Tan, Heule, and Myreen, 2021</a>.</p>
+<h2 id="let-s-make-it-16">Let’s make it 16.</h2>
+<p>We can actually leverage the insight of the consecutive differences from earlier on to certify the value of \(\mu_5(16)\) without having to run a MaxSAT solver.</p>
+<p>First, consider the following <em>supersaturation</em> lemma.</p>
+<blockquote>
+<p><strong>Lemma 2</strong>: For every \(n &gt; 5\), we have \(\mu_5(n) \geq \frac{n}{n-5} \cdot \mu_5(n-1)\).</p>
+</blockquote>
+<p><em>Proof</em>. Consider a set of \(n\) points \(S\) that achieves the optimal bound, and for each point \(p \in S\) let \(f(p)\) be the number of convex pentagons in \(S\) that contain \(p\). As pentagons consist of exactly five points, we have \(\sum_{p \in S} f(p) = 5 \cdot \mu_5(n)\). Now, notice that for every \(p\) there must be at least \(\mu_5(n-1)\) convex pentagons that do not contain \(p\), and thus we have \( \mu_5(n) - f(p) \geq \mu_5(n-1)\). Summing this equation over \(p\) gives us
+\[
+\sum_{p \in S} (\mu_5(n) - f(p)) \geq n \cdot \mu_5(n-1),
+\]
+and as \(\sum_{p \in S} (\mu_5(n) - f(p)) = n \cdot \mu_5(n) - 5 \cdot \mu_5(n)\), we have the desired inequality.</p>
+<p>Now, combining this with <strong>Theorem 1</strong>, we can formalize our previous observation:</p>
+<blockquote>
+<p><strong>Theorem 2</strong>: If for some \(n &gt; 5\) it holds that \(\mu_5(2n-1) = \binom{n}{5} + \binom{n-1}{5}\), then we have \(\mu_5(2n) = 2\binom{n}{5}\).</p>
+</blockquote>
+<p><em>Proof</em>. We have \(\mu_5(2n) \leq 2\binom{n}{5}\) by <strong>Theorem 1</strong>, and thus to see that equality is achieved we use <strong>Lemma 2</strong> to obtain
+\[
+\mu_5(2n) \geq \frac{2n}{2n-5} \mu_5(2n-1) = \frac{2n}{2n-5} \left(\binom{n}{5} + \binom{n-1}{5}\right),
+\]
+and since \(\binom{n}{5} = \frac{n}{n-5} \binom{n-1}{5}\), we have
+\[
+\frac{2n}{2n-5} \left(\binom{n}{5} + \frac{n-5}{n} \binom{n}{5}\right) = \left(\frac{2n}{2n-5} + \frac{2(n-5)}{2n-5}\right)\binom{n}{5} = 2\binom{n}{5}.
+\]</p>
+<p>Thus, from the fact \(\mu_5(15) = 77\), we conclude that \(\mu_5(16) = 112\).</p>
+<!-- What can we say about $\mu_5(n)$? Well, from $g(5) = 9$ we at least get that $\mu_5(n) = 0$ for $n < 9$, and $\mu_5(9) \geq 1$. We can leverage this fact as follows. If we have for instance $90$ points in the plane, and partition them into $10$ groups of $9$ points, we know that each group must contain at least one convex pentagon, and thus $\mu_5(90) \geq 10$. This folklore "supersaturation" idea can be extended further:
+
+> **Lemma 1**: Let $m$ and $r$ be values such that $\mu_k(m) \geq r$. Then, for every $n \geq m$ we have
+
+$$
+
+\mu_k(n) \geq r \cdot \binom{n}{m}/\binom{n-k}{m-k} = r \binom{n}{k}/\binom{m}{k}.
+
+$$
+
+_Proof_.  -->
+<!-- The value of $g(7)$ is conjectured to be $33$, and more in general, Erdős and Szekeres conjectured $g(k) = 2^{k-2} + 1$. In 1961, Erdős and Szekeres proved $g(k) \geq 2^{k-2} + 1$, and to this day, the best upper bound is $g(k) \leq 2^{k + O(\sqrt{k \log k})}$ -->
+<h2 id="conclusions">Conclusions</h2>
+<p>We have seen, through a concrete case study, how SAT solvers, coupled with other computational tools, can assist mathematical research at different stages. At the moment, the mathematical community is still trying to understand how to best leverage AI for mathematics, and it is important to document how existing tools can also be used in this context. While the current conversation is centered around language models, I strongly believe that classical AI tools are still vastly underutilized by the mathematical community, and I plan to keep working on tools, algorithms, and logical encodings that might make them more popular among mathematicians.</p>
+<p>This blog is based on joint work with John Mackey, Marijn J. H. Heule and Ruben Martins, which was accepted at CICM’2024, and is publicly available at <a rel="noopener" target="_blank" href="https://arxiv.org/abs/2311.03645">https://arxiv.org/abs/2311.03645</a>. Naturally, this blog post tells a linearized version of the story; our work went through many back-and-forths, and sometimes intuition preceded computation.</p>
+<h2 id="bibliography">Bibliography</h2>
+<ul>
+<li>
+<p><a name="szekeresPeters"></a> George Szekeres and Lindsay Peters. Computer solution to the 17-point Erdős-Szekeres problem. The ANZIAM Journal, 48(2):151–164, 2006.</p>
+</li>
+<li>
+<p><a name="signotopes"></a> Stefan Felsner and Helmut Weil. Sweeps, arrangements and signotopes. Discrete Applied Mathematics, 109(1):67–94, April 2001.</p>
+</li>
+<li>
+<p><a name="knuthAxiomsHulls"></a> Donald E. Knuth. Axioms and Hulls. In Donald E. Knuth, editor, Axioms and Hulls, Lecture Notes in Computer Science, pages 1–98. Springer, Berlin, Heidelberg, 1992.</p>
+</li>
+<li>
+<p><a name="Tassat"></a> Md Solimul Chowdhury, Cayden R. Codel, and Marijn J. H. Heule. 2024. TaSSAT: Transfer and Share SAT. In Tools and Algorithms for the Construction and Analysis of Systems: 30th International Conference, TACAS 2024, Held as Part of the European Joint Conferences on Theory and Practice of Software, ETAPS 2024, Luxembourg City, Luxembourg, April 6–11, 2024, Proceedings, Part I. Springer-Verlag, Berlin, Heidelberg, 34–42. https://doi.org/10.1007/978-3-031-57246-3_3</p>
+</li>
+<li>
+<p><a name="MaxCDCL"></a> Chu-Min Li, Zhenxing Xu, Jordi Coll, Felip Manyà, Djamal Habet, and Kun He. Combining Clause Learning and Branch and Bound for MaxSAT. In 27th International Conference on Principles and Practice of Constraint Programming (CP 2021). Leibniz International Proceedings in Informatics (LIPIcs), Volume 210, pp. 38:1-38:18, Schloss Dagstuhl – Leibniz-Zentrum für Informatik (2021) https://doi.org/10.4230/LIPIcs.CP.2021.38</p>
+</li>
+<li>
+<p><a name="Veritas"></a> Stephan Gocht, Ruben Martins, Jakob Nordström, and Andy Oertel. Certified CNF Translations for Pseudo-Boolean Solving. In 25th International Conference on Theory and Applications of Satisfiability Testing (SAT 2022). Leibniz International Proceedings in Informatics (LIPIcs), Volume 236, pp. 16:1-16:25, Schloss Dagstuhl – Leibniz-Zentrum für Informatik (2022) https://doi.org/10.4230/LIPIcs.SAT.2022.16</p>
+</li>
+<li>
+<p><a name="Verification"></a> Bernardo Subercaseaux, Wojciech Nawrocki, James Gallicchio, Cayden Codel, Mario Carneiro, and Marijn J. H. Heule. Formal Verification of the Empty Hexagon Number. In 15th International Conference on Interactive Theorem Proving (ITP 2024). Leibniz International Proceedings in Informatics (LIPIcs), Volume 309, pp. 35:1-35:19, Schloss Dagstuhl – Leibniz-Zentrum für Informatik (2024) https://doi.org/10.4230/LIPIcs.ITP.2024.35</p>
+</li>
+<li>
+<p><a name="EllenbergQuote"></a> Castelvecchi, D.: DeepMind AI outdoes human mathematicians on unsolved problem. Nature 625(7993), 12–13 (Dec 2023).</p>
+</li>
+<li>
+<p><a name="CubeAndConquer"></a> Heule, M.J.H., Kullmann, O., Biere, A. (2018). Cube-and-Conquer for Satisfiability. In: Hamadi, Y., Sais, L. (eds) Handbook of Parallel Constraint Reasoning. Springer, Cham. https://doi.org/10.1007/978-3-319-63516-3_2</p>
+</li>
+<li>
+<p><a name="CakeLPR"></a> Tan, Y.K., Heule, M.J.H., Myreen, M.O. (2021). cake_lpr: Verified Propagation Redundancy Checking in CakeML. In: Groote, J.F., Larsen, K.G. (eds) Tools and Algorithms for the Construction and Analysis of Systems. TACAS 2021. Lecture Notes in Computer Science(), vol 12652. Springer, Cham. https://doi.org/10.1007/978-3-030-72013-1_12</p>
+</li>
+<li>
+<p><a name="erdosGuy"></a> Erdős, P., Guy, R.K.: Crossing number problems. The American Mathematical Monthly 80(1), 52–58 (1973).</p>
+</li>
+</ul>
+<div class="footnote-definition" id="szekeres"><sup class="footnote-definition-label">1</sup>
+<p>George Szekeres died in 2005 (one hour apart from Esther Klein!), and thus to the best of my knowledge, Peters completed the paper using some previous ideas of Szekeres, which makes unclear whether the Hungarian mathematician got to see the result \(g(6) = 17\) before his passing.</p>
+</div>
+<div class="footnote-definition" id="aka"><sup class="footnote-definition-label">2</sup>
+<p>Also known as <em>signotopes</em> [2], Knuth’s counterclockwise relation (CC-systems) [3], or <em>signatures</em> [1].</p>
+</div>
+<div class="footnote-definition" id="realizer"><sup class="footnote-definition-label">3</sup>
+<p>I have developed since a much more efficient version of this program, leveraging parallelism and a much better algorithm. It can be found in <a rel="noopener" target="_blank" href="https://github.com/bsubercaseaux/point_realizer">https://github.com/bsubercaseaux/point_realizer</a>.</p>
+</div>
+
+    </div>
+
+    
+    
+
+    <div class="post-footer">
+        
+            Author: 
+
+
+
+  
+  
+
+
+<a href="https:&#x2F;&#x2F;bsubercaseaux.github.io&#x2F;" target=_blank>
+  Bernardo Subercaseaux
+</a>
+
+            <br />
+            Approved by:
+            
+            
+
+
+
+  
+  
+
+
+<a href="http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~bovik&#x2F;" target=_blank>
+  Harry Q. Bovik,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="Committee Member 2&#x27;s page" target=_blank>
+  Committee Member 2&#x27;s Full Name,
+</a>
+
+            
+            
+
+
+
+  
+  
+
+
+<a href="Committee Member 3&#x27;s page" target=_blank>
+  Committee Member 3&#x27;s Full Name
+</a>
+
+            <br />
+            
+                <div class="post-tags">
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/artificial-intelligence/">#Artificial Intelligence</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/areas/theory/">#Theory</a>
+                    
+                    <br />
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/sat/">#SAT</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/discrete-geometry/">#discrete geometry</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/erdos-szekeres-problems/">#Erdős-Szekeres problems</a>
+                    
+                        <a href="https://www.cs.cmu.edu/~csd-phd-blog/tags/automated-mathematics/">#automated mathematics</a>
+                    
+                </div>
+            
+            
+            <div class="post-nav">
+                
+                    <a class="previous" href="https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;~csd-phd-blog&#x2F;2025&#x2F;llm-checklist-assistant&#x2F;">‹ Usefulness of LLMs as an Author Checklist Assistant for Scientific Papers: NeurIPS&#x27;24 Experiment</a>
+                
+                
+            </div>
+            
+        
+
+    </div>
+
+    
+    
+</article>
+
+
+                </div>
+            </main>
+
+            
+            
+        </div>
+
+      
+          <script type="text/javascript" src="https://www.cs.cmu.edu/~csd-phd-blog/even.js" ></script>
+      
+    </body>
+
+</html>
