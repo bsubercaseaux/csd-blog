@@ -38,7 +38,7 @@ In 1933, Esther Klein presented the following problem to George Szekeres and Pau
 
 > **Problem 1.** If five points lie on a plane so that no three points form a straight line, prove that four of the points will form a convex quadrilateral.
 
-Klein's solution is simple and elegant; almost entirely exposed in **Figure 1**. Note first that there are only three possible cases for the size of the convex hull of five points without collinearities. In case **(a)**, where the convex hull includes all five points, any four of them make a convex quadrilateral. In case **(b)**, where the convex hull has only four points, those four are the sought-after quadrilateral. In case **(c)**, where the convex hull is a triangle, we consider the line \\(L\\) passing through the two points inside the triangle, which we call \\(p_1\\) and \\(p_2\\), and then observe that the pigeonhole principle implies that one side of \\(L\\) must contain two of the three points in the convex hull, which we call \\(p_3\\) and \\(p_4\\); we are done, since the points \\(p_1, p_2, p_3, p_4\\) must form a convex quadrilateral.
+Klein's solution is simple and elegant; almost entirely explained in **Figure 1**. Note first that there are only three possible cases for the size of the convex hull of five points without collinearities. In case **(a)**, where the convex hull includes all five points, any four of them make a convex quadrilateral. In case **(b)**, where the convex hull has only four points, those four are the sought-after quadrilateral. In case **(c)**, where the convex hull is a triangle, we consider the line \\(L\\) passing through the two points inside the triangle, which we call \\(p_1\\) and \\(p_2\\), and then observe that the pigeonhole principle implies that one side of \\(L\\) must contain two of the three points in the convex hull, which we call \\(p_3\\) and \\(p_4\\); we are done, since the points \\(p_1, p_2, p_3, p_4\\) must form a convex quadrilateral.
 
 <!-- ![Illustration of Klein's proof](./klein_cases.png) -->
 <img src="./klein_cases.png" width="500" alt="Illustration of Klein's proof for the existence of a convex quadrilateral among 5 popints in general position." style="display: block; margin: 0 auto">
@@ -47,13 +47,13 @@ Klein's problem kickstarted geometric Ramsey theory, and it was soon afterwards 
 
 > **Erdős-Szekeres Theorem.** For any positive integer \\(k\\), there is an integer \\(g(k)\\) such that any collection of \\(g(k)\\) points contains either 3 collinear points or a convex \\(k\\)-gon.
 
-As a second consequence of the problem, George Szekeres and Esther Klein married, which led Erdős to jokingly name Klein's problem as the *_Happy Ending problem_*.
+As a second consequence of the problem, George Szekeres and Esther Klein married, which led Erdős to jokingly name Klein's problem the *_Happy Ending problem_*.
 
-Not only has Klein's problem had a long-lasting impact in discrete geometry, her solution already contains an important insight: properties of finite point sets such as convexity do not rely on the specific coordinates of the points, but rather on their relative position and orientations, which are enough to determine the structure of e.g., convex hulls. This insight, as will become clear later in this post, is what opens the door to logical computation in a domain which may a priori seem continuous.
+Not only has Klein's problem had a long-lasting impact in discrete geometry, but her solution already contains an important insight: properties of finite point sets such as convexity do not rely on the specific coordinates of the points, but rather on their relative position and orientations, which are enough to determine the structure of e.g., convex hulls. This insight, as will become clear later in this post, is what opens the door to discrete computation in a domain which may a priori seem continuous.
 
 # The problem: minimizing convex pentagons
 
-Klein's proof shows \\(g(4) \leq 5\\), and it is then easy to see that indeed \\(g(4) = 5\\). It is not too hard to see that \\(g(5) = 9\\) (see **Figure 2**), but it took until 2006 for \\(g(6) = 17\\) to be proven computationally by [Lindsay Peters and George Szekeres](#szekeresPeters). [^szekeres] No other values of \\(g(k)\\) are known, although  Erdős and Szekeres conjectured \\(g(k) = 2^{k-2} + 1\\) for all \\(k \geq 3\\).
+Klein's proof shows that \\(g(4) \leq 5\\), and it is then easy to see that indeed \\(g(4) = 5\\). It is not too hard to see that \\(g(5) = 9\\) (see **Figure 2**), but it took until 2006 for \\(g(6) = 17\\) to be proven computationally by [Lindsay Peters and George Szekeres](#szekeresPeters). [^szekeres] No other values of \\(g(k)\\) are known, although Erdős and Szekeres conjectured \\(g(k) = 2^{k-2} + 1\\) for all \\(k \geq 3\\).
 
 <img src="./g_5_8_9.png" width="500" alt="8 points without convex pentagons" style="display: block; margin: 0 auto">
 
@@ -70,7 +70,7 @@ Indeed, let us denote by \\(\mu_k(n)\\) the minimum number of convex \\(k\\)-gon
 
 # A boolean representation of the problem
 
-As suggested by Klein's proof for \\(g(4)\\), it is possible to reason about properties like convexity based on combinatorial relationships between points instead of their concrete coordinates. Our goal in this section is to see how these relationships between points, and their impact on properties like convexity, can be encoded in propositional logic. The most successful combinatorial abstraction in geometric Ramsey theory is that of _triple orientations_,[^aka] which intuitively consists of considering which oriented triples of points define a curve that turns counterclockwise, and which ones turn clockwise. Concretely, given points \\(p, q, r\\), their _triple-orientation_ is defined as
+As suggested by Klein's proof for \\(g(4)\\), it is possible to reason about geometric properties like convexity based on combinatorial relationships between points instead of their concrete coordinates. Our goal in this section is to see how these relationships between points, and their impact on properties like convexity, can be encoded in propositional logic. The most successful combinatorial abstraction in geometric Ramsey theory is that of _triple orientations_,[^aka] which intuitively consists of considering which ordered triples of points define a curve that turns counterclockwise, and which ones turn clockwise. Concretely, given points \\(p, q, r\\), their _triple orientation_ is defined as
 
 \\[
     \sigma(p, q, r) =  \text{sign} \det \begin{pmatrix} p_x & q_x & r_x \\\ p_y & q_y & r_y \\\ 1 & 1 & 1 \end{pmatrix} = \begin{cases} -1 & \text{if } p, q, r \text{ are oriented clockwise,} \\\\
@@ -118,7 +118,7 @@ C_{a,b,c,d,e} \lor r_{a,b,c,d,e}
 # Local search
 
 At this point, we can use a local search SAT solver (e.g., _Tassat_ ([Chowdhury, Codel, Heule, 2023](#Tassat))) to try to minimize the number of falsified clauses in the formula \\(\Phi_n\\), and thus, indirectly, the number of convex pentagons among \\(n\\) points. We need however to declare two caveats:
-- Local search solvers can get stuck at local minima, so the number of falsified clauses they obtain is only an upper bound of the true answer.
+- Local search solvers can get stuck at local minima, so the number of falsified clauses they obtain is only an upper bound on the true answer.
 - Unfortunately, the upper bound on the number of falsified clauses does not provide an upper bound on the minimum number of convex pentagons, since assignments to the orientation variables might not be _realizable_ by any set of actual points in the plane. In fact, the _realizability problem_ of deciding whether an assignment to the orientation variables matches the orientations of some set of points in the plane is \\(\exists \mathbb{R} \\)-complete, so much harder than SAT itself.
 
 Despite these worst-case warnings, by running local search we obtained the following results:
@@ -211,7 +211,7 @@ Naturally, even the parabolic construction requires some care in the design of t
 
 # Verification
 
-Since local search solvers cannot prove lower bounds, we used a  MaxSAT formulation to certify the values \\(\mu_5(n)\\) for \\(n \leq 15\\). Concretely, the solver that performed best was _MaxCDCL_ ([Li et al., 2021](#MaxCDCL)), and we used a _Cube and Conquer_ ([Heule, Kullman, Biere, 2018](#CubeAndConquer)) approach to parallelize the computation. Then, the _VeritasPBLib_ ([Gocht et al., 2022](#Veritas)) framework allowed us to obtain a reproducible certificate. Such certificates prove facts of the form ``at most \\(k\\) clauses can be satisfied in formula \\(F\\)'' by showing
+Since local search solvers cannot prove lower bounds, we used a MaxSAT formulation to certify the values \\(\mu_5(n)\\) for \\(n \leq 15\\). Concretely, the solver that performed best was _MaxCDCL_ ([Li et al., 2021](#MaxCDCL)), and we used a _Cube and Conquer_ ([Heule, Kullman, Biere, 2018](#CubeAndConquer)) approach to parallelize the computation. Then, the _VeritasPBLib_ ([Gocht et al., 2022](#Veritas)) framework allowed us to obtain a reproducible certificate. Such certificates prove facts of the form ``at most \\(k\\) clauses can be satisfied in formula \\(F\\)'' by showing
 
 1. A new formula \\(F'\\), constructed based on \\(F\\) and \\(k\\), such that \\(F'\\) is satisfiable if and only if some assignment can satisfy \\(k+1\\) or more clauses in \\(F\\).
 This relation between \\(F'\\) and \\((F, k)\\) is formally proven through the _cutting planes_ method. 
