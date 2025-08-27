@@ -25,18 +25,37 @@ committee = [
 
 In the last couple of years a pressing question has started to permeate the mathematical community: *_how will mathematicians' jobs coexist harmoniously with AI as it gets progressively better at mathematics?_* ["A.I. Is Coming for Mathematics, Too"](https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html) was the title chosen by the NY Times in their dedicated article of 2024, ["AI Will Become Mathematicians' Co-Pilot"](https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html) said the Scientific American, and the American Mathematical Society published ["Questions Artificial Intelligence Raises for the Mathematics Profession"](https://www.nytimes.com/2023/07/02/science/ai-mathematics-machine-learning.html).
 
-This time it does not seem to be a matter of sensationalistic journalism; some of the most respected mathematicians in the world are joining the conversation, with voices of concern, excitement, and a wide spectrum of positions in between. Perhaps the most aligned with the spirit of this research is Jordan Ellenberg, number theorist who co-authored FunSearch with DeepMind and stated (see [Castekvecchi, 2023](#EllenbergQuote)):
+This time it does not seem to be just a matter of sensationalistic journalism. Some of the most respected mathematicians in the world are joining the conversation, with voices of concern, excitement, and a wide spectrum of positions in between. Perhaps the most aligned with the spirit of this research is Jordan Ellenberg, number theorist who co-authored FunSearch with DeepMind and stated (see [Castekvecchi, 2023](#EllenbergQuote)):
 
 > What’s most exciting to me is modeling new modes of human–machine collaboration,
 > I don’t look to use these as a replacement for human mathematicians, but as a force multiplier.
 
-The goal of this post is to show through a concrete case study how SAT solvers, a relatively old AI technology, can also allow for human-machine collaboration in mathematics. Interestingly, the problem we study takes place in two-dimensional geometry, an a priori continuous domain, which makes the participation of SAT solvers somewhat surprising. While this is not the first usage of SAT in discrete geometry, its main novelty (besides the technical results) is in documenting how SAT solvers and other automated reasoning tools can assist mathematical research by revealing patterns and elliciting conjectures. At the end of the post I discuss verification---as opposed to recent language-based forms of AI, standard automated reasoning tools such as (Max)SAT solvers can provide proofs for their answers, which can be crucial for mathematics.
+The goal of this post is to show through a concrete case study how SAT solvers, a relatively old AI technology, can also allow for human-machine collaboration in mathematics. 
+
+
+
+<!-- The problem we study takes place in two-dimensional geometry, an a priori continuous domain.
+ Perhaps surprisingly, we will leverage the capabilities of modern SAT solvers, which reason about boolean formulas, to make progress in  -->
+ While this is not the first usage of SAT in discrete geometry, its main novelty (besides the technical results) is in documenting how SAT solvers and other automated reasoning tools can assist mathematical research by revealing patterns and eliciting conjectures. At the end of the post I discuss verification---as opposed to recent language-based forms of AI, standard automated reasoning tools such as (Max)SAT solvers can provide proofs for their answers, which can be crucial for mathematics.
+
+ This post is based on joint work with John Mackey, Marijn J. H. Heule and Ruben Martins. It was accepted at CICM'2024, where it was the runner-up for best paper award, and it is publicly available at [https://arxiv.org/abs/2311.03645](https://arxiv.org/abs/2311.03645). Naturally, this blog post tells a linearized version of the story; our work went through many back-and-forths, and sometimes intuition preceded computation.
+
+ ## SAT solvers in two paragraphs
+
+ SAT solvers are highly efficient programs for determining whether a boolean formula can be _satisfied_ by some assignment of its variables. For example, the formula
+\\(
+  (x_1 \lor \neg x_2) \land (x_2 \lor x_3) \land (\neg x_1 \lor \neg x_3)
+\\)
+is satisfiable, since we can take the assignment \\(x_1 = \top, x_2 = \top, x_3 = \bot \\). Most SAT solvers take boolean formulas in this format, called _conjunctive normal form_ (CNF), in which a formula is a conjunction of _clauses_, where each clause is a disjunction of _literals_ (variables or their negation). 
+
+Even though this _satisfiability_ problem is the archetype of NP-completeness, the engineering advances on both software and hardware allow SAT solvers to tackle many instances of interest that arise naturally in mathematics, formal verification, and even cryptography ([Fichte et al., 2023](#silentRevolution)). The MaxSAT variant, in which the goal is to maximize the number of satisfied clauses, is also well-studied and has many applications. We will use it later on in this blog.
+For a general reference on SAT solvers, I recommend the _Handbook of Satisfiability_ ([Biere et al., 2009](#BiereHandbook)).
 
 # The Happy Ending was just the beginning
 
 In 1933, Esther Klein presented the following problem to George Szekeres and Paul Erdős:
 
-> **Problem 1.** If five points lie on a plane so that no three points form a straight line, prove that four of the points will form a convex quadrilateral.
+> **Problem 1.** If five points lie on a plane so that no three points form a straight line, prove that four of the points will form a convex quadrilateral.[^quadr]
 
 Klein's solution is simple and elegant; almost entirely explained in **Figure 1**. Note first that there are only three possible cases for the size of the convex hull of five points without collinearities. In case **(a)**, where the convex hull includes all five points, any four of them make a convex quadrilateral. In case **(b)**, where the convex hull has only four points, those four are the sought-after quadrilateral. In case **(c)**, where the convex hull is a triangle, we consider the line \\(L\\) passing through the two points inside the triangle, which we call \\(p_1\\) and \\(p_2\\), and then observe that the pigeonhole principle implies that one side of \\(L\\) must contain two of the three points in the convex hull, which we call \\(p_3\\) and \\(p_4\\); we are done, since the points \\(p_1, p_2, p_3, p_4\\) must form a convex quadrilateral.
 
@@ -103,7 +122,7 @@ F^I_{a,b,c,d,e} := (o_{a,b,c} \rightarrow (o_{b,c,d} \vee o_{c,d,e})) \wedge (\n
 \\]
 and similarly, we can construct formulas \\(F^{II}_{a,b,c,d,e}, F^{III}\_{a,b,c,d,e}, F^{IV}\_{a,b,c,d,e} \\) for the remaining cases.
 
-Then, it is easy to write each of these formulas in _conjunctive normal form_ (CNF), the format supported by most solvers. The conjunction of all these, over all 5-tuples of points indexed by \\([n]\\), results in a formula \\(\Phi_n\\) such that each convex pentagon on a set of \\(n\\) points in general position would induce exactly one falsified clause in \\(\Phi_n\\). Moreover, some additional symmetry-breaking constraints can be added to the \\(\Phi_n\\) in order to reduce the search space and make the local search more efficient, but we will not discuss them here in order to simplify our exposition. A detailed description, including formally verified proofs of correctness, can be found in  [Subercaseaux et al., 2024](#Verification).
+Then, we can write each of these formulas in _conjunctive normal form_ (CNF), the format supported by most solvers. The conjunction of all these, over all 5-tuples of points indexed by \\([n]\\), results in a formula \\(\Phi_n\\) such that each convex pentagon on a set of \\(n\\) points in general position would induce exactly one falsified clause in \\(\Phi_n\\). Moreover, some additional symmetry-breaking constraints can be added to the \\(\Phi_n\\) in order to reduce the search space and make the local search more efficient, but we will not discuss them here in order to simplify our exposition. A detailed description, including formally verified proofs of correctness, can be found in [Subercaseaux et al., 2024](#Verification).
 
 <!-- \\[
 F^{I}_{a,b,c,d,e} := (o_{a,b,c} \rightarrow (o_{b,c,d} \vee o_{c,d,e}) ) \wedge (\overline{o_{a,b,c}} \rightarrow (\overline{o_{b,c,d}} \vee \overline{o_{c,d,e}}))
@@ -170,11 +189,11 @@ Playing with the odd values quickly suggests the following conjecture for all va
 
 Note that this conjecture directly implies the observation about consecutive differences:
 \\[
-  \mu_5(2n) - \mu_5(2n-1) = 2\binom{n}{5} - \left(\binom{n}{5} + \binom{n-1}{5}\right) = \binom{n}{5} - \binom{n-1}{5},
+  \mu_5(2n) - \mu_5(2n-1) = 2\binom{n}{5} - \left(\binom{n}{5} + \binom{n-1}{5}\right) = \binom{n}{5} - \binom{n-1}{5} = \binom{n-1}{4}
 \\]
 and similarly
 \\[
-  \mu_5(2n-1) - \mu_5(2n-2) = \left(\binom{n}{5} + \binom{n-1}{5}\right) - 2\binom{n-1}{5} = \binom{n-2}{5} - \binom{n-2}{4}.
+  \mu_5(2n-1) - \mu_5(2n-2) = \left(\binom{n}{5} + \binom{n-1}{5}\right) - 2\binom{n-1}{5} = \binom{n}{5} - \binom{n-1}{5} = \binom{n-1}{4}.
 \\]
 
 
@@ -187,7 +206,7 @@ Once again, not discouraged by the worse-case analysis, implementing a realizabi
 <img src="./realizations.png" width="600" alt="Realizations for local-search assignments over 12 points."  style="display: block; margin: 0 auto">
 
 
-Naturally, we gave John Mackey, the mathematician in the group, the task of proposing general constrictions of these forms.
+Naturally, we gave John Mackey, the mathematician in the group, the task of proposing general constructions of these shapes.
 We called the left one a _pinwheel construction_, and the right one a _parabolic construction_.
 
 <img src="./constructions.png" width="600" alt="Illustrations of the upper bound constructions"  style="display: block; margin: 0 auto">
@@ -211,13 +230,13 @@ Naturally, even the parabolic construction requires some care in the design of t
 
 # Verification
 
-Since local search solvers cannot prove lower bounds, we used a MaxSAT formulation to certify the values \\(\mu_5(n)\\) for \\(n \leq 15\\). Concretely, the solver that performed best was _MaxCDCL_ ([Li et al., 2021](#MaxCDCL)), and we used a _Cube and Conquer_ ([Heule, Kullman, Biere, 2018](#CubeAndConquer)) approach to parallelize the computation. Then, the _VeritasPBLib_ ([Gocht et al., 2022](#Veritas)) framework allowed us to obtain a reproducible certificate. Such certificates prove facts of the form ``at most \\(k\\) clauses can be satisfied in formula \\(F\\)'' by showing
+Since local search solvers cannot prove lower bounds, we used a MaxSAT formulation to certify the values \\(\mu_5(n)\\) for \\(n \leq 15\\). Concretely, the solver that performed best was _MaxCDCL_ ([Li et al., 2021](#MaxCDCL)), and we used a _Cube and Conquer_ ([Heule, Kullman, Biere, 2018](#CubeAndConquer)) approach to parallelize the computation. Then, the _VeritasPBLib_ ([Gocht et al., 2022](#Veritas)) framework allowed us to obtain a reproducible certificate. Such certificates prove facts of the form "at most \\(k\\) clauses can be satisfied in formula \\(F\\)" by showing
 
 1. A new formula \\(F'\\), constructed based on \\(F\\) and \\(k\\), such that \\(F'\\) is satisfiable if and only if some assignment can satisfy \\(k+1\\) or more clauses in \\(F\\).
 This relation between \\(F'\\) and \\((F, k)\\) is formally proven through the _cutting planes_ method. 
 2. That \\(F'\\) is unsatisfiable, which is formally certified using the (by now standard) DRAT proof format, for which formally verified proof-checkers exist.
 
-The details are purposefully omitted here, but the important part is that SAT and MaxSAT solvers can emit checkable proofs of their results, and moreover, some of the proof-checkers have been formally verified in theorem provers such as Coq, Lean, or CakeML. See e.g., [Tan, Heule, and Myreen, 2021](#CakeLPR).
+The details are purposefully omitted here, but the important part is that SAT and MaxSAT solvers can emit checkable proofs of their results, and moreover, some of the proof-checkers have been formally verified in theorem provers such as HOL4 ([Tan, Heule, and Myreen, 2021](#CakeLPR), [Boaerts et al., 2023](#CakePB)).
 This is particularly important for applications to mathematics, where correctness is paramount, and there is experience of computer-assisted proofs containing mistakes (cf. the original proof of the four color theorem, now formally verified by [Gonthier, 2023](#fourColor)). Hence, it is also important to mention that an important concern with computer-proofs is the correspondence between the computation and the mathematical statement it intends to prove. For example, even if a formula \\(F\\) is formally proven to be unsatisfiable, it could be the case that \\(F\\) is not a correct encoding of the mathematical statement we have in mind, making its unsatisfiability irrelevant. Because of the subtleties that naturally appear in translating geometric properties to propositional logic, this is a particularly important concern in our case. To this end, together with a group of students at CMU, we formally verified in Lean that the logical constraints and symmetry-breaking predicates we used in this work, and other similar proofs about discrete geometry, are indeed correct ([Subercaseaux et al., 2024](#Verification)).
 
 
@@ -266,43 +285,58 @@ _Proof_.  -->
 
 # Conclusions
 
-We have seen, through a concrete case study, how SAT solvers, coupled with other computational tools, can assist mathematical research at different stages. At the moment, the mathematical community is still trying to understand how to best leverage AI for mathematics, and it is important to document how existing tools can also be used in this context. While the current conversation is centered around language models, I strongly believe that classical AI tools are still vastly underutilized by the mathematical community, and I plan to keep working on tools, algorithms, and logical encodings that might make them more popular among mathematicians.
+We have seen, through a concrete case study, how SAT solvers, coupled with other computational tools, can assist mathematical research at different stages. At the moment, the mathematical community is trying to understand how to best leverage AI for mathematics, and it is important to document how existing tools can also be used in this context. While the current conversation is centered around language models, I strongly believe that classical AI tools are still vastly underutilized by the mathematical community, and I plan to keep working on tools, algorithms, and logical encodings that might make them more popular among mathematicians.
 
-This blog is based on joint work with John Mackey, Marijn J. H. Heule and Ruben Martins. It was accepted at CICM'2024, where it was the runner-up for best paper award, and it is publicly available at [https://arxiv.org/abs/2311.03645](https://arxiv.org/abs/2311.03645). Naturally, this blog post tells a linearized version of the story; our work went through many back-and-forths, and sometimes intuition preceded computation.
+
 
 ---
 ## Bibliography
 
-- <a name="szekeresPeters"></a> George Szekeres and Lindsay Peters. Computer solution to the 17-point Erdős-Szekeres problem. The ANZIAM Journal, 48(2):151–164, 2006. <https://doi.org/10.1017/S144618110000300X>
+- <a name="BiereHandbook"></a> Biere, A., Heule, M. J. H., van Maaren, H., and Walsh, T. (eds.) (2009). Handbook of Satisfiability. IOS Press. <https://www.iospress.com/catalog/books/handbook-of-satisfiability-2/>
 
-- <a name="signotopes"></a> Stefan Felsner and Helmut Weil. Sweeps, arrangements and signotopes. Discrete Applied Mathematics, 109(1):67–94, April 2001. <https://doi.org/10.1016/S0166-218X(00)00232-8>
+- <a name="silentRevolution"></a> Fichte, J. K., Le Berre, D., Hecher, M., and Szeider, S. (2023). The Silent (R)evolution of SAT. Communications of the ACM, 66(6), 64–72. <https://doi.org/10.1145/3560469>
 
-- <a name="knuthAxiomsHulls"></a> Donald E. Knuth. Axioms and Hulls. In Donald E. Knuth, editor, Axioms and Hulls, Lecture Notes in Computer Science, pages 1–98. Springer, Berlin, Heidelberg, 1992. <https://doi.org/10.1007/3-540-55611-7>
+- <a name="szekeresPeters"></a> Szekeres, G., and Peters, L. (2006). Computer solution to the 17-point Erdős–Szekeres problem. ANZIAM Journal, 48(2), 151–164. <https://doi.org/10.1017/S144618110000300X>
 
-- <a name="Tassat"></a> Md Solimul Chowdhury, Cayden R. Codel, and Marijn J. H. Heule. 2024. TaSSAT: Transfer and Share SAT. In Tools and Algorithms for the Construction and Analysis of Systems: 30th International Conference, TACAS 2024, Held as Part of the European Joint Conferences on Theory and Practice of Software, ETAPS 2024, Luxembourg City, Luxembourg, April 6–11, 2024, Proceedings, Part I. Springer-Verlag, Berlin, Heidelberg, 34–42. <https://doi.org/10.1007/978-3-031-57246-3_3>
+- <a name="signotopes"></a> Felsner, S., and Weil, H. (2001). Sweeps, arrangements and signotopes. Discrete Applied Mathematics, 109(1), 67–94. <https://doi.org/10.1016/S0166-218X(00)00232-8>
 
-- <a name="MaxCDCL"></a> Chu-Min Li, Zhenxing Xu, Jordi Coll, Felip Manyà, Djamal Habet, and Kun He. Combining Clause Learning and Branch and Bound for MaxSAT. In 27th International Conference on Principles and Practice of Constraint Programming (CP 2021). Leibniz International Proceedings in Informatics (LIPIcs), Volume 210, pp. 38:1-38:18, Schloss Dagstuhl – Leibniz-Zentrum für Informatik (2021). <https://doi.org/10.4230/LIPIcs.CP.2021.38>
+- <a name="knuthAxiomsHulls"></a> Knuth, D. E. (1992). Axioms and Hulls. Lecture Notes in Computer Science, 606. Springer, Berlin/Heidelberg. <https://doi.org/10.1007/3-540-55611-7>
 
-- <a name="Veritas"></a> Stephan Gocht, Ruben Martins, Jakob Nordström, and Andy Oertel. Certified CNF Translations for Pseudo-Boolean Solving. In 25th International Conference on Theory and Applications of Satisfiability Testing (SAT 2022). Leibniz International Proceedings in Informatics (LIPIcs), Volume 236, pp. 16:1-16:25, Schloss Dagstuhl – Leibniz-Zentrum für Informatik (2022). <https://doi.org/10.4230/LIPIcs.SAT.2022.16>
-  
-- <a name="Verification"></a> Bernardo Subercaseaux, Wojciech Nawrocki, James Gallicchio, Cayden Codel, Mario Carneiro, and Marijn J. H. Heule. Formal Verification of the Empty Hexagon Number. In 15th International Conference on Interactive Theorem Proving (ITP 2024). Leibniz International Proceedings in Informatics (LIPIcs), Volume 309, pp. 35:1-35:19, Schloss Dagstuhl – Leibniz-Zentrum für Informatik (2024). <https://doi.org/10.4230/LIPIcs.ITP.2024.35>
+- <a name="Tassat"></a> Chowdhury, M. S., Codel, C. R., and Heule, M. J. H. (2024). TaSSAT: Transfer and Share SAT. In: Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2024), ETAPS 2024, Luxembourg City, Luxembourg, April 6–11, 2024. Proceedings, Part I (pp. 34–42). Springer, Berlin/Heidelberg. <https://doi.org/10.1007/978-3-031-57246-3_3>
 
-- <a name="EllenbergQuote"></a> Castelvecchi, D.: DeepMind AI outdoes human mathematicians on unsolved problem. Nature 625(7993), 12–13 (Dec 2023). <https://doi.org/10.1038/d41586-023-04043-w>
+- <a name="MaxCDCL"></a> Li, C., Xu, Z., Coll, J., Manyà, F., Habet, D., and He, K. (2021). Combining clause learning and branch and bound for MaxSAT. In: 27th International Conference on Principles and Practice of Constraint Programming (CP 2021). Leibniz International Proceedings in Informatics (LIPIcs), 210, 38:1–38:18. Schloss Dagstuhl—Leibniz-Zentrum für Informatik. <https://doi.org/10.4230/LIPIcs.CP.2021.38>
 
-- <a name="CubeAndConquer"></a> Heule, M.J.H., Kullmann, O., Biere, A. (2018). Cube-and-Conquer for Satisfiability. In: Hamadi, Y., Sais, L. (eds) Handbook of Parallel Constraint Reasoning. Springer, Cham. <https://doi.org/10.1007/978-3-319-63516-3_2>
+- <a name="Veritas"></a> Gocht, S., Martins, R., Nordström, J., and Oertel, A. (2022). Certified CNF translations for pseudo-Boolean solving. In: 25th International Conference on Theory and Applications of Satisfiability Testing (SAT 2022). Leibniz International Proceedings in Informatics (LIPIcs), 236, 16:1–16:25. Schloss Dagstuhl—Leibniz-Zentrum für Informatik. <https://doi.org/10.4230/LIPIcs.SAT.2022.16>
 
-- <a name="CakeLPR"></a> Tan, Y.K., Heule, M.J.H., Myreen, M.O. (2021). cake_lpr: Verified Propagation Redundancy Checking in CakeML. In: Groote, J.F., Larsen, K.G. (eds) Tools and Algorithms for the Construction and Analysis of Systems. TACAS 2021. Lecture Notes in Computer Science(), vol 12652. Springer, Cham. <https://doi.org/10.1007/978-3-030-72013-1_12>
+- <a name="Verification"></a> Subercaseaux, B., Nawrocki, W., Gallicchio, J., Codel, C., Carneiro, M., and Heule, M. J. H. (2024). Formal verification of the empty hexagon number. In: 15th International Conference on Interactive Theorem Proving (ITP 2024). Leibniz International Proceedings in Informatics (LIPIcs), 309, 35:1–35:19. Schloss Dagstuhl—Leibniz-Zentrum für Informatik. <https://doi.org/10.4230/LIPIcs.ITP.2024.35>
 
-- <a name="erdosGuy"></a> Erdős, P., Guy, R.K.: Crossing number problems. The American Mathematical Monthly 80(1), 52–58 (1973).
-<https://doi.org/10.1080/00029890.1973.11993230>
-<!-- - <a name="fourColor1"></a> Gonthier, Georges. "Formal proof–the four-color theorem." Notices of the AMS 55.11 (2008): 1382-1393. -->
+- <a name="EllenbergQuote"></a> Castelvecchi, D. (2023). DeepMind AI outdoes human mathematicians on an unsolved problem. Nature, 625(7993), 12–13. <https://doi.org/10.1038/d41586-023-04043-w>
 
-- <a name="fourColor"></a> Georges Gonthier. A computer-checked proof of the Four Color Theorem. Inria. 2023. <https://inria.hal.science/hal-04034866>
+- <a name="CubeAndConquer"></a> Heule, M. J. H., Kullmann, O., and Biere, A. (2018). Cube-and-conquer for satisfiability. In: Hamadi, Y., and Sais, L. (eds.), Handbook of Parallel Constraint Reasoning (pp. 31–59). Springer, Cham. <https://doi.org/10.1007/978-3-319-63516-3_2>
+
+- <a name="CakeLPR"></a> Tan, Y. K., Heule, M. J. H., and Myreen, M. O. (2021). cake_lpr: Verified propagation redundancy checking in CakeML. In: Groote, J. F., and Larsen, K. G. (eds.), Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2021). Lecture Notes in Computer Science, 12652, 223–241. Springer, Cham. <https://doi.org/10.1007/978-3-030-72013-1_12>
+
+- <a name="CakePB"></a> Bogaerts, B., McCreesh, C., Myreen, M. O., Nordström, J., Oertel, A., and Tan, Y. K. (2023). VeriPB and CakePB in the SAT Competition 2023. Report. <https://satcompetition.github.io/2024/downloads/checkers/veripb.pdf>
+
+- <a name="erdosGuy"></a> Erdős, P., and Guy, R. K. (1973). Crossing number problems. American Mathematical Monthly, 80(1), 52–58. <https://doi.org/10.1080/00029890.1973.11993230>
+
+- <a name="fourColor"></a> Gonthier, G. (2023). A computer-checked proof of the Four Color Theorem. Inria report. <https://inria.hal.science/hal-04034866>
+
+
 ---
 
 ## Footnotes
 
+[^quadr]: The standard definition of convexity for subsets of \\(\mathbb{R}^2\\) is that a set \\(S\\) is convex if for every two points \\(p, q \in S\\), the line segment joining \\(p\\) and \\(q\\) is also contained in \\(S\\). The convex hull of a set of points \\(P\\), denoted \\(h(P)\\), is the smallest convex set containing \\(P\\), and can be equivalently defined as the intersection of all convex sets containing \\(P\\). 
+A set of points \\(S\\) is said to be in _convex position_ if all its points are vertices of its convex hull, i.e., \\( h(S) \neq h(S \setminus \{p\}) \\) for every \\(p \in S\\). A set of \\(k\\) points in convex position is called a _convex k-gon_. For \\(k = 3\\), we also call them triangles, for \\(k = 4\\), convex quadrilaterals, and for \\(k = 5\\), convex pentagons.
+
+
+
+
+
 [^szekeres]: George Szekeres died in 2005 (one hour apart from Esther Klein!), and thus to the best of my knowledge, Peters completed the paper using some previous ideas of Szekeres, which makes unclear whether the Hungarian mathematician got to see the result \\(g(6) = 17\\) before his passing.
+
+
 [^aka]: Also known as _signotopes_ [2], Knuth's counterclockwise relation (CC-systems) [3], or _signatures_ [1].
 
 [^realizer]: I have developed since a much more efficient version of this program, leveraging parallelism and a much better algorithm. It can be found in [https://github.com/bsubercaseaux/point_realizer](https://github.com/bsubercaseaux/point_realizer).
