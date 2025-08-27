@@ -64,7 +64,7 @@ Klein's solution is simple and elegant; almost entirely explained in **Figure 1*
 
 Klein's problem kickstarted geometric Ramsey theory, and it was soon afterwards extended by Szekeres and Erdős into the following theorem:
 
-> **Erdős-Szekeres Theorem.** For any positive integer \\(k\\), there is a least integer \\(g(k)\\) such that any collection of \\(g(k)\\) points contains either 3 collinear points or a convex \\(k\\)-gon.
+> **Erdős-Szekeres Theorem.** For any positive integer \\(k\\), there is a least integer \\(g := g(k)\\) such that any collection of \\(g(k)\\) points contains either 3 collinear points or a convex \\(k\\)-gon.
 
 As a second consequence of the problem, George Szekeres and Esther Klein married, which led Erdős to jokingly name Klein's problem the *_Happy Ending problem_*.
 
