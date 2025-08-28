@@ -64,7 +64,9 @@ Klein's solution is simple and elegant; almost entirely explained in **Figure 1*
 
 Klein's problem kickstarted geometric Ramsey theory, and it was soon afterwards extended by Szekeres and Erdős into the following theorem:
 
-> **Erdős-Szekeres Theorem.** For any positive integer \\(k\\), there is a least integer \\(g := g(k)\\) such that any collection of \\(g(k)\\) points contains either 3 collinear points or a convex \\(k\\)-gon.
+> **Erdős-Szekeres Theorem.** For any positive integer \\(k\\), there is an integer \\(g\\) such that any set of \\(g\\) points contains either 3 collinear points or a convex \\(k\\)-gon.
+
+For every \\(k\\), the smallest integer \\(g\\) satisfying the theorem is denoted by \\(g(k)\\).
 
 As a second consequence of the problem, George Szekeres and Esther Klein married, which led Erdős to jokingly name Klein's problem the *_Happy Ending problem_*.
 
@@ -122,7 +124,7 @@ F^I_{a,b,c,d,e} := (o_{a,b,c} \rightarrow (o_{b,c,d} \vee o_{c,d,e})) \wedge (\n
 \\]
 and similarly, we can construct formulas \\(F^{II}_{a,b,c,d,e}, F^{III}\_{a,b,c,d,e}, F^{IV}\_{a,b,c,d,e} \\) for the remaining cases.
 
-Then, we can write each of these formulas in _conjunctive normal form_ (CNF), the format supported by most solvers. The conjunction of all these, over all 5-tuples of points indexed by \\([n]\\), results in a formula \\(\Phi_n\\) such that each convex pentagon on a set of \\(n\\) points in general position would induce exactly one falsified clause in \\(\Phi_n\\). Moreover, some additional symmetry-breaking constraints can be added to the \\(\Phi_n\\) in order to reduce the search space and make the local search more efficient, but we will not discuss them here in order to simplify our exposition. A detailed description, including formally verified proofs of correctness, can be found in [Subercaseaux et al., 2024](#Verification).
+Then, we can write each of these formulas in _conjunctive normal form_ (CNF), recalling that \\( (x \rightarrow y) \equiv (\overline{x} \lor y) \\). The conjunction of all these, over all 5-tuples of points indexed by \\([n]\\), results in a formula \\(\Phi_n\\) such that each convex pentagon on a set of \\(n\\) points in general position would induce exactly one falsified clause in \\(\Phi_n\\). Moreover, some additional symmetry-breaking constraints can be added to the \\(\Phi_n\\) in order to reduce the search space and make the local search more efficient, but we will not discuss them here in order to simplify our exposition. A detailed description, including formally verified proofs of correctness, can be found in [Subercaseaux et al., 2024](#Verification).
 
 <!-- \\[
 F^{I}_{a,b,c,d,e} := (o_{a,b,c} \rightarrow (o_{b,c,d} \vee o_{c,d,e}) ) \wedge (\overline{o_{a,b,c}} \rightarrow (\overline{o_{b,c,d}} \vee \overline{o_{c,d,e}}))
