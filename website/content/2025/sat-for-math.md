@@ -15,7 +15,7 @@ tags = ["SAT", "discrete geometry", "Erdős-Szekeres problems", "automated mathe
 author = {name = "Bernardo Subercaseaux", url = "https://bsubercaseaux.github.io/"}
 # The committee specification is a list of objects similar to the author.
 committee = [
-{name = "Jason Li", url = "https://q3r.github.io/"},
+{name = "William Kuszmaul", url = "https://sites.google.com/site/williamkuszmaul"},
 {name = "Jan Hoffmann", url = "https://www.cs.cmu.edu/~janh/"},
 {name = "Emre Yolcu", url = "https://www.cs.cmu.edu/~eyolcu/"}
 ]
@@ -62,7 +62,7 @@ Klein's solution is simple and elegant; almost entirely explained in **Figure 1*
 <!-- ![Illustration of Klein's proof](./klein_cases.png) -->
 <img src="./klein_cases.png" width="500" alt="Illustration of Klein's proof for the existence of a convex quadrilateral among 5 popints in general position." style="display: block; margin: 0 auto">
 
-Klein's problem kickstarted geometric Ramsey theory, and it was soon afterwards extended by Szekeres and Erdős into the following theorem:
+Klein's problem kickstarted _geometric Ramsey theory_, and it was soon afterwards extended by Szekeres and Erdős into the following theorem:
 
 > **Erdős-Szekeres Theorem.** For any positive integer \\(k\\), there is an integer \\(g\\) such that any set of \\(g\\) points contains either 3 collinear points or a convex \\(k\\)-gon.
 
@@ -238,7 +238,23 @@ Since local search solvers cannot prove lower bounds, we used a MaxSAT formulati
 This relation between \\(F'\\) and \\((F, k)\\) is formally proven through the _cutting planes_ method. 
 2. That \\(F'\\) is unsatisfiable, which is formally certified using the (by now standard) DRAT proof format, for which formally verified proof-checkers exist.
 
-The details are purposefully omitted here, but the important part is that SAT and MaxSAT solvers can emit checkable proofs of their results, and moreover, some of the proof-checkers have been formally verified in theorem provers such as HOL4 ([Tan, Heule, and Myreen, 2021](#CakeLPR), [Boaerts et al., 2023](#CakePB)).
+A reasonable analogy for how a "proof of unsatisfiability" looks like is as follows: consider a set of linear equations for which we want to show there is no solution. Then, a proof could list a sequence of operations, as for example
+1. multiply both sides of equation (7) by \\(-3\\),
+2. add equations (2) and (5) together, resulting in a new equation (9), 
+3. subtract \\(2x\\) from both sides of equation (4).
+
+Given a finite set of such valid operations, we may decide on a standardized format to list them, as for instance
+```
+mul eq7 -3: eq7
+add eq2 eq5: eq9
+add eq4 -2x: eq10
+```
+Then, we may also decide on a canonical example of impossibility: \\( 0 = 1\\), meaning that if we can derive this equation from our original set, then the original set has no solution, and all proofs must end by deriving exactly this equation. 
+
+The case of unsatisfiability proofs is analogous: proofs list a sequence of basic operations \\(F_i \to_{\text{op}} F_{i+1}\\) that iteratively transform a CNF formula while preserving satisfiability. The proof ends when \\(F_{n}\\) contains an empty clause, which is the canonical "\\(0 = 1\\)" example of unsatisfiability.
+
+
+The details are purposefully omitted here (and the interested reader can find them in [Heule, 2016](#DRAT)), but the important part is that SAT and MaxSAT solvers can emit checkable proofs of their results, and moreover, some of the proof-checkers have been formally verified in theorem provers such as HOL4 ([Tan, Heule, and Myreen, 2021](#CakeLPR), [Boaerts et al., 2023](#CakePB)).
 This is particularly important for applications to mathematics, where correctness is paramount, and there is experience of computer-assisted proofs containing mistakes (cf. the original proof of the four color theorem, now formally verified by [Gonthier, 2023](#fourColor)). Hence, it is also important to mention that an important concern with computer-proofs is the correspondence between the computation and the mathematical statement it intends to prove. For example, even if a formula \\(F\\) is formally proven to be unsatisfiable, it could be the case that \\(F\\) is not a correct encoding of the mathematical statement we have in mind, making its unsatisfiability irrelevant. Because of the subtleties that naturally appear in translating geometric properties to propositional logic, this is a particularly important concern in our case. To this end, together with a group of students at CMU, we formally verified in Lean that the logical constraints and symmetry-breaking predicates we used in this work, and other similar proofs about discrete geometry, are indeed correct ([Subercaseaux et al., 2024](#Verification)).
 
 
@@ -302,6 +318,8 @@ We have seen, through a concrete case study, how SAT solvers, coupled with other
 
 - <a name="signotopes"></a> Felsner, S., and Weil, H. (2001). Sweeps, arrangements and signotopes. Discrete Applied Mathematics, 109(1), 67–94. <https://doi.org/10.1016/S0166-218X(00)00232-8>
 
+- <a name="DRAT"></a> Heule, M. J. H. (2016). The DRAT format and DRAT-trim checker. <https://arxiv.org/abs/1610.06229>
+
 - <a name="knuthAxiomsHulls"></a> Knuth, D. E. (1992). Axioms and Hulls. Lecture Notes in Computer Science, 606. Springer, Berlin/Heidelberg. <https://doi.org/10.1007/3-540-55611-7>
 
 - <a name="Tassat"></a> Chowdhury, M. S., Codel, C. R., and Heule, M. J. H. (2024). TaSSAT: Transfer and Share SAT. In: Tools and Algorithms for the Construction and Analysis of Systems (TACAS 2024), ETAPS 2024, Luxembourg City, Luxembourg, April 6–11, 2024. Proceedings, Part I (pp. 34–42). Springer, Berlin/Heidelberg. <https://doi.org/10.1007/978-3-031-57246-3_3>
@@ -329,7 +347,8 @@ We have seen, through a concrete case study, how SAT solvers, coupled with other
 
 ## Footnotes
 
-[^quadr]: The standard definition of convexity for subsets of \\(\mathbb{R}^2\\) is that a set \\(S\\) is convex if for every two points \\(p, q \in S\\), the line segment joining \\(p\\) and \\(q\\) is also contained in \\(S\\). The convex hull of a set of points \\(P\\), denoted \\(h(P)\\), is the smallest convex set containing \\(P\\), and can be equivalently defined as the intersection of all convex sets containing \\(P\\). 
+[^quadr]: The standard definition of convexity for subsets of \\(\mathbb{R}^2\\) is that a set \\(S\\) is convex if for every two points \\(p, q \in S\\), the line segment joining \\(p\\) and \\(q\\) is also contained in \\(S\\). That is, for any \\(\alpha \in [0, 1]\\) the point \\( \alpha p + (1-\alpha) q\\) belongs to \\(S\\).
+ The convex hull of a set of points \\(P\\), denoted \\(h(P)\\), is the smallest convex set containing \\(P\\), that is, the intersection of all convex sets containing \\(P\\).
 A set of points \\(S\\) is said to be in _convex position_ if all its points are vertices of its convex hull, i.e., \\( h(S) \neq h(S \setminus \{p\}) \\) for every \\(p \in S\\). A set of \\(k\\) points in convex position is called a _convex k-gon_. For \\(k = 3\\), we also call them triangles, for \\(k = 4\\), convex quadrilaterals, and for \\(k = 5\\), convex pentagons.
 
 
