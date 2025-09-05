@@ -36,7 +36,8 @@ The goal of this post is to show through a concrete case study how SAT solvers, 
 
 <!-- The problem we study takes place in two-dimensional geometry, an a priori continuous domain.
  Perhaps surprisingly, we will leverage the capabilities of modern SAT solvers, which reason about boolean formulas, to make progress in  -->
- While this is not the first usage of SAT in discrete geometry, its main novelty (besides the technical results) is in documenting how SAT solvers and other automated reasoning tools can assist mathematical research by revealing patterns and eliciting conjectures. At the end of the post I discuss verification---as opposed to recent language-based forms of AI, standard automated reasoning tools such as (Max)SAT solvers can provide proofs for their answers, which can be crucial for mathematics.
+ While this is not the first usage of SAT in discrete geometry, its main novelty (besides the technical results) is in documenting how SAT solvers and other automated reasoning tools can assist mathematical research by revealing patterns and eliciting conjectures. 
+ Another advantage of these classic AI tools is _verification_: as opposed to recent language-based forms of AI, standard automated reasoning tools such as (Max)SAT solvers can provide checkable proofs for their answers. This enhances the trustworthiness of the results, which is paramount in computational mathematics.
 
  This post is based on joint work with John Mackey, Marijn J. H. Heule and Ruben Martins. It was accepted at CICM'2024, where it was the runner-up for best paper award, and it is publicly available at [https://arxiv.org/abs/2311.03645](https://arxiv.org/abs/2311.03645). Naturally, this blog post tells a linearized version of the story; our work went through many back-and-forths, and sometimes intuition preceded computation.
 
@@ -48,7 +49,7 @@ The goal of this post is to show through a concrete case study how SAT solvers, 
 \\)
 is satisfiable, since we can take the assignment \\(x_1 = \top, x_2 = \top, x_3 = \bot \\). Most SAT solvers take boolean formulas in this format, called _conjunctive normal form_ (CNF), in which a formula is a conjunction of _clauses_, where each clause is a disjunction of _literals_ (variables or their negation). 
 
-Even though this _satisfiability_ problem is the archetype of NP-completeness, the engineering advances on both software and hardware allow SAT solvers to tackle many instances of interest that arise naturally in mathematics, formal verification, and even cryptography ([Fichte et al., 2023](#silentRevolution)). The MaxSAT variant, in which the goal is to maximize the number of satisfied clauses, is also well-studied and has many applications. We will use it later on in this blog.
+Even though this _satisfiability_ problem is the archetype of NP-completeness, the engineering advances on both software and hardware allow modern SAT solvers to tackle many instances of interest that arise naturally in mathematics, formal verification, and even cryptography ([Fichte et al., 2023](#silentRevolution)). The MaxSAT variant, in which the goal is to maximize the number of satisfied clauses, is also well-studied and we will also use it later on in this blog.
 For a general reference on SAT solvers, I recommend the _Handbook of Satisfiability_ ([Biere et al., 2009](#BiereHandbook)).
 
 # The Happy Ending was just the beginning
