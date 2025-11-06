@@ -2,7 +2,7 @@
 # The title of your blogpost. No sub-titles are allowed, nor are line-breaks.
 title = "Computer Assisted Mathematics: A Case Study in Discrete Geometry"
 # Date must be written in YYYY-MM-DD format. This should be updated right before the final PR is made.
-date = 2025-03-24
+date = 2025-11-06
 
 [taxonomies]
 # Keep any areas that apply, removing ones that don't. Do not add new areas!
